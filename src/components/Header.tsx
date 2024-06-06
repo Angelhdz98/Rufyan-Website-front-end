@@ -1,5 +1,5 @@
 import { Link,} from "react-router-dom";
-import logoprovisionalRufyan from "../assets/Images/logoprovisionalRufyan.png"
+import logoprovisionalRufyan from "../assets/Images/logos/logoprovisionalRufyan.png"
 import { IoLogoInstagram } from "react-icons/io";
 import { BsFacebook } from "react-icons/bs";
 import { MdShoppingCart } from "react-icons/md";
@@ -9,10 +9,31 @@ import { useEffect, useRef, useState } from "react";
 import CustomLink from "./CustomLink";
 import BurguerMenu from "./BurguerMenu";
 import classNames from 'classnames';
-
+import Modal from "./Modal";
+import LogInForm from "./LogInForm";
+import RegisterForm from "./RegisterForm";
 function Header(){
     const [activeMenu, setActiveMenu]= useState<boolean>(false);
     const navList=useRef<HTMLDivElement>(null);
+    const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+    const [hasAccount, setHasaccount] = useState<boolean>(false);
+    const closeModal= ()=>{
+        setIsModalOpen(false);
+    }
+    
+    const openModal=() =>{
+        setIsModalOpen(true);
+    }
+    const logInClick= () =>{
+        openModal();
+        setHasaccount(true);
+    }
+
+    const registerClick= () =>{
+        openModal();
+        setHasaccount(false);
+    }
+
     const changeMenuState= ()=>{
                 setActiveMenu(!activeMenu);
 
@@ -21,7 +42,6 @@ function Header(){
      useEffect(()=>{
         const handler = (event: MouseEvent) =>{
             
-            console.log("el event target es", event.target);
         if( activeMenu && !navList.current?.contains(event.target as Node)){
             
             event.stopPropagation();
@@ -55,6 +75,10 @@ function Header(){
            <div ref={navList} onClick={changeMenuState} className="menuBurguerContenedor hidden max-md:block absolute z-20 " >
             <BurguerMenu   activeMenu={activeMenu} />
             </div>
+            <div className="absolute top-2 right-1/3">
+                <span className="hover:text-blue-900 hover:underline" onClick={logInClick}>Log in</span>/
+                <span className="hover:text-blue-900 hover:underline"  onClick={registerClick}>register</span>
+                </div>
         <div className="flex flex-row items-center absolute max-md:left-44 top-1 right-64   gap-2  ">
             <a target="_blank" href="https://www.instagram.com/rufyan_silva?igsh=MTBxc3BtazAxc2dwdg==">
               <IoLogoInstagram size={24} /></a>
@@ -69,10 +93,11 @@ function Header(){
     <MdShoppingCart size={20}/> 
 
     </div>
-
+    <Modal isOpen={isModalOpen} onClose={closeModal} >
+       {hasAccount?<LogInForm/>:<RegisterForm/>}
+        </Modal>
     </div>;
     }
-   // class="flex flex-row  max-md:top-1 max-md:right-2 bg-blue-400 "
     export default Header;
-    
+  
 

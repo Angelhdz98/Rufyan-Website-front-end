@@ -1,6 +1,10 @@
 
+import SlideBanner from "../../components/SlideBanner";
 function HomePage(){
-    return <div>HomePage</div>
+    return <div>
+        <SlideBanner/>
+       
+    </div>
     }
     
     export default HomePage;
