@@ -1,13 +1,12 @@
 import { Link, LinkProps } from "react-router-dom";
-import className from "classnames";
+import classNames from "classnames";
 interface CustomLinkProps extends LinkProps {
 
-    className?: string;
 }
 
 export default function CustomLink({children, ...props}:CustomLinkProps){
-   const  finalClasName= className(props.className, "hover:text-blue-900 hover:underline",{
-
+   const  finalClasName= classNames("hover:text-blue-900 hover:underline", props.className,{
+    //aquí puede ir los casos por medio de cierto y falso 
    }) ;
    return <li className="list-none">
     <Link {...props} className={finalClasName} >{children}</Link>
