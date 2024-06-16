@@ -1,69 +1,225 @@
-{"mainUser":[
-    {
-        "id": 1,
-        "userName": "RufyanOner",
-        "email": "rufyan@gmail.com",
-        "firstName": "Rodrigo",
-        "lastName": "Silva",
-        "password": "H4goArte!"
-    },
-    {
-        "id":2,
-        "userName": "joseDev",
-        "email":"hernandeztorresjoseangel@gmail.com",
-        "firstName":"Manolo",
-        "lastName": "Hernandez",
-        "password": "Contraseni4!"
-       
-        
-        
-    }
-],
-"users": [
+{
+  "users": [
     {
       "id": 1,
-      "firstName": "John",
-      "lastName": "Doe",
-      "username": "john_doe",
-      "email": "john@example.com",
-      "address": "123 Main St",
+      "username": "admin",
+      "email": "admin@example.com",
       "password": "password123",
-      "artworks": [1, 2]
+      "role": "admin"
     },
     {
       "id": 2,
-      "firstName": "Jane",
-      "lastName": "Smith",
-      "username": "jane_smith",
-      "email": "jane@example.com",
-      "address": "456 Elm St",
-      "password": "password456",
-      "artworks": [3]
+      "username": "user1",
+      "email": "user1@example.com",
+      "password": "password123",
+      "role": "user"
     }
   ],
-  "artworks": [
+  "products": [
     {
       "id": 1,
-      "title": "Starry Night",
-      "description": "A painting by Vincent van Gogh",
-      "year": 1889
+      "name": "Paisaje Tranquilo",
+      "description": "Pintura al óleo de un paisaje sereno",
+      "price": 1200.00,
+      "category": "painting",
+      "favorite":false,
+      "dateCreated": "2023-05-15",
+      "userId": 1,
+      "images": [
+        "/uploads/painting1-1.jpg",
+        "/uploads/painting1-2.jpg"
+      ],
+      "specific_attributes": {
+        "dimensions": "60x90 cm",
+        "medium": "Óleo",
+        "support_material": "Lienzo",
+        "certificate_of_authenticity": true,
+        "original_availability": false,
+        "available_copies": 2,
+        "copies_made": 8
+      }
+    },
+    {
+      "id": 8,
+      "name": "Graffiti Acuarela",
+      "description": "Pintura al óleo en acuarela de un Graffiti",
+      "price": 1000.00,
+      "category": "painting",
+      "favorite":true,
+      "dateCreated": "2023-05-18",
+      "userId": 1,
+      "images": [
+        "/uploads/painting1-1.jpg",
+        "/uploads/painting1-2.jpg"
+      ],
+      "specific_attributes": {
+        "dimensions": "60x90 cm",
+        "medium": "Óleo",
+        "support_material": "Lienzo",
+        "certificate_of_authenticity": true,
+        "original_availability": true,
+        "available_copies": 4,
+        "copies_made": 12
+      }
+    },
+    {
+      "id": 9,
+      "name": "Como Tesla",
+      "description": "figuras abstrasctas formando un semblante, parece tesla",
+      "price": 1400.00,
+      "category": "painting",
+      "favorite":true,
+      "dateCreated": "2023-05-20",
+      "userId": 1,
+      "images": [
+        "/uploads/painting1-1.jpg",
+        "/uploads/painting1-2.jpg"
+      ],
+      "specific_attributes": {
+        "dimensions": "60x90 cm",
+        "medium": "Acrilico",
+        "support_material": "Lienzo",
+        "certificate_of_authenticity": true,
+        "original_availability": false,
+        "available_copies": 12,
+        "copies_made": 15
+      }
     },
     {
       "id": 2,
-      "title": "The Persistence of Memory",
-      "description": "A painting by Salvador Dalí",
-      "year": 1931
+      "name": "Arte Digital Ejemplo",
+      "description": "Print de arte digital",
+      "price": 150.00,
+      "category": "digital_art", 
+      "dateCreated": "2020-01-15",
+      "userId": 1,
+      "images": [
+        "/uploads/digital1-1.jpg",
+        "/uploads/digital1-2.jpg"
+      ],
+      "specific_attributes": {
+        "dimensions": "50x70 cm",
+        "print_type": "Giclée",
+        "paper_quality": "Hahnemühle",
+        "limited_edition": true,
+        "certificate_of_authenticity": true,
+        "original_availability": false,
+        "available_copies": 50,
+        "copies_made": 100
+      }
     },
     {
       "id": 3,
-      "title": "Mona Lisa",
-      "description": "A painting by Leonardo da Vinci",
-      "year": 1503
-      
+      "name": "Taza de Café",
+      "description": "Taza con impresión de serigrafía",
+      "price": 20.00,
+      "category": "merchandise",
+      "dateCreated": "2023-05-15",
+      "userId": 1,
+      "images": [
+        "/uploads/mug1-1.jpg",
+        "/uploads/mug1-2.jpg"
+      ],
+      "specific_attributes": {
+        "type": "mug",
+        "material": "Cerámica",
+        "sizes": "12 oz",
+        "colors": "Blanco",
+        "printing_method": "Serigrafía",
+        "care_instructions": "Apto para lavavajillas"
+      }
+    },
+    {
+      "id": 4,
+      "name": "Playera Artística",
+      "description": "Playera con impresión de serigrafía",
+      "price": 35.00,
+      "category": "merchandise",
+      "dateCreated": "2023-05-15",
+      "userId": 1,
+      "images": [
+        "/uploads/tshirt1-1.jpg",
+        "/uploads/tshirt1-2.jpg"
+      ],
+      "specific_attributes": {
+        "type": "tshirt",
+        "material": "Algodón",
+        "sizes_availability": {
+          "S": 10,
+          "M": 15,
+          "L": 5,
+          "XL": 8
+        },
+        "colors": "Negro, Blanco",
+        "printing_method": "Serigrafía",
+        "care_instructions": "Lavar a máquina con agua fría"
+      }
+    },
+    {
+      "id": 5,
+      "name": "Sudadera Creativa",
+      "description": "Sudadera con impresión de serigrafía",
+      "price": 50.00,
+      "category": "merchandise",
+      "dateCreated": "2023-05-15",
+      "userId": 1,
+      "images": [
+        "/uploads/hoodie1-1.jpg",
+        "/uploads/hoodie1-2.jpg"
+      ],
+      "specific_attributes": {
+        "type": "hoodie",
+        "material": "Poliéster",
+        "sizes_availability": {
+          "S": 7,
+          "M": 12,
+          "L": 9,
+          "XL": 4
+        },
+        "colors": "Gris, Negro",
+        "printing_method": "Serigrafía",
+        "care_instructions": "Lavar a máquina con agua fría"
+      }
+    },
+    {
+      "id": 6,
+      "name": "Sticker Creativo",
+      "description": "Sticker decorativo",
+      "price": 5.00,
+      "category": "sticker",
+      "dateCreated": "2023-05-15",
+      "userId": 1,
+      "images": [
+        "/uploads/sticker1-1.jpg",
+        "/uploads/sticker1-2.jpg"
+      ],
+      "specific_attributes": {
+        "dimensions": "10x10 cm",
+        "material": "Vinilo",
+        "durability": "A prueba de agua",
+        "pack_size": 5,
+        "application_instructions": "Limpie y seque la superficie antes de aplicar"
+      }
+    },
+    {
+      "id": 7,
+      "name": "Bufanda Tejida",
+      "description": "Bufanda artesanal",
+      "price": 75.00,
+      "category": "handcrafted_item",
+      "dateCreated": "2023-05-15",
+      "userId": 1,
+      "images": [
+        "/uploads/handcrafted1-1.jpg",
+        "/uploads/handcrafted1-2.jpg"
+      ],
+      "specific_attributes": {
+        "dimensions": "180x30 cm",
+        "materials": "Lana",
+        "technique": "Tejido a mano",
+        "care_instructions": "Lavar a mano con agua fría",
+        "origin_story": "Hecha a mano por artesanos locales"
+      }
     }
   ]
 }
-
-
-
-

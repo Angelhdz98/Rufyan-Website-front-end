@@ -9,12 +9,12 @@ import { Settings } from "react-slick";
 
 import { MdOutlineKeyboardArrowLeft, MdOutlineKeyboardArrowRight } from "react-icons/md";
 
-const PrevArrow: React.FC<{onClick?:()=> void}> = ({onClick})=>{
+ export const PrevArrow: React.FC<{onClick?:()=> void}> = ({onClick})=>{
   return <div className="absolute top-1/2 left-4 transform -translate-y-1/2 cursor-pointer z-10" onClick={onClick}>
     <MdOutlineKeyboardArrowLeft className="w-8 h-8 text-orange-500"/>
   </div>
 } ;
-const NextArrow: React.FC<{onClick?:()=> void}> = ({onClick})=>{
+export const NextArrow: React.FC<{onClick?:()=> void}> = ({onClick})=>{
   return <div  className="absolute top-1/2 right-4 transform -translate-y-1/2 cursor-pointer z-10"
   onClick={onClick}>
     <MdOutlineKeyboardArrowRight className="w-8 h-8 text-orange-500"/>

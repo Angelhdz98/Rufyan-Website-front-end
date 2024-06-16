@@ -4,9 +4,11 @@ import AboutRufyanPage from "./pages/aboutRufyan/AboutRufyanPage";
 import CommitmentPage from "./pages/Commitment/CommitmentPage";
 import ProfessionalDevPage from "./pages/ProfessionalDev/ProfessionalDev";
 import Root from "./pages/Root";
-import StorePage from "./pages/store/StorePage";
+import StorePage from "./pages/galleryStore/StorePage";
 import ProjectsPage from "./pages/artProjects/ProjectsPage";
 import ShipmentPage from "./pages/shipment/ShipmentPage";
+//import { homeLoader } from "./pages/home/homeLoader";
+//import store from "./store";
 
 
 
@@ -17,7 +19,8 @@ const router= createBrowserRouter([
   children:[
     {
       index: true,
-      element:<HomePage/>
+      element:<HomePage/>,
+      
     },
     {path:'/aboutRufyan',
     element: <AboutRufyanPage/>
