@@ -5,24 +5,26 @@ export interface PaintLabelProps{
 }
 
 function PaintLabel({paint}:PaintLabelProps) {
-    return <div className="p-2 bg-white">
+    return <div className="px-2 py-4 bg-white border-t-2 border-black relative flex flex-col gap-0">
         <div>
-            <span>{paint.name}</span>
+            <span className="font-bold">{paint.name}</span>
         </div>
-        <div>
-            <span>Technique:</span> <span>{paint.specific_attributes.medium}</span>   
-        </div>
-        <div>
+        <p className="text-xs">
+            <span >Technique:</span> <span>{paint.specific_attributes.medium}</span>  <br />
             <span>
-            measures: { paint.specific_attributes.dimensions[0]} x {paint.specific_attributes.dimensions[1]} 
-            </span> 
+            Measures: { paint.specific_attributes.dimensions[0]} x {paint.specific_attributes.dimensions[1]} 
+            </span> <br />
+            <span>Description: </span> <span>{paint.description}</span>   
+        </p>
+        <div>
+            
         </div>
         <div>
-            <p> <span>Description</span> <span>{paint.description}</span> </p>
+            <p> </p>
 
         </div>
         <div>
-            <span>price {paint.price}</span>
+            <span className="text-orange-500 absolute top-0 right-1 font-medium text-sm">Price: {paint.price}.00MXN</span>
         </div>
     </div>
 }

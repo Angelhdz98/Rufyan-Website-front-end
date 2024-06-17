@@ -68,6 +68,167 @@ const initialState: PaintingsState = {
       }
     },
     {
+      id: 17,
+      name: "Graffiti Acuarela",
+      description: "Pintura al óleo en acuarela de un Graffiti",
+      price: 1000.00,
+      category: "painting",
+      favorite:true,
+      dateCreated: "2023-05-18",
+      userId: 1,
+      images: [
+        obra4,
+        obra5      
+      ],
+      specific_attributes: {
+        dimensions: [60,90],
+        medium: "Óleo",
+        support_material: "Lienzo",
+        "certificate_of_authenticity": true,
+        "original_availability": true,
+        "available_copies": 4,
+        "copies_made": 12
+      }
+    },
+    {
+      id: 16,
+      name: "Graffiti Acuarela",
+      description: "Pintura al óleo en acuarela de un Graffiti",
+      price: 1000.00,
+      category: "painting",
+      favorite:true,
+      dateCreated: "2023-05-18",
+      userId: 1,
+      images: [
+        obra4,
+        obra5      
+      ],
+      specific_attributes: {
+        dimensions: [60,90],
+        medium: "Óleo",
+        support_material: "Lienzo",
+        "certificate_of_authenticity": true,
+        "original_availability": true,
+        "available_copies": 4,
+        "copies_made": 12
+      }
+    },
+    {
+      id: 15,
+      name: "Graffiti Acuarela",
+      description: "Pintura al óleo en acuarela de un Graffiti",
+      price: 1000.00,
+      category: "painting",
+      favorite:true,
+      dateCreated: "2023-05-18",
+      userId: 1,
+      images: [
+        obra4,
+        obra5      
+      ],
+      specific_attributes: {
+        dimensions: [60,90],
+        medium: "Óleo",
+        support_material: "Lienzo",
+        "certificate_of_authenticity": true,
+        "original_availability": true,
+        "available_copies": 4,
+        "copies_made": 12
+      }
+    },
+    {
+      id: 13,
+      name: "Graffiti Acuarela",
+      description: "Pintura al óleo en acuarela de un Graffiti",
+      price: 1000.00,
+      category: "painting",
+      favorite:true,
+      dateCreated: "2023-05-18",
+      userId: 1,
+      images: [
+        obra4,
+        obra5      
+      ],
+      specific_attributes: {
+        dimensions: [60,90],
+        medium: "Óleo",
+        support_material: "Lienzo",
+        "certificate_of_authenticity": true,
+        "original_availability": true,
+        "available_copies": 4,
+        "copies_made": 12
+      }
+    },
+    {
+      id: 12,
+      name: "Graffiti Acuarela",
+      description: "Pintura al óleo en acuarela de un Graffiti",
+      price: 1000.00,
+      category: "painting",
+      favorite:true,
+      dateCreated: "2023-05-18",
+      userId: 1,
+      images: [
+        obra4,
+        obra5      
+      ],
+      specific_attributes: {
+        dimensions: [60,90],
+        medium: "Óleo",
+        support_material: "Lienzo",
+        "certificate_of_authenticity": true,
+        "original_availability": true,
+        "available_copies": 4,
+        "copies_made": 12
+      }
+    },
+    {
+      id: 11,
+      name: "Graffiti Acuarela",
+      description: "Pintura al óleo en acuarela de un Graffiti",
+      price: 1000.00,
+      category: "painting",
+      favorite:true,
+      dateCreated: "2023-05-18",
+      userId: 1,
+      images: [
+        obra4,
+        obra5      
+      ],
+      specific_attributes: {
+        dimensions: [60,90],
+        medium: "Óleo",
+        support_material: "Lienzo",
+        "certificate_of_authenticity": true,
+        "original_availability": true,
+        "available_copies": 4,
+        "copies_made": 12
+      }
+    },
+    {
+      id: 10,
+      name: "Graffiti Acuarela",
+      description: "Pintura al óleo en acuarela de un Graffiti",
+      price: 1000.00,
+      category: "painting",
+      favorite:true,
+      dateCreated: "2023-05-18",
+      userId: 1,
+      images: [
+        obra4,
+        obra5      
+      ],
+      specific_attributes: {
+        dimensions: [60,90],
+        medium: "Óleo",
+        support_material: "Lienzo",
+        "certificate_of_authenticity": true,
+        "original_availability": true,
+        "available_copies": 4,
+        "copies_made": 12
+      }
+    },
+    {
       id: 9,
       name: "Como Tesla",
       description: "figuras abstrasctas formando un semblante, parece tesla",
