@@ -26,8 +26,8 @@ function Button ({children,
 }:buttonProps){
       
 const finalClassName = className(rest.className, 'flex items-center px-3 py-1.5 border border-[3px]', {
-    "border-[#C04D2A] bg-[#D67254]/[.60] text-[#8B351C] font-bold" : primary,
-    "border-gray-900 bg-gray-900 text-white" : secondary,
+    "border-[#C04D2A] bg-[#EBAF9D]/[.70] text-[#8B351C] font-bold" : primary,
+    "border-[#D67254] bg-[#D67254] text-white font-bold" : secondary,
     "border-green-500 bg-green-500 text-white" : success,
     "border-yellow-500 bg-yellow-500 text-white" : warning,
     "border-red-500 bg-red-500 text-white" : danger,
