@@ -26,7 +26,6 @@ const handleMouseLeave= (id:number) =>{
 }
 const handleClick= (id:number) =>{
   setClickedPaints((prev) => ({...prev, [id]:!prev[id]}));
-  console.log(clickedPaints);
 };
 
     const renderedFavPaints= paintings.map((fp)=>{

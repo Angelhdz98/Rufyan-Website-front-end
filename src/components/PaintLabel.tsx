@@ -1,6 +1,7 @@
 import type { Painting } from "../types/typesIndex";
 import classNames from "classnames";
 import Button from "./Button";
+import { BiDownArrow } from "react-icons/bi";
 export interface PaintLabelProps{
     paint: Painting;
     hidden?: boolean;
@@ -34,10 +35,10 @@ function PaintLabel({paint, clicked }:PaintLabelProps) {
             </span> <br />
             <span>Description: </span> <span>{paint.description}</span>   
         </p>
-        {clicked && botoneraObra() }
+        {clicked ? botoneraObra(): <div className="flex flex-row place-self-center mt-1"><BiDownArrow className="text-[#CB3235]"/></div>  }
         
         <div>
-            <span className="text-orange-500 absolute top-0 right-1 font-medium text-xs">Price: {paint.price}.00MXN</span>
+            <span className="text-orange-500 absolute top-0 right-1 font-bold text-xs">Price: {paint.price}.00MXN</span>
         </div>
     </div>
 }
