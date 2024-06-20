@@ -10,5 +10,9 @@
     }
 }
 
+.slick-slide > div {
+    margin: 10px 10px
+}
+
 @import './styles/styleBurguerMenu.css'
 

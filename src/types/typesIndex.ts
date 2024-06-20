@@ -44,6 +44,16 @@ export interface User {
   }
 
 
+  export interface Project {
+    title: string; 
+    date: Date;
+    collaborator?: string;
+    description?: string;
+    images: string[],
+    
+  }
+
+
   
 
   
