@@ -75,7 +75,7 @@ function Header(){
            <div ref={navList} onClick={changeMenuState} className="menuBurguerContenedor hidden max-md:block absolute z-20 " >
             <BurguerMenu   activeMenu={activeMenu} />
             </div>
-            <div className="absolute top-8 right-12">
+            <div className="absolute top-8 right-[7%]  sm:right-12">
                 <span className="hover:text-blue-900 hover:underline hover:cursor-pointer"
                  onClick={logInClick}>Log in
                  </span>/

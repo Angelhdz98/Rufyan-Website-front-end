@@ -71,7 +71,7 @@ const renderedProjects = projects.map((project)=>{
 })
 
 return <div className="flex  flex-col justify-center " >
-    <Slider {...settings} className="m-4"   >
+    <Slider {...settings} className="m-4 my-8"   >
         {renderedProjects}
         </Slider>
     <div ><Button className="mx-auto" rounded success>See All projects </Button> </div>
