@@ -29,15 +29,15 @@ function ImgSlider({paint}:imgSliderProps){
     
     return (
         <Fragment >
-          <div >
-          <Slider {...settings} className="hover:drop-shadow-2xl	">
+          
+          <Slider {...settings} className="hover:drop-shadow-2xl w-full z-10 relative h-auto flex flex-col">
             {paint.images.map((image, index)  => (
               <Fragment key={index} >
-                <img src={image} alt={`Slide ${index}`} className="hover:drop-shadow-2xl" />
+                <img src={image} alt={`Slide ${index}`} className="hover:drop-shadow-2xl w-full" />
               </Fragment>
             ))}
           </Slider>
-          </div>
+          
         </Fragment>
       );
     

@@ -6,7 +6,7 @@ interface PanelProps{
 }
 function Panel({children, name}:PanelProps){
     
-    return <div className="p-2.5 m-4 bg-blue-200 rounded-xl">
+    return <div className="p-2.5 m-4 bg-blue-200 rounded-xl relative">
         <div>{name}</div>
         <hr className=" border border-black " />
         {children}

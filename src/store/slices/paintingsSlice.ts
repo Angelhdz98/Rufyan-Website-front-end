@@ -1,5 +1,5 @@
 import { createSlice} from '@reduxjs/toolkit';
-import { Painting, Product } from '../../types/typesIndex';
+import { Painting} from '../../types/typesIndex';
 import { fetchFavPaintings } from '../thunks/fetchFavPaintings';
 import obra2 from "../../assets/Images/imgObras/obra2.jpg"
 import obra3 from "../../assets/Images/imgObras/obra3.jpg"
@@ -8,11 +8,7 @@ import obra5 from "../../assets/Images/imgObras/obra5.png"
 import obra6 from "../../assets/Images/imgObras/obra6.png"
 import obra7 from "../../assets/Images/imgObras/obra7.png"
 
-export interface ProductState {
-  data: Product[];
-  isLoading: boolean;
-  error: string | null;
-}
+
 interface PaintingsState {
   data: Painting[];
   isLoading: boolean;
@@ -41,7 +37,9 @@ const initialState: PaintingsState = {
         certificate_of_authenticity: true,
         original_availability: false,
         available_copies: 2,
-        copies_made: 8
+        copies_made: 8,
+        copy_price:300,
+
       }
     },
     {
@@ -64,7 +62,8 @@ const initialState: PaintingsState = {
         "certificate_of_authenticity": true,
         "original_availability": true,
         "available_copies": 4,
-        "copies_made": 12
+        "copies_made": 12,
+        copy_price:300,
       }
     },
     {
@@ -257,8 +256,8 @@ const initialState: PaintingsState = {
   error: null,
 };
 
-const productsSlice = createSlice({
-  name: 'products',
+const paintingsSlice = createSlice({
+  name: 'paintings',
   initialState,
   reducers:{
     addPainting: (state, action) =>{
@@ -281,4 +280,4 @@ const productsSlice = createSlice({
 });
 
 
-export const productsReducer =productsSlice.reducer;
+export const paintingsReducer =paintingsSlice.reducer;

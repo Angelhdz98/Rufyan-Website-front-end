@@ -25,10 +25,10 @@ function Button ({children,
     ...rest 
 }:buttonProps){
       
-const finalClassName = className(rest.className, 'flex items-center px-3 py-1.5 border border-[3px]', {
+const finalClassName = className(rest.className, 'flex items-center px-2 border border-[3px]', {
     "border-[#C04D2A] bg-[#EBAF9D]/[.70] text-[#8B351C] font-bold" : primary,
     "border-[#D67254] bg-[#D67254] text-white font-bold" : secondary,
-    "border-green-500 bg-green-500 text-white" : success,
+    "border-[#1D6720] bg-[#1D6720] text-white" : success,
     "border-yellow-500 bg-yellow-500 text-white" : warning,
     "border-red-500 bg-red-500 text-white" : danger,
     "rounded-xl": rounded,
