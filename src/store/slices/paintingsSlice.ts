@@ -1,20 +1,23 @@
 import { createSlice} from '@reduxjs/toolkit';
 import { Painting} from '../../types/typesIndex';
 import { fetchFavPaintings } from '../thunks/fetchFavPaintings';
-import obra2 from "../../assets/Images/imgObras/obra2.jpg"
+/**
+ * import obra2 from "../../assets/Images/imgObras/obra2.jpg"
 import obra3 from "../../assets/Images/imgObras/obra3.jpg"
 import obra4 from "../../assets/Images/imgObras/obra4.png"
 import obra5 from "../../assets/Images/imgObras/obra5.png"
 import obra6 from "../../assets/Images/imgObras/obra6.png"
 import obra7 from "../../assets/Images/imgObras/obra7.png"
+*/
 
-
-interface PaintingsState {
+export interface PaintingsState {
   data: Painting[];
   isLoading: boolean;
   error: string|null;
   
 }
+
+/**
 const initialState: PaintingsState = {
   data:  [
     {
@@ -254,8 +257,13 @@ const initialState: PaintingsState = {
   ],
   isLoading: false,
   error: null,
-};
-
+}; //hecho para pruebas
+ */
+ const initialState:PaintingsState ={
+  data:[],
+  isLoading: false,
+  error: null,
+} 
 const paintingsSlice = createSlice({
   name: 'paintings',
   initialState,
@@ -267,6 +275,7 @@ const paintingsSlice = createSlice({
   extraReducers(builder){
     builder.addCase(fetchFavPaintings.pending, (state)=>{
       state.isLoading=true;
+      state.error=null;
     });
     builder.addCase(fetchFavPaintings.fulfilled, (state, action)=>{
       state.isLoading=false;
@@ -274,7 +283,7 @@ const paintingsSlice = createSlice({
     })
     builder.addCase(fetchFavPaintings.rejected, (state, action)=>{
       state.isLoading=false;
-      state.error = action.error.message||'Failed to fetch Paintings';
+      state.error = action.payload as string;
     })
   },
 });

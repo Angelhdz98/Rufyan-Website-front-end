@@ -1,14 +1,14 @@
 /* Esta Slice tiene que ser cambiado por un fetch filtrado por los productos favoritos 
 *
  */
-import { Product } from "../../types/typesIndex";
+import { Image, Product } from "../../types/typesIndex";
 
 import { createSlice } from "@reduxjs/toolkit";
-import tShirt from "../../assets/Images/productos/t-shirt.png";
-import print from "../../assets/Images/productos/print.png";
-import sticker from "../../assets/Images/productos/sticker.png"
-import bag from "../../assets/Images/productos/bag.png"
-import embriodery from "../../assets/Images/productos/handmade-embriodery.png"
+import tShirt from "../../../public/assets/Images/productos/t-shirt.png";
+import print from "../../../public/assets/Images/productos/print.png";
+import sticker from "../../../public/assets/Images/productos/sticker.png"
+import bag from "../../../public/assets/Images/productos/bag.png"
+import embriodery from "../../../public/assets/Images/productos/handmade-embriodery.png"
 
 
 
@@ -18,6 +18,36 @@ export interface ProductState {
     isLoading: boolean;
     error: string | null;
   }
+const  imagenTshirt:Image =
+{
+  id:12,  
+  url:tShirt,
+}
+const  imagenPrint:Image =
+{
+  id:13,  
+  url:print,
+}
+const  imagenSticker:Image =
+{
+  id:14,  
+  url:sticker,
+}
+const  imagenBag:Image =
+{
+  id:15,  
+  url:bag,
+}
+const  imagenEmbriodery:Image =
+{
+  id:14,  
+  url:embriodery,
+}
+
+
+
+
+
 
 const otherProductInitialState:ProductState = {
    data:[{
@@ -26,10 +56,9 @@ const otherProductInitialState:ProductState = {
     description: 'Cotton t-shirt with R graffiti tag',
     price: 500,
     category: "clothes",
-    dateCreated: "5 di mayo",
+    creation_date: "5 di mayo",
     userId: 0,
-    images: [tShirt],
-    specific_attributes: 0,
+    image: [imagenTshirt]
    },
    {
     id: 2,
@@ -37,10 +66,9 @@ const otherProductInitialState:ProductState = {
     description: 'Digital printart Redisign from a landscape',
     price: 500,
     category: "digital prints",
-    dateCreated: "january/12/2020 ",
+    creation_date: "january/12/2020 ",
     userId: 0,
-    images: [print],
-    specific_attributes: 0,
+    image: [imagenPrint],
    },
    {
     id: 3,
@@ -48,10 +76,9 @@ const otherProductInitialState:ProductState = {
     description: 'Sticker shiny ',
     price: 50,
     category: "sticker",
-    dateCreated: "october/12/2020 ",
+    creation_date: "october/12/2020 ",
     userId: 0,
-    images: [sticker],
-    specific_attributes: 0,
+    image: [imagenSticker],
    },
    {
     id: 4,
@@ -59,21 +86,20 @@ const otherProductInitialState:ProductState = {
     description: 'tote bag with art inspired on the street culture',
     price: 200,
     category: "digital prints",
-    dateCreated: "june/12/2020 ",
+    creation_date: "june/12/2020 ",
     userId: 0,
-    images: [bag],
-    specific_attributes: 0,
-   },
+    image: [imagenBag],
+       },
    {
     id: 5,
     name: 'Roots in base',
     description: 'Handmade embriodery',
     price: 500,
     category: "embriodery",
-    dateCreated: "january/12/2023 ",
+    creation_date: "january/12/2023 ",
     userId: 0,
-    images: [embriodery],
-    specific_attributes: 0,
+    image: [imagenEmbriodery],
+    
    },
 
    ],

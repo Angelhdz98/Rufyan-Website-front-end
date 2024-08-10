@@ -37,14 +37,14 @@ function PaintLabel({paint, clicked, isVisible }:PaintLabelProps) {
             <span className="font-bold">{paint.name}</span>
         </div>
         <p className="text-xs">
-            <span  >Technique:</span> <span>{paint.specific_attributes.medium}</span>  <br />
+            <span  >Technique:</span> <span>{paint.medium}</span>  <br />
             <span>
-            Measures: { paint.specific_attributes.dimensions[0]} x {paint.specific_attributes.dimensions[1]} 
+            Measures: { paint.largo_cm} x {paint.altura_cm} 
             </span> 
             <br />
             <span>Description: </span> <span>{paint.description}</span> 
             <br />
-            {paint.specific_attributes.copy_price && (<Fragment><span>Price Per Copy: </span> <span>{paint.specific_attributes.copy_price}</span> <br /> </Fragment>
+            {paint.price_copy && (<Fragment><span>Price Per Copy: </span> <span>{paint.price_copy}</span> <br /> </Fragment>
                 ) } 
         </p>
         {clicked ? botoneraObra(): <div className="flex flex-row place-self-center mt-1"><BiDownArrow className="text-[#CB3235]"/></div>  }

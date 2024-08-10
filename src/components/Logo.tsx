@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import logoprovisionalRufyan from "../assets/Images/logos/logoprovisionalRufyan.png"
+import logoprovisionalRufyan from "../../public/assets/Images/logos/logoprovisionalRufyan.png"
 import classNames from "classnames";
 import { LinkProps } from "react-router-dom";
 

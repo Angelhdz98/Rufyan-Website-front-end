@@ -1,15 +1,29 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
-import { Product } from "../../types/typesIndex";
+import { Painting } from "../../types/typesIndex";
+//import { PaintingsState } from "../slices/paintingsSlice";
+//import { Product } from "../../types/typesIndex";
 
 
-const fetchFavPaintings= createAsyncThunk('prodcucts/fetchFavPaintings', 
+const fetchFavPaintings = createAsyncThunk('products/fetchFavPaintings', 
     async () =>{
-    const response = await axios.get('http://localhost:3001/products');
+       // try{
+    const response = await axios.get('http://localhost:8080/paintings/favorites');
+    
     // dev only
-    await pause(1000);
-    return response.data.filter((product:Product )=>{
-         product.category ==='painting' && product.favorite===true});
+    
+   // await pause(1000);
+    //console.log(response);
+    const data = response.data.map((paint:Painting)=>({
+        ...paint,
+        creation_date: 'fecha',
+    }));
+    //console.log(data);
+    return  data;
+//} catch(error:any){
+//    return thunkApi.rejectWithValue(error.response.data);
+//}
+
 });
 
 const  pause = (duration:number) =>{
@@ -19,6 +33,8 @@ const  pause = (duration:number) =>{
     };
 
 //Dev only 
+
+ 
 
 
 

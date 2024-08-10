@@ -1,4 +1,4 @@
-import { createBrowserRouter, RouterProvider } from "react-router-dom"
+import { createBrowserRouter, LoaderFunction, RouterProvider } from "react-router-dom"
 import HomePage from "./pages/home/HomePage";
 import AboutRufyanPage from "./pages/aboutRufyan/AboutRufyanPage";
 import CommitmentPage from "./pages/Commitment/CommitmentPage";
@@ -7,10 +7,15 @@ import Root from "./pages/Root";
 import StorePage from "./pages/galleryStore/StorePage";
 import ProjectsPage from "./pages/artProjects/ProjectsPage";
 import ShipmentPage from "./pages/shipment/ShipmentPage";
+import store, { fetchFavPaintings } from "./store";
+import ControlPanel from "./pages/ControlPanel/ControlPanel";
 //import { homeLoader } from "./pages/home/homeLoader";
 //import store from "./store";
 
-
+const homeLoader:LoaderFunction = async () =>{
+  await store.dispatch(fetchFavPaintings());
+  return null;
+}
 
 const router= createBrowserRouter([
 {
@@ -20,6 +25,7 @@ const router= createBrowserRouter([
     {
       index: true,
       element:<HomePage/>,
+      loader:homeLoader,
       
     },
     {path:'/aboutRufyan',
@@ -40,6 +46,9 @@ const router= createBrowserRouter([
     {path:'/shipment',
     element: <ShipmentPage/>
     },
+    {path:'/admin',
+      element:<ControlPanel/>
+    }
   ]
 }
 ])

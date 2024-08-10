@@ -6,7 +6,11 @@ export interface User {
     role: string;
     products: Product[];
   }
-  
+  export interface Image{
+    id: number,
+    url: string
+  }
+
   export interface Product {
     id: number;
     name: string;
@@ -14,10 +18,10 @@ export interface User {
     price: number;
     category: string;
     favorite?:boolean,
-    dateCreated: string;
+    creation_date: string;
     userId: number;
-    images: string[];
-    specific_attributes: any; // Puedes definir tipos más específicos según tus necesidades
+    image: Image[];
+    //specific_attributes: any; // Puedes definir tipos más específicos según tus necesidades
   }
 
   export interface Painting extends Product  {
@@ -29,25 +33,25 @@ export interface User {
     favorite?: boolean;
     dateCreated: string;
     userId: number;
-    images: string[];*/ 
-    specific_attributes: {
-      dimensions:number[]
-      medium:string;
-      support_material: string;
+    images: string[];//Estos atributos son heredados de product*/ 
+      largo_cm:number,
+      altura_cm:number,
+      medium:String;
+      support_material: String;
       certificate_of_authenticity: boolean;
       original_availability: boolean;
-      copy_price?: number,
+      price_copy?: number,
       available_copies: number;
       copies_made: number;
       
-    }
+    
   }
 
 
   export interface Project {
     id: number;
     title: string; 
-    date: Date;
+    date: string;
     collaborator?: string;
     description?: string;
     images: string[],

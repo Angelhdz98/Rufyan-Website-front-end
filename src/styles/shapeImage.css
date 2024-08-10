@@ -1,0 +1,6 @@
+.shape-image {
+    float: left;
+    shape-outside: circle(50%);
+    /*clip-path: circle(50%);
+  */
+    }

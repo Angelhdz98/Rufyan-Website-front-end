@@ -1,8 +1,8 @@
 
 import Slider from "react-slick";
-import imagen1 from "../assets/Images/Imagen1-BannerProjects.png"
-import imagen2 from "../assets/Images/Imagen2-Banner-obras.png"
-import imagen3 from "../assets/Images/Imagen3-bannerObras.png"
+import imagen1 from "../../public/assets/Images/Imagen1-BannerProjects.png"
+import imagen2 from "../../public/assets/Images/Imagen2-Banner-obras.png"
+import imagen3 from "../../public/assets/Images/Imagen3-bannerObras.png"
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import { Settings } from "react-slick";

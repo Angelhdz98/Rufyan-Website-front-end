@@ -4,8 +4,10 @@ import { CiMail } from "react-icons/ci";
 
 
 function DevBanner(){
-    return <div className="flex flex-row items-center w-auto bg-black justify-between px-5 py-.5">
-        <div className="text-white text-lg">Website Designed and created by: José Ángel H.</div>
+    return <div className="flex flex-row items-center w-full bg-black justify-between px-5 py-.5  bottom-0">
+        <div className="text-white text-lg">
+            Website Designed and created by: José Ángel H.
+            </div>
         <div className="flex flex-row items-center">
             <a href="https://www.linkedin.com/in/jose-angel-hernandez-torres98/">
                 <FaLinkedin  size={24} color="white" />

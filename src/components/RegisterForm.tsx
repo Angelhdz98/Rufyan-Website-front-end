@@ -12,6 +12,7 @@ export interface FormInputProps  {
     value: string;
     onChange: (e: React.ChangeEvent<HTMLInputElement>) => void
     className?: string;
+    labelClassname?:string;
     children:string;
 
 
