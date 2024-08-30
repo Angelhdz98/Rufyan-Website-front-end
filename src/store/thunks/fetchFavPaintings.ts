@@ -5,8 +5,7 @@ import { Painting } from "../../types/typesIndex";
 //import { Product } from "../../types/typesIndex";
 
 
-const fetchFavPaintings = createAsyncThunk('products/fetchFavPaintings', 
-    async () =>{
+const fetchFavPaintings = createAsyncThunk('products/fetchFavPaintings', async () =>{
        // try{
     const response = await axios.get('http://localhost:8080/paintings/favorites');
     
@@ -25,18 +24,17 @@ const fetchFavPaintings = createAsyncThunk('products/fetchFavPaintings',
 //}
 
 });
-
+/*
 const  pause = (duration:number) =>{
     return new Promise((resolve)=>{
     setTimeout(resolve, duration);
     });
     };
-
+*/
 //Dev only 
 
  
 
 
 
-export {fetchFavPaintings}
-;
+export {fetchFavPaintings};

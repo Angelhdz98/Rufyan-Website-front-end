@@ -5,18 +5,24 @@
 //  import { useDispatch } from "react-redux";
 //  import { AppDispatch, fetchFavPaintings } from "../store";
 import { useSelector } from "react-redux";
-import { RootState } from "../store";
+import { AppDispatch, fetchFavPaintings, RootState } from "../store";
 import Button from "./Button";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import FavoritePaint from "./FavoritePaint";
 import Masonry from "react-masonry-css";
+import { LoadingPaint } from "./LoadingPaint";
+import { useDispatch } from "react-redux";
 
 function FavoritePaints() {
-
-  const paintings = useSelector((state: RootState) => state.paintings.data);
+  const dispatch = useDispatch<AppDispatch>();
+  const {data, isLoading, error} = useSelector((state: RootState)=> state.paintings);
 
   const [visibleLabels, setVisibleLabels] = useState<Record<number, boolean>>({})
   const [clickedPaints, setClickedPaints] = useState<Record<number, boolean>>({});
+ useEffect(( ) => {
+  dispatch(fetchFavPaintings());
+ }, [dispatch])
+ 
   const handleMouseEnter = (id: number) => {
     setVisibleLabels((prev) => ({ ...prev, [id]: true }))
   };
@@ -29,16 +35,19 @@ function FavoritePaints() {
     setClickedPaints((prev) => ({ ...prev, [id]: !prev[id] }));
   };
 
-  const renderedFavPaints = paintings.map((fp) => {
+  const renderedFavPaints =  data.map((fp) => {
     const isVisible = (visibleLabels[fp.id] || clickedPaints[fp.id]);
     return <FavoritePaint
+      
       key={fp.id}
       paint={fp}
       clicked={clickedPaints[fp.id]}
       isVisible={isVisible}
       onMouseEnter={() => handleMouseEnter(fp.id)}
       onMouseLeave={() => handleMouseLeave(fp.id)}
-      onClick={() => handleClick(fp.id)} />
+      onClick={() => handleClick(fp.id)} 
+      isLoading={isLoading} />
+
   })
   const breakpoints = {
     default: 4,
