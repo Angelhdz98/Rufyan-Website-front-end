@@ -6,7 +6,7 @@ function Navegacion() {
     const links = [{label: "Editar catalogo", path: "/admin/edit"},
                     {label: "Agregar un producto", path: "/admin/addProduct"},
                     {label: "Agregar un evento", path: "/admin/addEvent"},
-                    {label: "agregar una obra", path: "/admin/addPainting"},
+                    {label: "agregar una obra", path: "/admin"},
     ];
     const renderedLinks = links.map((link)=>{
 

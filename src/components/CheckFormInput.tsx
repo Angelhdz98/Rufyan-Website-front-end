@@ -5,7 +5,8 @@ export interface CheckFormInputProps  {
     type: string;
     name: string;
     checked: boolean;
-    onClick: (e: React.MouseEvent<HTMLInputElement>) => void
+    onClick?: (e: React.MouseEvent<HTMLInputElement>) => void;
+    onChange?: (e: React.ChangeEvent<HTMLInputElement>)=> void;
     className?: string;
     labelClassname?:string;
     children:string;
@@ -13,14 +14,15 @@ export interface CheckFormInputProps  {
 
 
 }
-function CheckFormInput({type, name, checked, className, children, labelClassname, onClick}:CheckFormInputProps){
+function CheckFormInput({type, name, checked, className, children, labelClassname, onChange}:CheckFormInputProps){
     return <Fragment >
     <label className={classNames("block text-gray-700", labelClassname,{})}>{children}</label>
     <input
       type={type}
       name={name} 
       checked={checked}
-      onClick={onClick}
+      onChange={onChange}
+    
       //onChange={onChange}
       className={classNames("w-full max p-2 border  border-gray-300 rounded mt-1 h-8", className,{})}
     />

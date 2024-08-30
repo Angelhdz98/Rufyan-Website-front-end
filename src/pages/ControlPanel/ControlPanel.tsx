@@ -24,7 +24,7 @@ function ControlPanel(){
             <Route path="/admin/addEvent">
                 <AddEventForm/>
             </Route>
-            <Route path="/admin/addPainting">
+            <Route path="/admin">
                 <AddPaintingForm/>
             </Route>
             
