@@ -1,6 +1,7 @@
 import { createSlice} from '@reduxjs/toolkit';
 import { Painting} from '../../types/typesIndex';
 import { fetchFavPaintings } from '../thunks/fetchFavPaintings';
+import { addPainting } from '../thunks/addPainting';
 /**
  * import obra2 from "../../assets/Images/imgObras/obra2.jpg"
 import obra3 from "../../assets/Images/imgObras/obra3.jpg"
@@ -268,9 +269,7 @@ const paintingsSlice = createSlice({
   name: 'paintings',
   initialState,
   reducers:{
-    addPainting: (state, action) =>{
-      state.data.push(action.payload)
-    }
+    
   },
   extraReducers(builder){
     builder.addCase(fetchFavPaintings.pending, (state)=>{
@@ -280,13 +279,28 @@ const paintingsSlice = createSlice({
     builder.addCase(fetchFavPaintings.fulfilled, (state, action)=>{
       state.isLoading=false;
       state.data= action.payload;
-    })
+    });
     builder.addCase(fetchFavPaintings.rejected, (state, action)=>{
       state.isLoading=false;
       state.error = action.payload as string;
+    });
+
+    builder.addCase(addPainting.pending, (state)=>{
+      state.isLoading=true;
+      state.error=null;
+    });
+    builder.addCase(addPainting.fulfilled, (state, action)=>{
+      state.isLoading=false;
+      state.data= action.payload;
     })
+    builder.addCase(addPainting.rejected, (state, action)=>{
+      state.isLoading=false;
+      state.error = action.payload as string;
+    })
+
   },
 });
 
 
 export const paintingsReducer =paintingsSlice.reducer;
+

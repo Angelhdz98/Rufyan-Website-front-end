@@ -12,11 +12,12 @@ import ControlPanel from "./pages/ControlPanel/ControlPanel";
 //import { homeLoader } from "./pages/home/homeLoader";
 //import store from "./store";
 
+/*
 const homeLoader:LoaderFunction = async () =>{
   await store.dispatch(fetchFavPaintings());
   return null;
 }
-
+*/
 const router= createBrowserRouter([
 {
   path: '/',
@@ -25,7 +26,7 @@ const router= createBrowserRouter([
     {
       index: true,
       element:<HomePage/>,
-      loader:homeLoader,
+      
       
     },
     {path:'/aboutRufyan',

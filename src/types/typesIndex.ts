@@ -6,9 +6,13 @@ export interface User {
     role: string;
     products: Product[];
   }
-  export interface Image{
-    id: number,
-    url: string
+  export interface ImageProduct{
+    id: number;
+    productName: string;
+    url:string;
+  
+    
+    
   }
 
   export interface Product {
@@ -20,7 +24,7 @@ export interface User {
     favorite?:boolean,
     creation_date: string;
     userId: number;
-    image: Image[];
+    image: ImageProduct[];
     //specific_attributes: any; // Puedes definir tipos más específicos según tus necesidades
   }
 

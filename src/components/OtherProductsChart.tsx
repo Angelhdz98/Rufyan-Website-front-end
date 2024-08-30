@@ -9,7 +9,7 @@ function OtherProductsChart() {
     const renderendProducts = products.map((product) => {
         return <div key={product.name} className="h-[250px] rounded-lg overflow-hidden drop-shadow-lg">
             <div className="h-[55%] w-full ">
-                <img className="h-full w-full " src={product.image[0].url} alt="" />
+                <img className="h-full w-full " src={product.image[0].data} alt="" />
             </div>
             
             <ProductLabel className="h-[45%] mb-0" product={product} />

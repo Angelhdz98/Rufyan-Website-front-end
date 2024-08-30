@@ -1,7 +1,7 @@
 /* Esta Slice tiene que ser cambiado por un fetch filtrado por los productos favoritos 
 *
  */
-import { Image, Product } from "../../types/typesIndex";
+import { ImageProduct, Product } from "../../types/typesIndex";
 
 import { createSlice } from "@reduxjs/toolkit";
 import tShirt from "../../../public/assets/Images/productos/t-shirt.png";
@@ -18,30 +18,36 @@ export interface ProductState {
     isLoading: boolean;
     error: string | null;
   }
-const  imagenTshirt:Image =
+  
+const  imagenTshirt:ImageProduct =
 {
   id:12,  
-  url:tShirt,
+  productName: "t-shirt",
+  url: URL.createObjectURL(new Blob([tShirt])),
 }
-const  imagenPrint:Image =
+const  imagenPrint:ImageProduct =
 {
-  id:13,  
-  url:print,
+  id:13,
+  productName:"print",  
+  url: URL.createObjectURL(new Blob([print]))
 }
-const  imagenSticker:Image =
+const  imagenSticker:ImageProduct =
 {
   id:14,  
-  url:sticker,
+  productName:"sticker",
+  url: URL.createObjectURL(new Blob([sticker]))
 }
-const  imagenBag:Image =
+const  imagenBag:ImageProduct =
 {
   id:15,  
-  url:bag,
+  productName:"bag",
+  url: URL.createObjectURL(new Blob([bag]))
 }
-const  imagenEmbriodery:Image =
+const  imagenEmbriodery:ImageProduct =
 {
   id:14,  
-  url:embriodery,
+  productName:"embriodery",
+  url: URL.createObjectURL(new Blob([embriodery]))
 }
 
 
@@ -115,6 +121,7 @@ const otherProductSlice = createSlice({
         addProduct: (state, action) =>{
           state.data.push(action.payload)
         }
+
       },
       extraReducers(){
         //builder.addCase //Here I will add the reducers of fetching

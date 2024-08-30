@@ -5,14 +5,26 @@
     body{
         background-color: white;
     }
-    .slick-prev:before, .slick-next:before{
-        color: black
-    }
+
 }
 
-.slick-slide > div {
-    
-}
+
+.slick {
+    .slick-track {
+      display: flex;
+  
+      .slick-slide {
+        display: flex;
+        height: auto;
+  
+        img {
+          height: 100%;
+          object-fit: cover;
+          object-position: center;
+        }
+      }
+    }
+  }
 
 @import './styles/styleBurguerMenu.css'
 
