@@ -1,15 +1,15 @@
 import FormInput from "../../components/FormInput";
-import { ImageProduct } from "../../types/typesIndex";
-import { useState } from "react";
-import ImageUploader from "./ImageUploader";
 import CheckFormInput from "../../components/CheckFormInput";
 import Button from "../../components/Button";
 import { useDispatch } from "react-redux";
 import {  addImage, AppDispatch, RootState, updateForm } from "../../store";
 import { addPainting } from "../../store/thunks/addPainting";
 import { useSelector } from "react-redux";
-import { convertBlobToBase64 } from "../../store/thunks/convertBlobToBase64";
-
+import { FaTrashAlt } from "react-icons/fa";
+import { deleteImage } from "../../store/slices/formPaintingSlice";
+import { ImageProduct } from "../../types/typesIndex";
+import { FaCloudUploadAlt } from "react-icons/fa";
+import { FaRegCheckCircle } from "react-icons/fa";
 
 export interface PaintingFormProps {
     
@@ -27,7 +27,7 @@ export interface PaintingFormProps {
   support_material: string;
   medium: string;
   image: File[];
-  previewImages: string[];
+  
 };
 
 
@@ -83,7 +83,7 @@ function AddPaintingForm() {
     })
 
     
-    console.log(form);
+    
     dispatch(addPainting(form));
     
 
@@ -97,6 +97,7 @@ function AddPaintingForm() {
   };
 
   const handleImageUpload =  (e: React.ChangeEvent<HTMLInputElement>) =>{
+    e.preventDefault();
     const files = e.target.files;
     if (files){
       const selectedFiles = Array.from(files);
@@ -106,14 +107,50 @@ function AddPaintingForm() {
 
     
     };
+
+    const deleteImageUpload = (name:string) =>{
+
+      dispatch(deleteImage(name));
+      
+
+    }
   
-    
+
   
-  
+    const renderedImages = formData.image.map((img: File, index)=>{
+            if(img != null && img instanceof File ){  
+        return <div className="relative" key={index}>
+            <img className="h-full w-full object-cover" src={URL.createObjectURL(img)} key={index} alt="" />
+            <div className="flex h-full w-full opacity-0 hover:opacity-85 absolute left-0 top-0 bg-slate-300 place-content-center items-center ">
+            <FaTrashAlt className="text-3xl" onClick={()=>deleteImageUpload(img.name)} />
+              </div>
+            </div>
+      }
+      else  {
+        const imageProduct = img as ImageProduct;
+
+        return <div className="relative w-full h-full object-cover" key={index} >
+            <div className="flex justify-center items-center absolute top-0 left-0 w-full z-10 bg-green-600 opacity-75">
+            <FaCloudUploadAlt className="text-xl" /><FaRegCheckCircle />
+            </div>
+           <img className="object-cover h-full w-full" src={`http://localhost:8080${imageProduct.url}`} alt="" />          
+        </div>
+      }
+      
+    })
+
+
+  /*
   const  renderedImages = formData.previewImages?.map((previewImg, index)=>{
 
-    return <img src={previewImg} key={index} alt="" />
+    return <div className="relative">
+            <img className="h-full w-full object-cover" src={previewImg} key={index} alt="" />
+            <div className="flex h-full w-full opacity-0 hover:opacity-85 absolute left-0 top-0 bg-slate-300 place-content-center items-center ">
+            <FaTrashAlt className="text-3xl" onClick={()=>deleteImageUpload(previewImg.)} />
+              </div>
+            </div>
   })
+            */
 
 /*  const handleImageUpload = (uploadedImages: string[]) => {
 

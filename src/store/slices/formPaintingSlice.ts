@@ -4,6 +4,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { PaintingFormProps } from "../../pages/ControlPanel/AddPaintingForm";
 import { addPainting } from "../thunks/addPainting";
 
+
 interface formDataPainting {
     data: PaintingFormProps
     isLoading: boolean,
@@ -26,7 +27,7 @@ const initialState: formDataPainting = {
         support_material: '',
         medium: '',
         image: [],
-        previewImages: []
+        
     },
     isLoading: false,
     error: null,
@@ -41,8 +42,19 @@ const formPaintingSlice = createSlice({
         },
         addImage:(state, action: PayloadAction<File[]>) => {
             state.data.image =[...action.payload]
-            state.data.previewImages = action.payload.map(file=>URL.createObjectURL(file));
-        }
+            //state.data.previewImages = action.payload.map(file=>URL.createObjectURL(file));
+        },
+        deleteImage:(state, action: PayloadAction<string>) => {
+            const updated= state.data.image.filter((img)=>{
+                return img.name != action.payload
+            })
+
+            state.data.image=updated
+            
+           // state.data.previewImages = state.data.image.map(file=>URL.createObjectURL(file));
+        },
+       
+
     },
     extraReducers(builder){
         
@@ -65,4 +77,4 @@ const formPaintingSlice = createSlice({
 })
 
 export const formPaintingReducer = formPaintingSlice.reducer;
-export const {updateForm, addImage} = formPaintingSlice.actions;
+export const {updateForm, addImage, deleteImage} = formPaintingSlice.actions;
