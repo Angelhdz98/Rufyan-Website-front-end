@@ -13,7 +13,7 @@ export interface HomeLoaderResult {
 export const  homeLoader:LoaderFunction= async () => {
 
    const result= await axios.get('http://localhost:3001/products') as HomeLoaderResult;
-   console.log(result.resultFavPaintings)
+   //console.log(result.resultFavPaintings)
    return result.resultFavPaintings
 
 

@@ -1,6 +1,7 @@
 import { createSlice} from '@reduxjs/toolkit';
 import { Painting} from '../../types/typesIndex';
 import { fetchFavPaintings } from '../thunks/fetchFavPaintings';
+import { fetchPaintings } from '../thunks/fetchPaintings';
 import { addPainting } from '../thunks/addPainting';
 /**
  * import obra2 from "../../assets/Images/imgObras/obra2.jpg"
@@ -285,6 +286,18 @@ const paintingsSlice = createSlice({
       state.error = action.payload as string;
     });
 
+    builder.addCase(fetchPaintings.pending, (state)=>{
+      state.isLoading=true;
+      state.error=null;
+    });
+    builder.addCase(fetchPaintings.fulfilled, (state, action)=>{
+      state.isLoading=false;
+      state.data= action.payload;
+    });
+    builder.addCase(fetchPaintings.rejected, (state, action)=>{
+      state.isLoading=false;
+      state.error = action.payload as string;
+    });
     builder.addCase(addPainting.pending, (state)=>{
       state.isLoading=true;
       state.error=null;

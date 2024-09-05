@@ -17,6 +17,7 @@ const store = configureStore({
 export type RootState  = ReturnType<typeof store.getState>
 export type AppDispatch = typeof store.dispatch;
 export * from './thunks/fetchFavPaintings'
+export * from './thunks/fetchPaintings'
 export * from './thunks/addPainting'
 export {updateForm, addImage}
 
