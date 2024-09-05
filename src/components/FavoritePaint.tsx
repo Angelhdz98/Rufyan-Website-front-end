@@ -1,5 +1,5 @@
 import PaintLabel from "./PaintLabel"
-import ImgSlider from "./ImgSlider"
+
 import { Painting } from "../types/typesIndex"
 import { LoadingPaint } from "./LoadingPaint";
 import { useEffect } from "react";

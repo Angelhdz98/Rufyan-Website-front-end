@@ -78,7 +78,7 @@ import className from "classnames"
     return <div className="h-[650px]" > 
     
     <SliderImgOpacity   src={`../../../public/assets/Images/imgObras/${selectedImage}`}
-                        loading="eager" 
+                        loading="lazy" 
                         className={className('h-[95%] object-cover',loaded? "loaded":"",{}) } 
                         onLoad={()=>setLoaded(true)} />
         <button onClick={previous}>{"<"}</button>

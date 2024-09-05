@@ -7,7 +7,7 @@ import { Swiper, SwiperSlide } from "swiper/react"
  }
 
 
- function SwiperProducts( children){
+ function SwiperProducts(){
 
     
     const renderedProducts = children.map((product)=>{
