@@ -26,6 +26,7 @@ function SwiperSlider(props:SwiperSliderProps){
 
     const nextSlide = ()=>{
         setLoaded(false);
+
         if(selectedIndex < props.images.length-1){
             
             setSelectedIndex(selectedIndex+1);
@@ -40,6 +41,7 @@ function SwiperSlider(props:SwiperSliderProps){
     }
     const prevSlide = ()=>{
         setLoaded(false);
+
         if(selectedIndex == 0){
             setSelectedIndex(props.images.length-1);
         }else {
@@ -62,7 +64,8 @@ function SwiperSlider(props:SwiperSliderProps){
                     alt={image.productName}
                     loading="lazy"
                     onLoadedData={() =>loadedHandler()}
-                    className={(selectedIndex==index? "":"hidden ") + (loaded?" opacity-100 " : " ") +" object-cover   h-full   "} />
+                    className={(selectedIndex==index?"":"hidden ") + (loaded?" opacity-100 " : "  ") +" object-cover  rounded-lg h-full   "} />
+                    <div className="swiper-lazy-preloader swiper-lazy-preloader-white"></div>
             
             </SwiperSlide>
     })

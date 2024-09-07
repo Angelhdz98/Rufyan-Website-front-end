@@ -8,6 +8,13 @@
 
 }
 
+.previewImageSlider .swiper-pagination {
+  position: static;
+}
+
+.swiper-pagination-bullet-active {
+  
+}
 
 .slick {
     .slick-track {

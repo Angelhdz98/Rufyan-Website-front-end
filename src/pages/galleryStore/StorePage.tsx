@@ -1,13 +1,14 @@
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Navigation, EffectCoverflow, EffectCreative} from "swiper/modules";
+import { Pagination, EffectCoverflow, EffectCreative} from "swiper/modules";
 import { useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { AppDispatch, fetchPaintings, RootState } from "../../store";
 import { useSelector } from "react-redux";
-import FavoritePaint from "../../components/FavoritePaint";
-import SwiperSlider from "../../components/SwiperSlider";
+
 import PaintingPreview from "../../components/PaintingPreview";
 
+import 'swiper/css/pagination';
+import '../../styles.css'
 
 function StorePage(){
     
@@ -25,15 +26,19 @@ function StorePage(){
         console.log("Navegar a obra especifica")
     }
     
-    const  firstPaint = data[1];
+    
+    
+    
+
+    
     const renderedPaints = data.map((paint)=>{
         return <SwiperSlide key={paint.id}>
-          <SwiperSlider key={paint.id} images={paint.image}  />   
+          <PaintingPreview paint={paint}    />   
            </SwiperSlide> 
 
       });
     return  <div >
-      <div className="flex m-4 gap-8 h-[450px]"> 
+      <div className="flex m-4 gap-8 "> 
         <div className="w-1/3 relative flex items-center  rounded-xl overflow-hidden">
         <img className="h-full w-full "
          src={"/public/assets/Images/galeria/RufyanPainting.jpg"} 
@@ -46,14 +51,23 @@ function StorePage(){
       
         <div className="w-2/3 flex">
         {/*<SwiperProducts> </SwiperProducts>*/}
-      <Swiper navigation  
-      modules={[Navigation]}
+      <Swiper  
+      className="previewImageSlider"
+      grabCursor 
+      freeMode
+      modules={[Pagination]}
+      pagination={{
+         
+        }}
+        
       watchSlidesProgress
       spaceBetween={"20px"}
       slidesPerView={3}>
         
 
       {renderedPaints}
+
+
       </Swiper>
         
 
@@ -62,9 +76,7 @@ function StorePage(){
         </div>
 
         </div>   
-      
-      <PaintingPreview
-      paint={firstPaint}/>
+       
 
     </div>
 }
