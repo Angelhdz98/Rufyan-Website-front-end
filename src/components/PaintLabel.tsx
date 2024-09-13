@@ -2,14 +2,22 @@ import type { Painting } from "../types/typesIndex";
 import classNames from "classnames";
 import Button from "./Button";
 import { BiDownArrow } from "react-icons/bi";
-import { Fragment } from "react/jsx-runtime";
+import { Fragment } from "react/jsx-runtime"
+import BuyNowButton from "./BuyNowButton";
+import AddToCartButton from "./AddToCartButton";
 export interface PaintLabelProps{
     paint: Painting;
     hidden?: boolean;
     clicked?: boolean;
     isVisible: boolean;
 }
-
+ export const botoneraObra = ()=>{
+        return (<div className="flex flex-row justify-between ">
+            
+            <BuyNowButton/>
+            <AddToCartButton/>
+    </div>)
+    };
 
 function PaintLabel({paint, clicked, isVisible }:PaintLabelProps) {
     const finalClassname= classNames("px-2 py-4 bg-white border-t-2  border-black  flex flex-col gap-0  w-full   transition-transform duration-300   box-border ",
@@ -19,18 +27,7 @@ function PaintLabel({paint, clicked, isVisible }:PaintLabelProps) {
             
         }
         )
-    const botoneraObra = ()=>{
-        return (<div className="flex flex-row justify-between mt-2">
-        <Button primary rounded 
-        className="text-xs px-1">
-            Add to cart
-            </Button> 
-        <Button rounded secondary  
-        className="text-xs px-1">
-            Buy now
-            </Button>
-    </div>)
-    };
+
 
     return <div className={finalClassname}>
         <div>
@@ -55,4 +52,5 @@ function PaintLabel({paint, clicked, isVisible }:PaintLabelProps) {
     </div>
 }
 
-export default PaintLabel;
+
+export default PaintLabel

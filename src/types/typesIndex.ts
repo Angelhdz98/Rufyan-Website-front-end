@@ -25,6 +25,7 @@ export interface User {
     creation_date: string;
     userId: number;
     image: ImageProduct[];
+    available: boolean;
     //specific_attributes: any; // Puedes definir tipos más específicos según tus necesidades
   }
 

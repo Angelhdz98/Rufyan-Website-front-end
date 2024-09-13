@@ -60,7 +60,9 @@ function SwiperSlider(props:SwiperSliderProps){
     const slides= props.images.map((image, index)=>{
         return <SwiperSlide   key={index}   className="h-auto  ">
             {/***object-cover h-full  */}
-            <img    src={`http://localhost:8080${image.url}`}
+            {//SRC para conectar con la API
+            /*src={`http://localhost:8080${image.url}`}*/}
+            <img   src={image.url} 
                     alt={image.productName}
                     loading="lazy"
                     onLoadedData={() =>loadedHandler()}

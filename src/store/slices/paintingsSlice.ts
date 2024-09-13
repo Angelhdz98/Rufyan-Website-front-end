@@ -3,14 +3,15 @@ import { Painting} from '../../types/typesIndex';
 import { fetchFavPaintings } from '../thunks/fetchFavPaintings';
 import { fetchPaintings } from '../thunks/fetchPaintings';
 import { addPainting } from '../thunks/addPainting';
-/**
- * import obra2 from "../../assets/Images/imgObras/obra2.jpg"
-import obra3 from "../../assets/Images/imgObras/obra3.jpg"
-import obra4 from "../../assets/Images/imgObras/obra4.png"
-import obra5 from "../../assets/Images/imgObras/obra5.png"
-import obra6 from "../../assets/Images/imgObras/obra6.png"
-import obra7 from "../../assets/Images/imgObras/obra7.png"
-*/
+
+
+import obra2 from "../../../public/assets/Images/imgObras/obra2.jpg"
+import obra3 from "../../../public/assets/Images/imgObras/obra3.jpg"
+import obra4 from "../../../public/assets/Images/imgObras/obra4.png"
+import obra5 from "../../../public/assets/Images/imgObras/obra5.png"
+import obra6 from "../../../public/assets/Images/imgObras/obra6.png"
+import obra7 from "../../../public/assets/Images/imgObras/obra7.png"
+
 
 export interface PaintingsState {
   data: Painting[];
@@ -19,7 +20,7 @@ export interface PaintingsState {
   
 }
 
-/**
+ // initial state for dev testing 
 const initialState: PaintingsState = {
   data:  [
     {
@@ -29,23 +30,29 @@ const initialState: PaintingsState = {
       price: 1200.00,
       category: "painting",
       favorite:false,
-      dateCreated: "2023-05-15",
+      creation_date: "2023-05-15",
       userId: 1,
-      images: [
-        obra2,
-        obra3
+      image: [{
+        id: 1,
+        productName: "una obra fea",
+        url: obra2,
+      },
+      {id: 2,
+      productName: "una obra fea",
+       url: obra3}
       ],
-      specific_attributes: {
-        dimensions: [60,90],
+        largo_cm: 60,
+        altura_cm:90,
+        available: true,
         medium: "Óleo",
         support_material: "Lienzo",
         certificate_of_authenticity: true,
         original_availability: false,
         available_copies: 2,
         copies_made: 8,
-        copy_price:300,
+        price_copy:300,
 
-      }
+
     },
     {
       id: 8,
@@ -54,23 +61,31 @@ const initialState: PaintingsState = {
       price: 1000.00,
       category: "painting",
       favorite:true,
-      dateCreated: "2023-05-18",
+      creation_date: "2023-05-18",
       userId: 1,
-      images: [
-        obra4,
-        obra5      
+      image: [
+        {
+        id: 3,
+        productName: "Obra fea con otro nombre",
+        url: obra4},
+
+        {
+          id: 4,
+          productName: "una obra fea made by Rufyan", 
+          url: obra5}      
       ],
-      specific_attributes: {
-        dimensions: [60,90],
+        altura_cm: 60,
+        largo_cm:90,
+        available: true,
         medium: "Óleo",
         support_material: "Lienzo",
         "certificate_of_authenticity": true,
         "original_availability": true,
         "available_copies": 4,
         "copies_made": 12,
-        copy_price:300,
+        price_copy:300,
       }
-    },
+   ,
     {
       id: 17,
       name: "Graffiti Acuarela",
@@ -78,14 +93,23 @@ const initialState: PaintingsState = {
       price: 1000.00,
       category: "painting",
       favorite:true,
-      dateCreated: "2023-05-18",
+      creation_date: "2023-05-18",
       userId: 1,
-      images: [
-        obra4,
-        obra5      
-      ],
-      specific_attributes: {
-        dimensions: [60,90],
+      image: [
+        {
+          id: 5,
+          productName: "una obra en acuarela",
+          url:obra4,
+        },
+        {
+          id: 6,
+          productName: "una obra en acuarela",
+          url:obra5, 
+        }],
+      
+        altura_cm:60,
+        largo_cm:90,
+        available: true,
         medium: "Óleo",
         support_material: "Lienzo",
         "certificate_of_authenticity": true,
@@ -93,7 +117,7 @@ const initialState: PaintingsState = {
         "available_copies": 4,
         "copies_made": 12
       }
-    },
+    ,
     {
       id: 16,
       name: "Graffiti Acuarela",
@@ -101,21 +125,30 @@ const initialState: PaintingsState = {
       price: 1000.00,
       category: "painting",
       favorite:true,
-      dateCreated: "2023-05-18",
+      creation_date: "2023-05-18",
       userId: 1,
-      images: [
-        obra4,
-        obra5      
+      image: [
+        {
+          id: 7,
+          productName: "una obra en acuarela con otro nombre",
+          url:obra4, 
+        },
+        {
+          id: 8,
+          productName: "una obra en acuarela 2.0",
+          url:obra5, 
+        }
       ],
-      specific_attributes: {
-        dimensions: [60,90],
+        altura_cm:60,
+        largo_cm:90,
+        available: true,
         medium: "Óleo",
         support_material: "Lienzo",
-        "certificate_of_authenticity": true,
-        "original_availability": true,
-        "available_copies": 4,
-        "copies_made": 12
-      }
+        certificate_of_authenticity: true,
+        original_availability: true,
+        available_copies: 4,
+        copies_made: 12
+     
     },
     {
       id: 15,
@@ -124,21 +157,33 @@ const initialState: PaintingsState = {
       price: 1000.00,
       category: "painting",
       favorite:true,
-      dateCreated: "2023-05-18",
+      creation_date: "2023-05-18",
       userId: 1,
-      images: [
-        obra4,
-        obra5      
+      image: [
+        {
+          id: 9,
+          productName: "una obra en acuarela",
+          url:obra6, 
+        },
+        {
+          id: 10,
+          productName: "una obra en acuarela",
+          url:obra7, 
+        },
+        
+        
+      
       ],
-      specific_attributes: {
-        dimensions: [60,90],
+        available:true,
+        altura_cm:60,
+        largo_cm:90,
         medium: "Óleo",
         support_material: "Lienzo",
-        "certificate_of_authenticity": true,
-        "original_availability": true,
-        "available_copies": 4,
-        "copies_made": 12
-      }
+        certificate_of_authenticity: true,
+        original_availability: true,
+        available_copies: 4,
+        copies_made: 12
+      
     },
     {
       id: 13,
@@ -147,21 +192,31 @@ const initialState: PaintingsState = {
       price: 1000.00,
       category: "painting",
       favorite:true,
-      dateCreated: "2023-05-18",
+      creation_date: "2023-05-18",
       userId: 1,
-      images: [
-        obra4,
-        obra5      
+      image: [
+        {
+          id: 11,
+          productName: "una obra en acuarela",
+          url:obra4, 
+        },
+        {
+          id: 12,
+          productName: "una obra en acuarela",
+          url:obra4, 
+        },     
       ],
-      specific_attributes: {
-        dimensions: [60,90],
+
+        altura_cm: 60,
+        largo_cm: 90,
+        available: true,
         medium: "Óleo",
         support_material: "Lienzo",
-        "certificate_of_authenticity": true,
-        "original_availability": true,
-        "available_copies": 4,
-        "copies_made": 12
-      }
+        certificate_of_authenticity: true,
+        original_availability: true,
+        available_copies: 4,
+        copies_made: 12
+
     },
     {
       id: 12,
@@ -170,21 +225,30 @@ const initialState: PaintingsState = {
       price: 1000.00,
       category: "painting",
       favorite:true,
-      dateCreated: "2023-05-18",
+      creation_date: "2023-05-18",
       userId: 1,
-      images: [
-        obra4,
-        obra5      
+      image: [
+        {
+          id: 13,
+          productName: "una obra en acuarela",
+          url:obra4, 
+        },
+        {
+          id: 14,
+          productName: "una obra en acuarela",
+          url:obra4, 
+        },   
       ],
-      specific_attributes: {
-        dimensions: [60,90],
+        altura_cm:60,
+        largo_cm:90,
+        available: true,
         medium: "Óleo",
         support_material: "Lienzo",
-        "certificate_of_authenticity": true,
-        "original_availability": true,
-        "available_copies": 4,
-        "copies_made": 12
-      }
+        certificate_of_authenticity: true,
+        original_availability: true,
+        available_copies: 4,
+        copies_made: 12
+      
     },
     {
       id: 11,
@@ -193,21 +257,30 @@ const initialState: PaintingsState = {
       price: 1000.00,
       category: "painting",
       favorite:true,
-      dateCreated: "2023-05-18",
+      creation_date: "2023-05-18",
+      available: true, 
       userId: 1,
-      images: [
-        obra4,
-        obra5      
+      image: [
+        {
+          id: 15,
+          productName: "una obra en acuarela",
+          url:obra4, 
+        },
+        {
+          id: 16,
+          productName: "una obra en acuarela",
+          url:obra4, 
+        },   
       ],
-      specific_attributes: {
-        dimensions: [60,90],
+        altura_cm: 60,
+        largo_cm:90,
         medium: "Óleo",
         support_material: "Lienzo",
-        "certificate_of_authenticity": true,
-        "original_availability": true,
-        "available_copies": 4,
-        "copies_made": 12
-      }
+        certificate_of_authenticity: true,
+        original_availability: true,
+        available_copies: 4,
+        copies_made: 12
+      
     },
     {
       id: 10,
@@ -216,21 +289,31 @@ const initialState: PaintingsState = {
       price: 1000.00,
       category: "painting",
       favorite:true,
-      dateCreated: "2023-05-18",
+      creation_date: "2023-05-18",
       userId: 1,
-      images: [
-        obra4,
-        obra5      
+      image: [
+        {
+          id: 17,
+          productName: "una obra en acuarela",
+          url:obra4, 
+        },
+        {
+          id: 18,
+          productName: "una obra en acuarela",
+          url:obra4, 
+        }   
       ],
-      specific_attributes: {
-        dimensions: [60,90],
+        
+        altura_cm: 60,
+        largo_cm:90,
+        available: true,
         medium: "Óleo",
         support_material: "Lienzo",
-        "certificate_of_authenticity": true,
-        "original_availability": true,
-        "available_copies": 4,
-        "copies_made": 12
-      }
+        certificate_of_authenticity: true,
+        original_availability: true,
+        available_copies: 4,
+        copies_made: 12
+      
     },
     {
       id: 9,
@@ -239,33 +322,48 @@ const initialState: PaintingsState = {
       price: 1400.00,
       category: "painting",
       favorite:true,
-      dateCreated: "2023-05-20",
+      creation_date: "2023-05-20",
       userId: 1,
-      images: [
-        obra6,
-        obra7
+      image: [
+        {
+          id: 19,
+          productName: "una obra en acuarela",
+          url:obra4, 
+        },
+        {
+          id: 20,
+          productName: "una obra en acuarela",
+          url:obra4, 
+        },
+
       ],
-      specific_attributes: {
-        dimensions: [100, 80],
+      
+        altura_cm: 100,
+        largo_cm: 80,
+        available:true,
         medium: "Acrilico",
         support_material: "Lienzo",
         certificate_of_authenticity: true,
         original_availability: false,
         available_copies: 12,
         copies_made: 15
-      }
+      
     },
 
   ],
   isLoading: false,
   error: null,
 }; //hecho para pruebas
- */
+
+
+//Initial State will be used with the API
+/*
  const initialState:PaintingsState ={
   data:[],
   isLoading: false,
   error: null,
-} 
+} */
+
 const paintingsSlice = createSlice({
   name: 'paintings',
   initialState,

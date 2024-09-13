@@ -14,12 +14,10 @@ const dispatch= useDispatch<AppDispatch>();
     })
     
     useEffect(()=>{
-      dispatch(fetchPaintings());
+      //dispatch(fetchPaintings());
     },[dispatch])
 
-    const handleClick = () =>{
-        console.log("Navegar a obra especifica")
-    }
+   
     
     
     

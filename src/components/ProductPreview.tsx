@@ -29,9 +29,12 @@ function ProductPreview({product}:ProductPreviewProps){
     // cambiar este ultimo booleano por paint.original_availability 
   */  
 
-    
+    {/*src={`http://localhost:8080${product.image[0].url}` }*/ }
 
-    return <div className="relative "> <img className="rounded-2xl  " src={`http://localhost:8080${product.image[0].url}` } alt={product.image[0].productName} /> 
+    return <div className="relative h-full "> 
+    <img className="rounded-2xl object-fill h-5/6 " 
+    src={product.image[0].url}
+    alt={product.image[0].productName} /> 
     <div className="flex gap-2 text-sm  original-available-tag absolute items-center z-10 bg-white/70 rounded top-2 right-4 px-1 ">
          {availabilityTag} 
         </div>

@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import logoprovisionalRufyan from "../../public/assets/Images/logos/logoprovisionalRufyan.png"
+import nuevoLogoProvisional from "../../public/assets/Images/logos/NuevoLogoRufyan.jpg"
 import classNames from "classnames";
 import { LinkProps } from "react-router-dom";
 
@@ -10,7 +10,7 @@ function Logo({to, ...props}:LogoProps){
 const  finalClasName= classNames("w-auto", props.className,{})
     return <div className={finalClasName}>
         <Link to={to}  >
-    <img      src={logoprovisionalRufyan} alt="Logo"   />
+    <img      src={nuevoLogoProvisional} alt="Logo"   />
     </Link>
 </div>
 }

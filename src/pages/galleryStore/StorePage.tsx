@@ -8,7 +8,8 @@ import PaintingPreview from "../../components/PaintingPreview";
 
 import 'swiper/css/pagination';
 import '../../styles/stylePaginationSwiper.css'
-import SwiperProducts from "../../components/SwiperPaintings";
+import SwiperProducts from "../../components/SwiperProducts";
+import SwiperPaintings from "../../components/SwiperPaintings";
 
 
 function StorePage(){
@@ -31,13 +32,16 @@ function StorePage(){
       <div className="flex  gap-8 "> 
         
       
-        <SwiperProducts/>
+        <SwiperPaintings/>
+
+        
      
 
 
 
         </div>  
-
+        
+        <SwiperProducts/>
        
 
     </div>
