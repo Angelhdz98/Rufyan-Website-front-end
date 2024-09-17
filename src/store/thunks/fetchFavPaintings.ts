@@ -17,7 +17,7 @@ const fetchFavPaintings = createAsyncThunk('products/fetchFavPaintings', async (
         ...paint,
         creation_date: 'fecha',
     }));
-    //console.log(data);
+    console.log(data);
     return  data;
 //} catch(error:any){
 //    return thunkApi.rejectWithValue(error.response.data);
