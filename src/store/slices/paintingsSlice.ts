@@ -79,10 +79,10 @@ const initialState: PaintingsState = {
         available: true,
         medium: "Óleo",
         support_material: "Lienzo",
-        "certificate_of_authenticity": true,
-        "original_availability": true,
-        "available_copies": 4,
-        "copies_made": 12,
+        certificate_of_authenticity: true,
+        original_availability: true,
+        available_copies: 0,
+        copies_made: 12,
         price_copy:300,
       }
    ,
@@ -112,10 +112,11 @@ const initialState: PaintingsState = {
         available: true,
         medium: "Óleo",
         support_material: "Lienzo",
-        "certificate_of_authenticity": true,
-        "original_availability": true,
-        "available_copies": 4,
-        "copies_made": 12
+        certificate_of_authenticity: true,
+        original_availability: true,
+        available_copies: 4,
+        copies_made: 12,
+        price_copy:300,
       }
     ,
     {
@@ -147,7 +148,8 @@ const initialState: PaintingsState = {
         certificate_of_authenticity: true,
         original_availability: true,
         available_copies: 4,
-        copies_made: 12
+        copies_made: 12,
+        price_copy:400.00,
      
     },
     {
@@ -182,7 +184,8 @@ const initialState: PaintingsState = {
         certificate_of_authenticity: true,
         original_availability: true,
         available_copies: 4,
-        copies_made: 12
+        copies_made: 12,
+        price_copy: 280.00
       
     },
     {
@@ -215,7 +218,8 @@ const initialState: PaintingsState = {
         certificate_of_authenticity: true,
         original_availability: true,
         available_copies: 4,
-        copies_made: 12
+        copies_made: 12,
+        price_copy: 450.00,
 
     },
     {
@@ -247,8 +251,9 @@ const initialState: PaintingsState = {
         certificate_of_authenticity: true,
         original_availability: true,
         available_copies: 4,
-        copies_made: 12
-      
+        copies_made: 12,
+        price_copy:150.00,
+
     },
     {
       id: 11,
@@ -279,7 +284,8 @@ const initialState: PaintingsState = {
         certificate_of_authenticity: true,
         original_availability: true,
         available_copies: 4,
-        copies_made: 12
+        copies_made: 12,
+        price_copy: 300,
       
     },
     {
@@ -312,7 +318,8 @@ const initialState: PaintingsState = {
         certificate_of_authenticity: true,
         original_availability: true,
         available_copies: 4,
-        copies_made: 12
+        copies_made: 12,
+        price_copy:320.00
       
     },
     {
@@ -346,7 +353,8 @@ const initialState: PaintingsState = {
         certificate_of_authenticity: true,
         original_availability: false,
         available_copies: 12,
-        copies_made: 15
+        copies_made: 15,
+        price_copy:210.00,
       
     },
 

@@ -2,6 +2,8 @@ import { Painting, Product } from "../types/typesIndex";
 import { IoIosCheckmarkCircle } from "react-icons/io";
 
 import { CiNoWaitingSign } from "react-icons/ci";
+import BuyNowButton from "./BuyNowButton";
+import AddToCartButton from "./AddToCartButton";
 
 interface ProductPreviewProps {
     product: Product;
@@ -31,8 +33,8 @@ function ProductPreview({product}:ProductPreviewProps){
 
     {/*src={`http://localhost:8080${product.image[0].url}` }*/ }
 
-    return <div className="relative h-full "> 
-    <img className="rounded-2xl object-fill h-5/6 " 
+    return <div className="relative h-[90%] flex flex-col border-2 border-black rounded-2xl"> 
+    <img className="rounded-t-2xl object-cover h-full " 
     src={product.image[0].url}
     alt={product.image[0].productName} /> 
     <div className="flex gap-2 text-sm  original-available-tag absolute items-center z-10 bg-white/70 rounded top-2 right-4 px-1 ">
@@ -41,6 +43,15 @@ function ProductPreview({product}:ProductPreviewProps){
 
         
     {/*<div className="prices absolute "></div>*/}
+    {/** bg-slate-300 m-0 px-6 rounded-b-2xl h-[10%] */}
+    <div className="bg-slate-300 p-2 px-6 rounded-b-2xl h-[10%] ">
+        <div className="flex flex-row justify-between ">
+            
+            <BuyNowButton />
+            <AddToCartButton  />
+    </div>
+    </div>
+    
 
     </div>
 

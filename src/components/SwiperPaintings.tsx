@@ -1,9 +1,9 @@
 import {Swiper, SwiperSlide } from "swiper/react";
 import PaintingPreview from "./PaintingPreview";
 import { useDispatch } from "react-redux";
-import { Pagination, EffectCoverflow, EffectCreative} from "swiper/modules";
+import { Pagination, } from "swiper/modules";
 import { useEffect } from "react";
-import { AppDispatch, fetchPaintings, RootState } from "../store";
+import { AppDispatch, RootState } from "../store";
 import { useSelector } from "react-redux";
 
 
@@ -26,7 +26,7 @@ const dispatch= useDispatch<AppDispatch>();
     
     const renderedPaints = data.map((paint)=>{
         return <SwiperSlide key={paint.id} className="drop-shadow-xl">
-          <PaintingPreview paint={paint}    />   
+          <PaintingPreview paint={paint}  />   
            </SwiperSlide> 
 
       });
