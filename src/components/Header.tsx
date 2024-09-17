@@ -57,7 +57,7 @@ function Header(){
     }
     },[activeMenu])
     return <div className="flex flex-row   items-end 2xl:gap-32 xl:gap-16 lg:gap-8     relative h-full min-h-24">
-        <div className="w-1/6 h-full min-w-64 min-h-24"  >
+        <div className="w-1/12 h-full min-w-64 min-h-24"  >
          <Logo to="/"  />
                  </div>
             <div  className={classNames("",{"absolute navBoxShadow md:hidden flex flex-col md top-0 right-0 pl-5 pr-3 pt-10 gap-1 items-end    bg-blue-400 flex h-dvh z-10":activeMenu,
