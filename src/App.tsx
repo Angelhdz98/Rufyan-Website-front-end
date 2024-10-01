@@ -9,6 +9,7 @@ import ProjectsPage from "./pages/artProjects/ProjectsPage";
 import ShipmentPage from "./pages/shipment/ShipmentPage";
 
 import ControlPanel from "./pages/ControlPanel/ControlPanel";
+import ProductList from "./pages/galleryStore/ProductList";
 //import { homeLoader } from "./pages/home/homeLoader";
 //import store from "./store";
 
@@ -39,6 +40,10 @@ const router= createBrowserRouter([
     },
     {path:'/store',
     element: <StorePage/>
+    },
+    {path:'/store/:category?',
+      element:<ProductList/>
+
     },
     {path:'/projects',
     element: <ProjectsPage/>

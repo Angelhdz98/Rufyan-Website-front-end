@@ -15,7 +15,7 @@ const addPainting = createAsyncThunk('painting/addPaintings',
             'Content-Type': 'multipart/form-data', // Especificar el tipo de contenido
         },
     });
-    
+    console.log("Valor de response data: " + response.data);
     return  response.data;
 } catch (error: any) {
     return thunkAPI.rejectWithValue(error.response.data);
