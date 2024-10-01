@@ -8,6 +8,8 @@ import { UseDispatch } from "react-redux";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "../store";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+
 interface PaintingPreviewProps {
     paint: Painting;
 }
@@ -17,6 +19,7 @@ interface PaintingPreviewProps {
 function PaintingPreview({ paint }: PaintingPreviewProps) {
 
     const [originalSelected, setOriginalSelected] = useState(false);
+    const navigate= useNavigate();
 
     const dispatch = useDispatch<AppDispatch>();
 
@@ -27,8 +30,9 @@ function PaintingPreview({ paint }: PaintingPreviewProps) {
 
     //const originalAvailable = true; // momentaneo para pruebas
 
-    const handleClick = () => {
+    const handleClick = (id: number) => {
         console.log("Navegar a obra especifica")
+        navigate(`/store/paintings/${id}`);
     }
     const toggleOnSelectedHandler = () => {
         setOriginalSelected(!originalSelected);
@@ -58,7 +62,7 @@ function PaintingPreview({ paint }: PaintingPreviewProps) {
 
     return <div className="flex flex-col relative h-[90%] border-2 border-black rounded-2xl ">
         <div className="h-full ">
-            <img className="rounded-t-2xl object-cover w-full h-[90%]  " src={paint.image[0].url}
+            <img onClick={()=>{handleClick(paint.id)}} className="rounded-t-2xl cursor-pointer object-cover w-full h-[90%]  " src={paint.image[0].url}
                 alt={paint.image[0].productName} />
             <div className=" bg-slate-300 p-2 px-6 rounded-b-2xl h-[10%]">
                 <div className="flex flex-row justify-between ">

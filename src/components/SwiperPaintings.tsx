@@ -2,13 +2,16 @@ import {Swiper, SwiperSlide } from "swiper/react";
 import PaintingPreview from "./PaintingPreview";
 import { useDispatch } from "react-redux";
 import { Pagination, } from "swiper/modules";
-import { useEffect } from "react";
+import { Fragment, useEffect } from "react";
 import { AppDispatch, RootState } from "../store";
 import { useSelector } from "react-redux";
+import Button from "./Button";
+import { useNavigate } from "react-router-dom";
 
 
 function SwiperPaintings(){
 const dispatch= useDispatch<AppDispatch>();
+const navigate = useNavigate();
     const {data, isLoading, error} = useSelector((state: RootState)=>{
         return state.paintings;
     })
@@ -17,7 +20,13 @@ const dispatch= useDispatch<AppDispatch>();
       //dispatch(fetchPaintings());
     },[dispatch])
 
-   
+    const goToPaintingCategoryHandler = () =>{
+      console.log("viajar a categoría pintura");
+      navigate('/store/paintings');
+
+
+    }
+  
     
     
     
@@ -25,9 +34,11 @@ const dispatch= useDispatch<AppDispatch>();
 
     
     const renderedPaints = data.map((paint)=>{
-        return <SwiperSlide key={paint.id} className="drop-shadow-xl">
+        return <Fragment><SwiperSlide key={paint.id} className="drop-shadow-xl">
           <PaintingPreview paint={paint}  />   
-           </SwiperSlide> 
+           </SwiperSlide>
+           
+        </Fragment>  
 
       });
     
@@ -82,6 +93,9 @@ const dispatch= useDispatch<AppDispatch>();
 
      
         </div>
+        <Button onClick={goToPaintingCategoryHandler} rounded primary className="w-fit self-center absolute bottom-0 cursor-pointer right-[16.6%] px-3 z-10">
+          Ver todas las obras
+          </Button>
 
        </div>
 
