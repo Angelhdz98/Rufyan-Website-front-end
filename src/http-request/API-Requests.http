@@ -1,0 +1,75 @@
+
+##Obteniendo todos los usuarios
+GET http://localhost:8080/users
+
+### Obtener un usuario especifico por id
+GET  http://localhost:8080/users/1
+
+### Crear un nuevo usuario 
+POST http://localhost:8080/users
+
+Content-Type: application/json
+
+{
+  "name": "Juanito ",
+  "lastname": "Salinas ",
+  "birthDate": "1946-5-17",
+  "email": "JuanitoHerrreroe@gmail.com",
+  "username": "JuanSalinas",
+  "password": "yonomascompro",
+  "accountNoExpired": true,
+  "accountNoLocked": true,
+  "credentialNoExpired": true,
+  "roles": [ 
+    {
+      "id": 2,
+      "roleEnum": "CLIENT"
+    }
+  ],
+  "favoriteProducts": [],
+  "enabled": true
+}
+
+### Probando otras peticiones
+//Petición de los productos 
+GET http://localhost:8080/products
+
+###
+//Petición de las obras 
+GET http://localhost:8080/paintings
+
+### Checar las categorías de productos 
+
+GET http://localhost:8080/products-category
+
+
+
+###Agregar a favorito de don Baudelio (id= 5)
+POST http://localhost:8080/my-favorites/add
+Content-Type: application/json
+
+{
+"userId": 5,
+"productId": 2
+}
+
+
+### Obtener checar al usuario donde agregamos
+GET  http://localhost:8080/users/5
+
+### Probando otras peticiones
+//Petición de los productos 
+GET http://localhost:8080/products/2
+
+
+###Eliminar de los favoritos de don baudelio
+DELETE http://localhost:8080/my-favorites/remove
+Content-Type: application/json
+
+{
+"userId": 5,
+"productId": 2,
+}
+
+### Agregar un producto a favoritos de un usuario desde el controlador del usuario
+PUT http://localhost:8080/users/5/favorites/2
