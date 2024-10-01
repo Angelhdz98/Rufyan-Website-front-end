@@ -16,7 +16,11 @@ export interface PaintingFormProps {
   name: string;
   price: number;
   description: string;
-  category: string;
+  category: 
+  {
+    id: number,
+    category: string;
+  }
   altura_cm: number;
   largo_cm: number;
   available_copies: number;
@@ -77,7 +81,8 @@ function AddPaintingForm() {
     form.append('description',formData.description);
     form.append('price',formData.price.toString());
     form.append('favorite',formData.favorite.valueOf().toString());
-    form.append('category',formData.category);
+    //form.append('category',formData.category.toString()); // prueba ambas opciones 
+    form.append('category',formData.category.category);
     formData.image.forEach((image) =>{
         form.append("image", image);
     })
