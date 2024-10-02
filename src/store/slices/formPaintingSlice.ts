@@ -16,7 +16,7 @@ const initialState: formDataPainting = {
         name: "",
         price: 1000,
         description: '',
-        category: '',
+        category: {},
         altura_cm: 40,
         largo_cm: 30,
         available_copies: 12,

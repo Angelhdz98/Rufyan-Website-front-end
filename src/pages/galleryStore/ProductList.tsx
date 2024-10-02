@@ -22,7 +22,7 @@ function ProductList() {
     
     const products = data.map((product: Product)=>{
         if (category=="paintings") {
-            return <PaintingPreview paint={product as Painting}/>
+            return <PaintingPreview key={product.id} paint={product as Painting}/>
         }
         return <div>{product.name}</div>
      
