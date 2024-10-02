@@ -1,16 +1,17 @@
 //import PropTypes from 'prop-types';
 import className from "classnames";
-import React from "react";
+import React, { ReactNode } from "react";
 
 export interface buttonProps extends React.ButtonHTMLAttributes<HTMLButtonElement>{
-    children: string;
+    children: ReactNode;
     primary?: boolean;
     secondary?: boolean;
     success?: boolean;
     warning?: boolean;
     danger?:boolean;
     outline?: boolean;
-    rounded?: boolean; 
+    rounded?: boolean;
+    sorter?:boolean; 
 }
 
 
@@ -20,6 +21,7 @@ function Button ({children,
     success,
     warning,
     danger,
+    sorter,
     outline,
     rounded, 
     ...rest 
@@ -31,6 +33,7 @@ const finalClassName = className(rest.className, 'flex items-center px-2 border 
     "border-[#1D6720] bg-[#1D6720] text-white" : success,
     "border-yellow-500 bg-yellow-500 text-white" : warning,
     "border-red-500 bg-red-500 text-white" : danger,
+    "border-[#D67254] bg-[#b5b5b5] text-white":sorter,
     "rounded-xl": rounded,
     "bg-white": outline,
     "text-blue-500": outline && primary,
