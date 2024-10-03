@@ -9,7 +9,7 @@ interface SearchBarProps {
 function SearchBar({className}:SearchBarProps){
     
     
-   return  <div className={classNames("flex flex-row rounded-lg bg-white drop-shadow-lg mx-4 px-6 gap-14 justify-between ", className)}>
+   return  <div className={classNames(className,"flex flex-row rounded-lg bg-white drop-shadow-lg  px-6 gap-14 justify-between ", className)}>
     Barra de busqueda
     <FaSearch />
     </div>    

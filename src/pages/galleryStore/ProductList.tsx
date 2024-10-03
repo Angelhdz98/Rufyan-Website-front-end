@@ -5,6 +5,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, fetchProductsBycategory, RootState } from "../../store";
 import PaintingPreview from "../../components/PaintingPreview";
 import NavProduct from "../../components/NavProduct";
+import { fetchSortedProduct } from "../../store/thunks/fetchSortedProducts";
+
 
 
 
@@ -14,15 +16,20 @@ function ProductList() {
     const dispatch= useDispatch<AppDispatch>();
     const {data, isLoading, error}= useSelector((state: RootState)=>{return state.products
     })
+    const {sortBy, sortOrder} = useSelector((state: RootState)=>state.sortProducts);
     useEffect(()=>{
         if (category){
-        dispatch(fetchProductsBycategory(category))}
-    },[]);
+        dispatch(fetchSortedProduct(category))
+    }
+    console.log("category: ",category, " order: ", sortOrder, " sortBy: ", sortBy);
+    },[sortBy, sortOrder, category]);
 
     
     const products = data.map((product: Product)=>{
         if (category=="paintings") {
-            return <PaintingPreview key={product.id} paint={product as Painting}/>
+            return <PaintingPreview 
+                    key={product.id} 
+                    paint={product as Painting}/>
         }
         return <div>{product.name}</div>
      

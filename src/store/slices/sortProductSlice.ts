@@ -11,7 +11,7 @@ interface sortProducState{
 
 const initialState:sortProducState = {
     sortBy: "fecha", // Propiedad por la cual ordenar
-    sortOrder: "asc", // "asc" o "desc" para ascendente o descendente
+    sortOrder: "desc", // "asc" o "desc" para ascendente o descendente
   };
 
 const sortProductSlice = createSlice({

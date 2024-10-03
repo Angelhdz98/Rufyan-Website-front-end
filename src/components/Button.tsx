@@ -50,10 +50,10 @@ const finalClassName = className(rest.className, 'flex items-center px-2 border 
 }
 
 Button.propTypes= {
-    checkVariation: ({primary, secondary, success, warning, danger }:buttonProps) =>{
+    checkVariation: ({primary, secondary, success, warning, danger, sorter }:buttonProps) =>{
         //console.log(props);
         const count = Number(!!primary) + Number(!!secondary) + Number(!!success) 
-        + Number(!!warning) + Number(!!danger); 
+        + Number(!!warning) + Number(!!danger)+ Number(!!sorter); 
 
         if(count >1){
             return new Error('Only one of primary, socondary, warning, danger can be true');

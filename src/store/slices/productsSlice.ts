@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { fetchProductsBycategory } from "../thunks/fetchProductsByCategory";
 import type { Product } from "../../types/typesIndex";
+import { fetchSortedProduct } from "../thunks/fetchSortedProducts";
 
 export interface ProductState {
     data: Product[];
@@ -34,6 +35,19 @@ const productsSlice = createSlice({
         builder.addCase(fetchProductsBycategory.rejected, (state,action)=> {
             state.isLoading = false;
             state.error = action.payload as string
+        })
+        builder.addCase(fetchSortedProduct.pending, (state)=>{
+            state.isLoading= true;
+            state.error= null; 
+        })
+        builder.addCase(fetchSortedProduct.fulfilled, (state, action)=>{
+            state.isLoading= false;
+            state.data= action.payload; 
+        })
+        builder.addCase(fetchSortedProduct.rejected, (state, action)=>{
+            state.isLoading= false;
+            state.error= action.payload as string;
+ 
         })
     
     }
