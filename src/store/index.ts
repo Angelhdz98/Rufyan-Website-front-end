@@ -6,6 +6,7 @@ import { formPaintingReducer, updateForm, addImage, deleteImage } from "./slices
 import { setSortBy, toggleSortOrder, beginSorting } from "./slices/sortProductSlice";
 import { productsReducer } from "./slices/productsSlice";
 import { sortProductsReducer } from "./slices/sortProductSlice";
+import { singleProductReducer } from "./slices/singleProductSlice";
 
 const store = configureStore({
     reducer:{
@@ -15,7 +16,7 @@ const store = configureStore({
         formPainting:formPaintingReducer,
         products:productsReducer,
         sortProducts:sortProductsReducer,
-
+        singleProduct:singleProductReducer
     },
 });
 
@@ -25,6 +26,7 @@ export * from './thunks/fetchFavPaintings'
 export * from './thunks/fetchPaintings'
 export * from './thunks/addPainting'
 export * from './thunks/fetchProductsByCategory'
+export * from './thunks/fetchProductById'
 export {updateForm, addImage,deleteImage, setSortBy,toggleSortOrder, beginSorting }
 
 

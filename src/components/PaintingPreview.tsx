@@ -1,10 +1,8 @@
 import { Painting } from "../types/typesIndex";
 import { IoIosCheckmarkCircle } from "react-icons/io";
-import { botoneraObra } from "./PaintLabel";
 import { CiNoWaitingSign } from "react-icons/ci";
 import BuyNowButton from "./BuyNowButton";
 import AddToCartButton from "./AddToCartButton";
-import { UseDispatch } from "react-redux";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "../store";
 import { useState } from "react";

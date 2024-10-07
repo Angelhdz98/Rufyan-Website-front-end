@@ -1,8 +1,8 @@
-import { useEffect, useState } from "react";
+import { useEffect} from "react";
 import { useParams } from "react-router-dom";
 import { Painting, Product } from "../../types/typesIndex";
 import { useDispatch, useSelector } from "react-redux";
-import { AppDispatch, fetchProductsBycategory, RootState } from "../../store";
+import { AppDispatch,  RootState } from "../../store";
 import PaintingPreview from "../../components/PaintingPreview";
 import NavProduct from "../../components/NavProduct";
 import { fetchSortedProduct } from "../../store/thunks/fetchSortedProducts";
