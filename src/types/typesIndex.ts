@@ -15,12 +15,16 @@ export interface User {
     
   }
 
+  export interface ProductCategory{
+    id:number;
+    name: string;
+  }
   export interface Product {
     id: number;
     name: string;
     description: string;
     price: number;
-    category: string;
+    category: ProductCategory;
     favorite?:boolean,
     creation_date: string;
     userId: number;
@@ -41,8 +45,8 @@ export interface User {
     images: string[];//Estos atributos son heredados de product*/ 
       largo_cm:number,
       altura_cm:number,
-      medium:String;
-      support_material: String;
+      medium:string;
+      support_material: string;
       certificate_of_authenticity: boolean;
       original_availability: boolean;
       price_copy?: number,
