@@ -1,5 +1,5 @@
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Navigation, EffectCards, EffectFade} from "swiper/modules";
+import { Navigation, EffectCards, EffectFade, EffectCoverflow, EffectCube} from "swiper/modules";
 
 
 import "swiper/css/navigation"
@@ -16,6 +16,7 @@ import { useState } from "react";
 
 interface SwiperSliderProps{
     images: ImageProduct[] ;
+    className?: string;
 };
 
 
@@ -66,8 +67,8 @@ function SwiperSlider(props:SwiperSliderProps){
                     alt={image.productName}
                     loading="lazy"
                     onLoadedData={() =>loadedHandler()}
-                    className={(selectedIndex==index?"":"hidden ") + (loaded?" opacity-100 " : "  ") +" object-cover  rounded-lg h-full   "} />
-                    <div className="swiper-lazy-preloader swiper-lazy-preloader-white"></div>
+                    className={(selectedIndex==index?"":"hidden ") + (loaded?" opacity-100 " : "  ") +" object-cover  h-full   " +props.className} />
+                    <div className={"swiper-lazy-preloader swiper-lazy-preloader-white "}></div>
             
             </SwiperSlide>
     })
@@ -77,9 +78,10 @@ function SwiperSlider(props:SwiperSliderProps){
                  onSlidePrevTransitionStart={prevSlide}
                 navigation 
                 effect="cards"  loop 
-                modules={[Navigation, EffectCards]}
+                modules={[Navigation, EffectCube]}
                 watchSlidesProgress
                 lazyPreloadPrevNext={0}
+                className={props.className}
                 
                 
 

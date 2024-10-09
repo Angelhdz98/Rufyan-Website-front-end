@@ -5,46 +5,108 @@ import { useDispatch } from "react-redux";
 import { AppDispatch, RootState } from "../../store";
 import { fetchProductById, RequestParams } from "../../store/thunks/fetchProductById";
 import { useSelector } from "react-redux";
+import OriginalSelecetor from "./OriginalSelecetor";
+import { isPainting } from "../../hooks/isPainting";
+import { Painting } from "../../types/typesIndex";
 
-   
- 
-function ProductPage(){
-    const{category, id} = useParams<{category?: string, id?:string}>();
+
+
+
+function ProductPage() {
+    const { category, id } = useParams<{ category?: string, id?: string }>();
     const dispatch = useDispatch<AppDispatch>();
-    const {data, isLoading, error} = useSelector((state:RootState) =>state.singleProduct);
+    const { data, isLoading, error } = useSelector((state: RootState) => state.singleProduct);
 
     
-   
-     
-    
-    useEffect(()=>{
+        const painting = data[0] as Painting;
 
-        if(category && id ){
-            const request: RequestParams= {category: category, id: Number(id)};
-       dispatch(fetchProductById(request));
-       console.log("se hace el fetch category: ", category, " id: ", id );
+        const renderedProperties = () =>{
+
+            if(isPainting(data[0])){
+            return <div className=" flex flex-col w-full px-4">
+                <div className="flex flex-row">
+                    <span className="font-semibold">Medium</span>
+                    <span>{": "+painting.medium}</span>
+                </div>
+                <div className="flex flex-row">
+                    <span className="font-semibold">Support material </span>
+                    <span>{": "+painting.support_material}</span>
+                </div>
+                <div className="flex flex-row">
+                    <span className="font-semibold">Available copieas </span>
+                    <span>{": "+painting.available_copies}/{painting.copies_made}</span>
+                </div>
+                <div className="flex flex-row">
+                    <span className="font-semibold">Measures </span>
+                    <span>{": Height: "+ painting.altura_cm +"cm Length: " +painting.largo_cm+ "cm"}</span>
+                </div>
+            </div>
         }
-        
-    },[category, id, dispatch]);
+        return <div></div>
+    }
 
-    if(isLoading){
+
+
+    useEffect(() => {
+
+
+        const request: RequestParams = { category: category as string, id: Number(id) };
+        dispatch(fetchProductById(request));
+        console.log("se hace el fetch category: ", category, " id: ", id);
+
+    }, [dispatch]);
+
+    if (isLoading) {
         return <div>Is loading. . . </div>
     }
-    
-    
-        return <div className="main-body w-full flex flex-row  gap-4 p-2 h-dvh">
-        <div className="first-column bg-cyan-500 w-4/12 h-full">
-           { 
-           
-           <ImageSwiper image={data[0].image } title="" />
 
-}        </div>
-        <div className="second-column  bg-slate-500 w-8/12">
-        columna 2 
+    else if (error) {
+        return <div> {error.toString()}</div>
+
+    }
+    console.log("data ", data[0])
+    if (!isLoading && error == null && data[0]) {
+        return <div className="main-body w-full flex flex-row  gap-4 p-2 h-dvh">
+            <div className="first-column w-4/12 h-full">
+
+
+                <ImageSwiper image={data[0].image} title={data[0].name} />
+                <div className="p-2">
+                     <div>
+                    <span className="font-semibold">
+                        Description:
+                    </span>
+                    {" " + data[0].description}
+                </div>
+                <div>
+                <span className="font-semibold">
+                        Category:
+                    </span>
+                    {" " + data[0].category.name }
+                </div> 
+                </div>
+              
+
+            </div>
+            <div className="second-column   w-8/12 ">
+                 <div>
+                 <OriginalSelecetor/>
+                 </div>
+
+                 {renderedProperties() }
+                 
+
+            </div>
         </div>
-    </div>
-    
-    
+
+    }
+
+
+
+
+
+
+
 
 }
 
