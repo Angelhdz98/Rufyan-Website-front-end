@@ -33,7 +33,7 @@ function ProductPage() {
                     <span>{": "+painting.support_material}</span>
                 </div>
                 <div className="flex flex-row">
-                    <span className="font-semibold">Available copieas </span>
+                    <span className="font-semibold">Available copies </span>
                     <span>{": "+painting.available_copies}/{painting.copies_made}</span>
                 </div>
                 <div className="flex flex-row">
@@ -66,8 +66,8 @@ function ProductPage() {
     }
     console.log("data ", data[0])
     if (!isLoading && error == null && data[0]) {
-        return <div className="main-body w-full flex flex-row  gap-4 p-2 h-dvh">
-            <div className="first-column w-4/12 h-full">
+        return <div className="main-body w-full flex flex-col md:flex-row  md_gap-4 p-2 py-4 h-fit">
+            <div className="first-column md:w-5/12 h-fit">
 
 
                 <ImageSwiper image={data[0].image} title={data[0].name} />
@@ -88,7 +88,7 @@ function ProductPage() {
               
 
             </div>
-            <div className="second-column   w-8/12 ">
+            <div className="second-column   md:w-8/12 ">
                  <div>
                  <OriginalSelecetor/>
                  </div>

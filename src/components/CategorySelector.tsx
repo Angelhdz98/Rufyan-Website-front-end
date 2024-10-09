@@ -48,8 +48,8 @@ function CategorySelector() {
     return <div onClick={categoriesClickHandler}
         className=
         {
-            classNames("bg-gray-500 rounded-lg h-fit flex flex-col   mx-2 z-10 px-1 pl-2 transition-all duration-300 ease-in-out overflow-hidden w-44 ",{"max-h-6": isSelected,
-              "max-h-40":!isSelected  
+            classNames("bg-gray-500 rounded-lg h-fit flex flex-col   mx-2 z-10 px-1 pl-2 transition-all duration-300 ease-in-out overflow-hidden w-fit ",{"max-h-6": !isSelected,
+              "max-h-40 overflow-scroll":isSelected  
             })
         }>
         <div className="flex w-full flex-row items-center gap-4  cursor-pointer justify-between ">
