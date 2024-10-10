@@ -40,7 +40,7 @@ function SwiperProducts() {
       Otros productos
     </span>
     <hr className="mb-4 font-bold border-black" />
-    <div className=" flex">
+    <div className=" flex  ">
       <Swiper
 
         breakpoints={{

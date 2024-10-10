@@ -34,7 +34,7 @@ function ProductPreview({product}:ProductPreviewProps){
     {/*src={`http://localhost:8080${product.image[0].url}` }*/ }
 
     return <div className="relative h-[90%] flex flex-col border-2 border-black rounded-2xl"> 
-    <img className="rounded-t-2xl object-cover h-full " 
+    <img className="rounded-t-2xl curosr-pointer object-cover h-full " 
     src={product.image[0].url}
     alt={product.image[0].productName} /> 
     <div className="flex gap-2 text-sm  original-available-tag absolute items-center z-10 bg-white/70 rounded top-2 right-4 px-1 ">
@@ -48,7 +48,9 @@ function ProductPreview({product}:ProductPreviewProps){
         <div className="flex flex-row justify-between ">
             
             <BuyNowButton />
-            <AddToCartButton  />
+            <AddToCartButton onClick={function (): void {
+                    throw new Error("Function not implemented.");
+                } }  />
     </div>
     </div>
     

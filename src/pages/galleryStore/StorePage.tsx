@@ -23,16 +23,16 @@ function StorePage() {
     <div className="flex flex-col gap-0 relative">
 
 
-      <SwiperPaintings />
+   <SwiperPaintings />
 
+  
 
-
-
+  <SwiperProducts />
 
 
     </div>
 
-    <SwiperProducts />
+    
 
 
   </div>
