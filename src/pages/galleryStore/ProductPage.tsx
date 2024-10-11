@@ -66,8 +66,8 @@ function ProductPage() {
     }
     console.log("data ", data[0])
     if (!isLoading && error == null && data[0]) {
-        return <div className="main-body w-full flex flex-col md:flex-row  md_gap-4 p-2 py-4 h-fit">
-            <div className="first-column md:w-5/12 h-fit">
+        return <div className="main-body w-full flex flex-col md:flex-row  md_gap-4 p-4 py-4 h-fit">
+            <div className="first-column md:w-4/12 h-fit">
 
 
                 <ImageSwiper image={data[0].image} title={data[0].name} />

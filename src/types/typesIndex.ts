@@ -25,7 +25,7 @@ export interface User {
     description: string;
     price: number;
     category: ProductCategory;
-    favorite?:boolean,
+    favorite:boolean,
     creation_date: string;
     userId: number;
     image: ImageProduct[];
