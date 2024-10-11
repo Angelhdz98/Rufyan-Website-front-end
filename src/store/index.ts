@@ -27,6 +27,7 @@ export * from './thunks/fetchPaintings'
 export * from './thunks/addPainting'
 export * from './thunks/fetchProductsByCategory'
 export * from './thunks/fetchProductById'
+export * from './thunks/updatePainting'
 export {updateForm, addImage,deleteImage, setSortBy,toggleSortOrder, beginSorting }
 
 
