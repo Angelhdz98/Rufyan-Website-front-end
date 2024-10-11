@@ -233,7 +233,7 @@ function AddPaintingForm() {
       </FormInput>
 
       <FormInput type={"text"} name={"category"}
-        value={formData.category}
+        value={formData.category.category}
         onChange={handleChange}>
         Estilo
       </FormInput>

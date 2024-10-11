@@ -2,7 +2,9 @@ import axios from "axios";
 import classNames from "classnames";
 import { Fragment, useEffect, useState } from "react";
 import { IoIosArrowDropleft } from "react-icons/io";
+import { useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
+import { AppDispatch, fetchProductsBycategory } from "../store";
 
 export interface productCategoryInterface {
     id: number;
@@ -14,15 +16,25 @@ function CategorySelector() {
     const [categoriesAvailable , setCategoriesAvailable ] = useState<string[]>([]);
     const [loading, setLoading] = useState(true);
     //const [error, setError] = useState(null);
-    const {category} = useParams<{category?: string}>();
-    
+     
     const categoriesClickHandler = () => {
         setIsSelected(!isSelected);
     }
+    const dispatch = useDispatch<AppDispatch>();
+
+    const fetchCategorieHandler =(selectedCategory:string) =>{
+
+        dispatch(fetchProductsBycategory(selectedCategory));
+        console.log("fetch by category dispatched");
+    }
+
     const renderedCategories = categoriesAvailable.map(
         (singleCategory)=>
     {
-        return <li key={singleCategory} className="list-none cursor-pointer" >{singleCategory}</li>
+        return <li key={singleCategory} 
+        className="list-none cursor-pointer" onClick={()=>fetchCategorieHandler(singleCategory)} >
+            {singleCategory}
+            </li>
     })
     useEffect(()=>{
         const fetchCategories= async () =>{
@@ -58,7 +70,8 @@ function CategorySelector() {
                 "transform -rotate-90": isSelected,
             })} />
         </div>
-           <div className="flex flex-col px-2 gap-1">{renderedCategories}</div> 
+           <div className="flex flex-col px-2 gap-1">
+            <ul>{renderedCategories}</ul></div> 
     </div>
 
 }

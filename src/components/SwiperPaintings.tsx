@@ -2,7 +2,7 @@ import {Swiper, SwiperSlide } from "swiper/react";
 import PaintingPreview from "./PaintingPreview";
 import { useDispatch } from "react-redux";
 import { Pagination, } from "swiper/modules";
-import { Fragment, useEffect } from "react";
+import { useEffect } from "react";
 import { AppDispatch, fetchPaintings, RootState } from "../store";
 import { useSelector } from "react-redux";
 import Button from "./Button";

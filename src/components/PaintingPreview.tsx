@@ -51,7 +51,7 @@ function PaintingPreview({ paint }: PaintingPreviewProps) {
 
     const availableCopies = paint.available_copies > 0 ?
         <div className="Available-copies text-xs bg-white/70 absolute z-10 left-3 rounded px-1  bottom-12">Copies: {paint.available_copies}/{paint.copies_made}</div> :
-        <div className="z-10 absolute text-red-500 font-bold text-xs bg-white/70 absolute left-3 rounded px-1  bottom-12">No copies available</div>
+        <div className="z-10  text-red-500 font-bold text-xs bg-white/70 absolute left-3 rounded px-1  bottom-12">No copies available</div>
 
     // cambiar este ultimo booleano por paint.original_availability 
     const renderedPrice = originalSelected ? (<div >Price original: <br /> {paint.price}.00 MXN</div>) : (<div>Price p/copy: <br /> {paint.price_copy}.00 MXN</div>);
