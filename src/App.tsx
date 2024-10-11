@@ -11,6 +11,7 @@ import ShipmentPage from "./pages/shipment/ShipmentPage";
 import ControlPanel from "./pages/ControlPanel/ControlPanel";
 import ProductList from "./pages/galleryStore/ProductList";
 import ProductPage from "./pages/galleryStore/ProductPage";
+import EditAll from "./pages/ControlPanel/EditAll";
 //import { homeLoader } from "./pages/home/homeLoader";
 //import store from "./store";
 
@@ -59,6 +60,10 @@ const router= createBrowserRouter([
     },
     {path:'/admin',
       element:<ControlPanel/>
+    },
+    {
+      path:'/admin/edit',
+      element:<EditAll/>
     }
   ]
 }
