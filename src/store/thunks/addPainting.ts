@@ -1,7 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 //import { Painting } from "../../types/typesIndex";
-import {  PaintingFormProps } from "../../pages/ControlPanel/AddPaintingForm";
 //import { PaintingsState } from "../slices/paintingsSlice";
 //import { Product } from "../../types/typesIndex";
 
