@@ -38,6 +38,43 @@ GET http://localhost:8080/products
 //Petición de las obras 
 GET http://localhost:8080/paintings
 
+###
+//Petición de las obras 
+PUT   http://localhost:8080/paintings/1
+Content-Type: application/json
+
+{
+    "id": 1,
+    "name": "Starry Night",
+    "description": "A gorgeous painting by me",
+    "creation_date": "2020-09-11",
+    "style": "Surrealismo",
+    "price": 2000,
+    "favorite": true,
+    "category": {
+      "id": 2,
+      "name": "paintings"
+    },
+    "image": [
+      {
+        "id": 2,
+        "productName": null,
+        "url": "../../assets/Images/imgObras/obra3.jpg"
+      }
+    ],
+    "favoriteOf": [],
+    "adittionalFeatures": null,
+    "altura_cm": 92,
+    "largo_cm": 74,
+    "medium": "Oil",
+    "support_material": "canvas",
+    "available_copies": 3,
+    "copies_made": 5,
+    "price_copy": 400
+  },
+
+
+
 ### Checar las categorías de productos 
 
 GET http://localhost:8080/products-category
@@ -73,3 +110,13 @@ Content-Type: application/json
 
 ### Agregar un producto a favoritos de un usuario desde el controlador del usuario
 PUT http://localhost:8080/users/5/favorites/2
+
+
+###Eliminar la imagen uno de una pintura 
+DELETE  http://localhost:8080/paintings/1/1
+###
+GET http://localhost:8080/images
+
+
+###
+DELETE  http://localhost:8080/images/1
