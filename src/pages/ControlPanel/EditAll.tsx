@@ -8,14 +8,14 @@ import EditableProduct from "./EditableProduct";
 import { useState } from "react";
 import Modal from "../../components/Modal";
 import EditingProduct from "./EditingProduct";
+import EditingPainting from "./EditingPainting";
 
 
 function EditAll(){
 
 
     const {data, isLoading, error} = useSelector((state:RootState)=> state.products);
-      
-    const [selectedProduct, setSelectedProduct] = useState<Product>();
+    const [selectedProduct, setSelectedProduct] = useState<number>(-1);
 
         const [showModal, setShowModal] = useState(false);
 
@@ -23,7 +23,7 @@ function EditAll(){
             if (isPainting(product)) {
                 return <EditablePainting 
                 onClick={() =>{ 
-                    setSelectedProduct(product);
+                    setSelectedProduct(product.id);
                     setShowModal(true);}}
                 paint={product as Painting} 
                 key={product.id}/>
@@ -48,8 +48,8 @@ return <div>
     {products}
     </div>
     
-    <Modal isOpen={showModal} onClose={()=> setShowModal(false) }> 
-        <div> {<EditingProduct product={selectedProduct as Product} />}</div>
+    <Modal  className="h-5/6 w-5/6"  isOpen={showModal} onClose={()=> setShowModal(false)  } > 
+        <div> <EditingPainting paintingId={selectedProduct} /></div>
     </Modal>
 
 </div>
