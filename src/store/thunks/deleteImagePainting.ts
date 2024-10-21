@@ -1,24 +1,23 @@
+
+
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 //import { Painting } from "../../types/typesIndex";
 //import { PaintingsState } from "../slices/paintingsSlice";
 //import { Product } from "../../types/typesIndex";
 
-
-interface updatePaintingParams{
-    formData: FormData;
-    id:number;
+interface DeleteImageParams{
+    paintingId: number;
+    imageId:number; 
 }
 
-const updatePainting = createAsyncThunk('painting/updatePaintings', 
-    async ({formData, id}:updatePaintingParams , thunkAPI) =>{
+
+const deleteImagePainting = createAsyncThunk('singlePainting/deleteImagePainting', 
+    async ({paintingId, imageId}:DeleteImageParams, thunkAPI) =>{
         
         try{
-    const response = await axios.put(`http://localhost:8080/paintings/${id}`, formData,{
-        headers: {
-            'Content-Type': 'multipart/form-data', // Especificar el tipo de contenido
-        },
-    });
+    const response = await 
+    axios.delete(`http://localhost:8080/paintings/${paintingId}/${imageId}`);
     console.log("Valor de response data: " + response.data);
     return  response.data;
 } catch (error: any) {
@@ -32,4 +31,4 @@ const updatePainting = createAsyncThunk('painting/updatePaintings',
 
 
 
-export {updatePainting};
+export {deleteImagePainting};

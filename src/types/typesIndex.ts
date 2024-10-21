@@ -49,7 +49,7 @@ export interface User {
       support_material: string;
       certificate_of_authenticity: boolean;
       original_availability: boolean;
-      price_copy?: number,
+      price_copy: number,
       available_copies: number;
       copies_made: number;
       

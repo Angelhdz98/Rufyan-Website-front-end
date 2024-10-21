@@ -38,7 +38,7 @@ const formPaintingSlice = createSlice({
     initialState,
     reducers: {
         updateForm: (state, action)=>{
-            state.data = action.payload
+            state.data = action.payload as PaintingFormProps;   
         },
         addImage:(state, action: PayloadAction<File[]>) => {
             state.data.image =[...action.payload]
