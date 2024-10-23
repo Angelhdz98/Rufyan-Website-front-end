@@ -1,12 +1,12 @@
 import { HTMLAttributes,  useEffect,  useState } from "react";
-import { Painting } from "../../types/typesIndex";
+import { EditPainting, Painting } from "../../types/typesIndex";
 import FormInput from "../../components/FormInput";
 import CheckFormInput from "../../components/CheckFormInput";
 
 import Button from "../../components/Button";
 import FormImage from "./FormImage";
 import { useSelector } from "react-redux";
-import { AppDispatch, deleteImagePainting, fetchPaintingById, RootState } from "../../store";
+import { AppDispatch, deleteImagePainting, fetchPaintingById, RootState, updatePainting, updatePaintingParams } from "../../store";
 import { useDispatch } from "react-redux";
 import { deleteStateImage, updateStatePainting } from "../../store/slices/singlePaintingSlice";
 
@@ -45,7 +45,7 @@ function EditingPainting({paintingId, ...rest}:EditingPaintingProps){
     
   }
   else if(error){
-    renderedComponent =<div>{error as string}</div>
+    renderedComponent =<div>error :c</div>
   }
   else if(!isLoading && error==null){
     
@@ -64,7 +64,7 @@ function EditingPainting({paintingId, ...rest}:EditingPaintingProps){
 
         return URL.createObjectURL(file);
       });
-      console.log("uploaded images: "+imageUrls );
+      //console.log("uploaded images: "+imageUrls );
       
           setUploadedRenderedImages(imageUrls);
           setUploadedFiles(selectedFiles);
@@ -81,12 +81,16 @@ function EditingPainting({paintingId, ...rest}:EditingPaintingProps){
 };
 const toggleValueHandler = (field: keyof Painting) => {
   //dispatch(updateForm({ ...data, [field]: !data[field] }));
+  
   dispatch(updateStatePainting({ ...data, [field]: !data[field] }))
+  console.log("original availability: ", data.original_availability, " Favorita: ", data.favorite);
+
 };
 
 const updatePaintingHandler = (event: React.FormEvent<HTMLFormElement>)=>{
-  event.preventDefault();
+  //event.preventDefault();
   const form = new FormData();
+  //form.append('id', paintingId.toString());
   form.append('altura_cm',data.altura_cm.toString());
   form.append('largo_cm',data.largo_cm.toString());
   form.append('medium',data.medium);
@@ -94,24 +98,58 @@ const updatePaintingHandler = (event: React.FormEvent<HTMLFormElement>)=>{
   form.append('available_copies',data.available_copies.toString());
   form.append('copies_made',data.copies_made.toString());
   form.append('price_copy',data.price_copy.toString());
-  form.append('original_available',data.original_availability.valueOf().toString());
+  //Se agregara cuando la disponibilidad de original esté en backend 
+  //form.append('original_availability',data.original_availability.valueOf().toString());
   form.append('name',data.name);
   form.append('description',data.description);
   form.append('price',data.price.toString());
   form.append('favorite',data.favorite.valueOf().toString());
   //form.append('category',formData.category.toString()); // prueba ambas opciones 
-  form.append('category', data.category.name);
-  /*
+  form.append('categoryId', data.category.id.toString());
+  
+  
+if(uploadedFiles.length==0){
+  form.append("imageFiles", uploadedFiles[0]);
 
-  data.image.forEach((singleimage) =>{
-      form.append("image", singleimage.);
+}
+else{
+  uploadedFiles.forEach((singleimage) =>{
+      form.append("imageFiles", singleimage);
   })
-      */
+}
+       
 
-  uploadedFiles.forEach((image)=>{
-    form.append('image', image);
-  });
+  /*const paintingData: EditPainting= {
+    largo_cm: data.largo_cm,
+    altura_cm: data.altura_cm,
+    medium: data.medium,
+    support_material: data.support_material,
+    certificate_of_authenticity: data.certificate_of_authenticity,
+    original_availability: data.original_availability,
+    price_copy: data.price_copy,
+    available_copies: data.available_copies,
+    copies_made: data.copies_made,
+    id: data.id,
+    name: data.name,
+    description: data.description,
+    price: data.price,
+    categoryId: data.category.id,
+    favorite: data.favorite,
+    creation_date: data.creation_date,
+    userId: data.userId,
+    imageFiles: uploadedFiles,
+    available: data.available,
+  }
+*/
 
+  // uploadedFiles.forEach((image)=>{
+  //   form.append('image', image);
+  // });
+  console.log("painting data: ",form);
+const request:updatePaintingParams= {id:paintingId, formData:form};
+
+
+  dispatch(updatePainting(request));
   
 }
 

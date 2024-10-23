@@ -19,6 +19,7 @@ export interface User {
     id:number;
     name: string;
   }
+
   export interface Product {
     id: number;
     name: string;
@@ -55,6 +56,29 @@ export interface User {
       
     
   }
+
+  export interface EditPainting {
+    id: string;
+    name: string;
+    description: string;
+    price: number;
+    categoryId: number;
+    favorite:boolean,
+    creation_date: string;
+    userId: number;
+    imageFiles: File[];
+    available: boolean;
+    largo_cm:number;
+    altura_cm:number;
+    medium:string;
+    support_material: string;
+    certificate_of_authenticity: boolean;
+    original_availability: boolean;
+    price_copy: number;
+    available_copies: number;
+    copies_made: number;
+  }
+  
 
 
   export interface Project {

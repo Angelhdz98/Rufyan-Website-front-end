@@ -1,11 +1,12 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
+import { EditPainting, Painting } from "../../types/typesIndex";
 //import { Painting } from "../../types/typesIndex";
 //import { PaintingsState } from "../slices/paintingsSlice";
 //import { Product } from "../../types/typesIndex";
 
 
-interface updatePaintingParams{
+export interface updatePaintingParams{
     formData: FormData;
     id:number;
 }

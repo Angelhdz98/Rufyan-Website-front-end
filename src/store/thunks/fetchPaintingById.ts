@@ -13,7 +13,7 @@ const fetchPaintingById = createAsyncThunk('singlePainting/fechPaintingById',
     const response = await 
     axios.get(`http://localhost:8080/paintings/${id}`);
     const data = response.data;
-   // console.log(data);
+    console.log(data);
     return  data;
 } catch (error: any) {
     return thunkAPI.rejectWithValue(error.response.data);
