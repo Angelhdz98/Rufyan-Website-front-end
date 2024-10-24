@@ -6,9 +6,11 @@ import CheckFormInput from "../../components/CheckFormInput";
 import Button from "../../components/Button";
 import FormImage from "./FormImage";
 import { useSelector } from "react-redux";
-import { AppDispatch, deleteImagePainting, fetchPaintingById, RootState, updatePainting, updatePaintingParams } from "../../store";
+import { AppDispatch, deleteImagePainting, DeleteImageParams, fetchPaintingById, RootState, updatePainting, updatePaintingParams } from "../../store";
 import { useDispatch } from "react-redux";
 import { deleteStateImage, updateStatePainting } from "../../store/slices/singlePaintingSlice";
+import ConfirmationModal from "../../components/ConfirmationModal";
+import Modal from "../../components/Modal";
 
 
 export interface EditingPaintingProps extends HTMLAttributes<HTMLDivElement> {
@@ -25,7 +27,8 @@ function EditingPainting({paintingId, ...rest}:EditingPaintingProps){
   //const [data, setdata ] = useState<Painting>(data);
     const [uploadedRenderedImages, setUploadedRenderedImages] = useState<string[]>([]);
      const[uploadedFiles, setUploadedFiles]= useState<File[]>([]);
-  
+      const[isConfirmationShowed, setIsConfirmationShowed ] = useState(false);
+      const[dispatchData, setDispatchData] = useState<any>();
     let renderedComponent= <div></div>;
    
         
@@ -152,11 +155,25 @@ const request:updatePaintingParams= {id:paintingId, formData:form};
   dispatch(updatePainting(request));
   
 }
+ let confirmationComponent= <ConfirmationModal 
+  data={dispatchData}
+  onAccept={()=>{
+   setIsConfirmationShowed(false);
+   dispatch(deleteImagePainting(dispatchData as DeleteImageParams));
+ }}
+ onCancel={()=> {setIsConfirmationShowed(false)
+               }
+ }
+ 
+ className=" h-5/6 w-5/6 z-[100] "
+ > Estas a punto de eliminar una Imagen de la obra</ConfirmationModal>;;
 
 const deletePaintingImageHandler = (paintingId:number,imageId: number) =>{
   console.log("valores image id" + imageId, " paintingId: ", paintingId)
   //dispatch(deleteStateImage(imageId));
-  dispatch(deleteImagePainting({paintingId, imageId}));
+  setIsConfirmationShowed(true);
+  setDispatchData({paintingId, imageId})
+//dispatch(deleteImagePainting({paintingId, imageId}));
 
 }
 
@@ -168,6 +185,7 @@ const renderedUploadedImages = uploadedRenderedImages.map((image)=>{
     return <img src={image} alt="" />
 });
 
+ ////= <ConfirmationModal  isOpen={isConfirmationShowed} onClose={()=>setIsConfirmationShowed(false) }  > Estas a punto de . . . </ConfirmationModal>;
 
 //const uploadedImages; 
 
@@ -175,7 +193,8 @@ const stringOriginalAvailable = data.original_availability ? "true" : "false";
 const stringFavorite = data.favorite ? "true" : "false";
   
 
-    renderedComponent= <form onSubmit={updatePaintingHandler} className={"flex flex-col m-6 "+ rest.className} encType="multipart/form-data">
+    renderedComponent= <form 
+    onSubmit={updatePaintingHandler} className={"flex flex-col m-6 "+ rest.className} encType="multipart/form-data">
 
    <div className="flex flex-col"> <div className="flex flex-row flex-gow  gap-6">
     <div className="leftColumn flex flex-col w-1/2 ">
@@ -381,7 +400,12 @@ const stringFavorite = data.favorite ? "true" : "false";
  
    </div>
 <Button rounded primary className="w-fit  place-self-end  " >Update painting</Button>
-
+{/* 
+{confirmationComponent}
+ */}
+ <Modal  className="h-5/6 w-5/6" isOpen={isConfirmationShowed} onClose={() =>setIsConfirmationShowed(false)}  >
+ {confirmationComponent}
+ </Modal>
   </div>
        
   </form>
