@@ -1,6 +1,6 @@
 import { HTMLAttributes, useEffect } from "react";
 import { FaWindowClose } from "react-icons/fa";
-interface ModalProps extends HTMLAttributes<HTMLDivElement>{
+export interface ModalProps extends HTMLAttributes<HTMLDivElement>{
     isOpen: boolean;
     onClose: ()=> void;
     children: React.ReactNode;

@@ -6,7 +6,7 @@ import axios from "axios";
 //import { PaintingsState } from "../slices/paintingsSlice";
 //import { Product } from "../../types/typesIndex";
 
-interface DeleteImageParams{
+export interface DeleteImageParams{
     paintingId: number;
     imageId:number; 
 }
