@@ -16,11 +16,12 @@ export interface ConfirmationModalProps extends HTMLAttributes<HTMLDivElement> {
 function ConfirmationModal(props: ConfirmationModalProps) {
 
 
-    return <div className={"flex flex-col"+ props.className}>
+    return <div className={"flex flex-col  justify-center items-center gap-8 w-full h-full"
+        + props.className}>
             <div>
                 {props.children}
             </div>
-            <div className="flex flex-row">
+            <div className="flex flex-row gap-4">
                <Button success 
                rounded onClick={props.onAccept} >
                  Continuar
