@@ -36,7 +36,7 @@ GET http://localhost:8080/products
 
 ###
 //Petición de las obras 
-GET http://localhost:8080/paintings
+GET http://localhost:8080/paintings/3
 
 ###
 //Petición de las obras 
