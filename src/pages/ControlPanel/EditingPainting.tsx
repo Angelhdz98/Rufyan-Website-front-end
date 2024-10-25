@@ -151,7 +151,8 @@ else{
   console.log("painting data: ",form);
 const request:updatePaintingParams= {id:paintingId, formData:form};
 
-
+setUploadedRenderedImages([]);
+setUploadedFiles([]);
   dispatch(updatePainting(request));
   
 }
@@ -196,8 +197,8 @@ const stringFavorite = data.favorite ? "true" : "false";
     renderedComponent= <form 
     onSubmit={updatePaintingHandler} className={"flex flex-col m-6 "+ rest.className} encType="multipart/form-data">
 
-   <div className="flex flex-col"> <div className="flex flex-col   sm:flex-row  lg:flex-row  gap-6">
-    <div className="leftColumn flex flex-col w-full sm:w-1/2 ">
+   <div className="flex flex-col h-fit gap-8 "> <div className="flex flex-col   sm:flex-row   gap-6 h-full ">
+    <div className="leftColumn flex flex-col w-full sm:w-1/2  h-full">
       <FormInput type={"text"} name={"name"}
         value={data.name}
         onChange={handleChange}>
@@ -303,7 +304,7 @@ const stringFavorite = data.favorite ? "true" : "false";
 
     </div>
 
-    <div className="rightColumn flex flex-col w-full sm:w-1/2">
+    <div className="rightColumn flex flex-col w-full sm:w-1/2 h-full">
       <FormInput type={"text"} name={"support_material"}
         value={data.support_material}
         onChange={handleChange}>
@@ -399,7 +400,7 @@ const stringFavorite = data.favorite ? "true" : "false";
     </div>
  
    </div>
-<Button rounded primary className="w-fit  place-self-end  " >Update painting</Button>
+<Button rounded primary className="w-fit h-fit  place-self-end  " >Update painting</Button>
 {/* 
 {confirmationComponent}
  */}
