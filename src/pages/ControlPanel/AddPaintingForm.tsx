@@ -76,18 +76,18 @@ function AddPaintingForm() {
     form.append('available_copies',formData.available_copies.toString());
     form.append('copies_made',formData.copies_made.toString());
     form.append('price_copy',formData.price_copy.toString());
-    form.append('original_available',formData.original_available.valueOf().toString());
+    //form.append('original_available',formData.original_available.valueOf().toString());
     form.append('name',formData.name);
     form.append('description',formData.description);
     form.append('price',formData.price.toString());
     form.append('favorite',formData.favorite.valueOf().toString());
     //form.append('category',formData.category.toString()); // prueba ambas opciones 
-    form.append('category',formData.category.category);
+    form.append('category',"paintings");
     formData.image.forEach((image) =>{
         form.append("image", image);
     })
 
-    
+    console.log (form); 
     
     dispatch(addPainting(form));
     

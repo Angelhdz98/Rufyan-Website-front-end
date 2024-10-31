@@ -107,7 +107,7 @@ const updatePaintingHandler = (event: React.FormEvent<HTMLFormElement>)=>{
   form.append('description',data.description);
   form.append('price',data.price.toString());
   form.append('favorite',data.favorite.valueOf().toString());
-  //form.append('category',formData.category.toString()); // prueba ambas opciones 
+  form.append('category',data.category.name); // prueba ambas opciones 
   form.append('categoryId', data.category.id.toString());
   
   
