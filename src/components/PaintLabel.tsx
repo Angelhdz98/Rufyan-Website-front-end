@@ -5,7 +5,8 @@ import { BiDownArrow } from "react-icons/bi";
 import { Fragment } from "react/jsx-runtime"
 import BuyNowButton from "./BuyNowButton";
 import AddToCartButton from "./AddToCartButton";
-export interface PaintLabelProps{
+import { HTMLAttributes } from "react";
+export interface PaintLabelProps extends HTMLAttributes<HTMLDivElement>{
     paint: Painting;
     hidden?: boolean;
     clicked?: boolean;
@@ -19,7 +20,7 @@ export interface PaintLabelProps{
     </div>)
     };
 
-function PaintLabel({paint, clicked, isVisible }:PaintLabelProps) {
+function PaintLabel({paint, clicked, isVisible, onClick }:PaintLabelProps) {
     const finalClassname= classNames("px-2 py-4 bg-white border-t-2  border-black  flex flex-col gap-0  w-full   transition-transform duration-300   box-border ",
         {
             "transform -translate-y-full absolute ":!isVisible,
@@ -29,7 +30,8 @@ function PaintLabel({paint, clicked, isVisible }:PaintLabelProps) {
         )
 
 
-    return <div className={finalClassname}>
+    return <div className={finalClassname}
+                onClick={ onClick}>
         <div>
             <span className="font-bold">{paint.name}</span>
         </div>

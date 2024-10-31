@@ -12,9 +12,9 @@ import "swiper/css/effect-cards"
 
 
 import { ImageProduct } from "../types/typesIndex";
-import { useState } from "react";
+import { HTMLAttributes, useState } from "react";
 
-interface SwiperSliderProps{
+interface SwiperSliderProps extends HTMLAttributes<HTMLDivElement>{
     images: ImageProduct[] ;
     className?: string;
 };
@@ -65,6 +65,7 @@ function SwiperSlider(props:SwiperSliderProps){
             /*src={`http://localhost:8080${image.url}`}*/}
             <img   src={image.url} 
                     alt={image.productName}
+                    onClick={props.onClick}
                     loading="lazy"
                     onLoadedData={() =>loadedHandler()}
                     className={(selectedIndex==index?"":"hidden ") + (loaded?" opacity-100 " : "  ") +" object-cover  h-full   " +props.className} />
