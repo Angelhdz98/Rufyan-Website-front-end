@@ -57,6 +57,21 @@ export interface User {
     
   }
 
+  export interface OptionSelectRequest{
+    name: string;
+    label: string;    
+  }
+
+  export interface OptionSelect extends OptionSelectRequest{
+    id:number;
+
+  }
+
+  export interface ProductCategory extends OptionSelect{
+
+  }
+
+
   export interface EditPainting {
     id: string;
     name: string;

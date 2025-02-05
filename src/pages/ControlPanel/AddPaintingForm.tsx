@@ -10,6 +10,8 @@ import { deleteImage } from "../../store/slices/formPaintingSlice";
 import { ImageProduct } from "../../types/typesIndex";
 import { FaCloudUploadAlt } from "react-icons/fa";
 import { FaRegCheckCircle } from "react-icons/fa";
+import FormApiSelect from "../../components/FormApiSelect";
+import { Form } from "react-router-dom";
 
 export interface PaintingFormProps {
     
@@ -81,8 +83,8 @@ function AddPaintingForm() {
     form.append('description',formData.description);
     form.append('price',formData.price.toString());
     form.append('favorite',formData.favorite.valueOf().toString());
-    //form.append('category',formData.category.toString()); // prueba ambas opciones 
-    form.append('category',"paintings");
+    form.append('category',formData.category.toString()); // prueba ambas opciones 
+    //form.append('category',"paintings");
     formData.image.forEach((image) =>{
         form.append("image", image);
     })
@@ -101,6 +103,8 @@ function AddPaintingForm() {
     dispatch(updateForm({ ...formData, [field]: !formData[field] }));
   };
 
+
+
   const handleImageUpload =  (e: React.ChangeEvent<HTMLInputElement>) =>{
     e.preventDefault();
     const files = e.target.files;
@@ -111,6 +115,16 @@ function AddPaintingForm() {
       }  
 
     
+    };
+
+    const handleOptionSelect = (e: React.ChangeEvent<HTMLSelectElement>) =>{
+      e.preventDefault();
+      const {name, value} = e.target;
+      //console.log("name: ",name, " value: ", value);
+
+      dispatch(updateForm({...formData, [name]:value}));
+
+      //console.log("formData: ", formData);
     };
 
     const deleteImageUpload = (name:string) =>{
@@ -313,7 +327,15 @@ function AddPaintingForm() {
       </div>
 
 
+          <FormApiSelect  field={"category"} 
+                          label={"Categoría"} 
+                          apiEndpoint={"https://catfact.ninja/facts"} 
+                           onChange={ handleOptionSelect} 
+                           value={formData.category.category}
+                           onOptionSelect={handleOptionSelect}
+                           />
 
+                          
 
 
 
@@ -326,6 +348,15 @@ function AddPaintingForm() {
         Material de soporte
       </FormInput>
 
+  {/*    <FormApiSelect 
+                field="support_material" 
+                label={"Material de soporte"}
+                apiEndpoint={"https://catfact.ninja/facts"}
+                onChange={handleOptionSelect} >
+                Material de soporte
+      </FormApiSelect>
+*/
+}
       <FormInput type={"text"} name={"medium"}
         value={formData.medium}
         onChange={handleChange}>

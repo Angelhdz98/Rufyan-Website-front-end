@@ -14,6 +14,9 @@ import { productsReducer } from "./slices/productsSlice";
 import { sortProductsReducer } from "./slices/sortProductSlice";
 import { singleProductReducer } from "./slices/singleProductSlice";
 import { singlePaintingReducer } from "./slices/singlePaintingSlice";
+import { selectOptionsReducer } from "./slices/selectOpitonsSlice";
+import { changeOption } from "./slices/selectOpitonsSlice";
+
 
 const store = configureStore({
     reducer:{
@@ -24,7 +27,8 @@ const store = configureStore({
         products:productsReducer,
         sortProducts:sortProductsReducer,
         singleProduct:singleProductReducer,
-        singlePainting:singlePaintingReducer
+        singlePainting:singlePaintingReducer,
+        selectOption: selectOptionsReducer,
     },
 });
 
@@ -38,8 +42,10 @@ export * from './thunks/fetchProductById'
 export * from './thunks/updatePainting'
 export * from './thunks/deleteImagePainting'
 export * from './thunks/fetchPaintingById'
+export * from './thunks/addOption'
+export * from './thunks/fetchOptions'
 
-export {updateForm, addImage,deleteImage, setSortBy,toggleSortOrder, beginSorting,updateStatePainting, deleteStateImage }
+export {updateForm, addImage,deleteImage, setSortBy,toggleSortOrder, beginSorting,updateStatePainting, deleteStateImage, changeOption }
 
 
 export default store;
