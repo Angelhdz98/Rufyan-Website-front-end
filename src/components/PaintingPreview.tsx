@@ -7,11 +7,39 @@ import { useDispatch } from "react-redux";
 import { AppDispatch } from "../store";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import PaintingPreviewButtonPanel from "./PaintingPreviewButtonPanel";
+import obra2 from "../../public/assets/Images/imgObras/obra2.jpg"
 
 interface PaintingPreviewProps {
     paint: Painting;
 }
 
+const examplePaint: Painting = 
+    {
+        id: 1,
+        name: "Paisaje Tranquilo",
+        description: "Pintura al óleo de un paisaje sereno",
+        price: 1200.00,
+        category: { id: 1, name: "painting", label: "Pintura" },
+        favorite: false,
+        creation_date: "2023-05-15",
+        userId: 1,
+        image: [{
+            id: 1,
+            productName: "una obra fea",
+            url: obra2,
+        }],
+        largo_cm: 30,
+        altura_cm:50,
+        medium: "Aceite",
+        support_material: "Papel algodon",
+        certificate_of_authenticity: true,
+        original_availability: true,
+        price_copy: 200,
+        available_copies: 11,
+        copies_made: 15 ,
+        available: true,
+    }
 
 
 function PaintingPreview({ paint }: PaintingPreviewProps) {
@@ -21,10 +49,7 @@ function PaintingPreview({ paint }: PaintingPreviewProps) {
 
     const dispatch = useDispatch<AppDispatch>();
 
-    const addToCartHandler = (id: number, originalSelected: boolean) => {
-        //dispatch();
-        console.log("Agregar al carrito obra con ID: " + id + " original " + (originalSelected ? "sí" : "no"));
-    }
+    
 
     //const originalAvailable = true; // momentaneo para pruebas
 
@@ -56,6 +81,8 @@ function PaintingPreview({ paint }: PaintingPreviewProps) {
     // cambiar este ultimo booleano por paint.original_availability 
     const renderedPrice = originalSelected ? (<div >Price original: <br /> {paint.price}.00 MXN</div>) : (<div>Price p/copy: <br /> {paint.price_copy}.00 MXN</div>);
 
+    
+
     {/*`http://localhost:8080${paint.image[0].url}`*/ }
 
     return <div className="flex flex-col relative h-[90%] border-2 border-black rounded-2xl ">
@@ -66,11 +93,7 @@ function PaintingPreview({ paint }: PaintingPreviewProps) {
             alt={paint.image[0].productName} />
             <div 
             className= " bg-slate-300 p-2 px-6 rounded-b-2xl h-[10%]">
-                <div className="flex flex-row justify-between ">
-
-                    <BuyNowButton />
-                    <AddToCartButton onClick = {()=>addToCartHandler(paint.id, originalSelected)} />
-                </div>
+               <PaintingPreviewButtonPanel  paint={examplePaint} isOriginalSelected={false} />
             </div>
             <div className="flex gap-2 text-sm  original-available-tag absolute items-center z-10 bg-white/70 rounded top-2 right-4 px-1 ">
                 {availabilityTag}
@@ -94,3 +117,4 @@ function PaintingPreview({ paint }: PaintingPreviewProps) {
 }
 
 export default PaintingPreview; 
+export  {examplePaint};
