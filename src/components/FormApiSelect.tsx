@@ -138,7 +138,7 @@ function FormApiSelect
 
   });
 
-    const optionAddOption = <option key={0} value={"addOption"}>Agregar otra opción</option>
+    const optionAddOption = <option onClick={()=>setShowOptionForm(true)} key={0} value={"addOption"}>Agregar otra opción</option>
     
     const addOptionForm = <form
     onSubmit={handleAddOption}
