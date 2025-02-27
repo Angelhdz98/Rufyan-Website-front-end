@@ -12,6 +12,7 @@ import ControlPanel from "./pages/ControlPanel/ControlPanel";
 import ProductList from "./pages/galleryStore/ProductList";
 import ProductPage from "./pages/galleryStore/ProductPage";
 import EditAll from "./pages/ControlPanel/EditAll";
+import Cart from "./pages/cartPage/Cart";
 //import { homeLoader } from "./pages/home/homeLoader";
 //import store from "./store";
 
@@ -64,6 +65,10 @@ const router= createBrowserRouter([
     {
       path:'/admin/edit',
       element:<EditAll/>
+    },
+    {
+      path:'/cart',
+      element:<Cart/>
     }
   ]
 }
