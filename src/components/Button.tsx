@@ -44,12 +44,13 @@ const finalClassName = className('flex items-center px-2 border border-[3px]', r
     "text-green-500": outline && success,
     "text-yellow-500": outline && warning,
     "text-red-500": outline && danger,
+    
 
 }) ;
 
 
 
-        return <button {...rest} className={finalClassName} > {children} </button>
+        return <button {...rest} className={finalClassName+" "+ rest.className} > {children} </button>
 }
 
 Button.propTypes= {
