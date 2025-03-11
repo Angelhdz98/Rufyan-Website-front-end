@@ -17,17 +17,17 @@ function PiecesSelector(){
 
     const onePieceLessButton = 
     pieces==1? <FaRegTrashAlt onClick={restAPieceHandler} 
-                className="text-xl" /> :
+                className="text-md text-[#C04D2A] "  /> :
      <AiFillMinusSquare onClick={restAPieceHandler}
-     className="text-xl"/>;
+     className="text-xl text-[#C04D2A] "/>;
 
-    const onePieceMoreButton = <AiFillPlusSquare onClick={addAPieceHandler}
-    className="text-xl"/>;
+    const onePieceMoreButton = <AiFillPlusSquare  onClick={addAPieceHandler}
+    className="text-xl text-[#C04D2A]"/>;
 
-    return <div className="">
+    return <div className="  ">
         <div className="">Piezas</div>
         
-<div className="flex flex-row  w-16 justify-around items-center border-black border-2 ">
+<div className="flex flex-row  w-16 justify-around items-center border-black border rounded-md ">
         <div className="one-piece-less ">
             {onePieceLessButton}
         </div>
@@ -39,3 +39,4 @@ function PiecesSelector(){
 }
 
 export default PiecesSelector;
+
