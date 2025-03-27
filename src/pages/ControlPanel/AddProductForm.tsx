@@ -1,3 +1,5 @@
+import PaintingLoader from "../../components/PaintingLoader";
+import ProjectLoader from "../../components/ProjectLoader";
 
 /*import image1 from "../../../public/assets/Images/imgObras/obra1.jpg"
 import image2 from "../../../public/assets/Images/imgObras/obra2.jpg"
@@ -9,7 +11,14 @@ function AddProductForm(){
     return <div className="h-full">
         AddProductForm component and new slider test
         <hr />
-        Prueba de ProjectCard
+        Prueba de Loader
+        <div className="flex content-center justify-center">
+        <PaintingLoader/>
+        <ProjectLoader/>
+        </div>
+         
+
+
 
         
         

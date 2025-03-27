@@ -3,7 +3,9 @@ import { FormInputProps } from "./RegisterForm";
 import classNames from "classnames";
 function FormInput({type, name, value, className, children, labelClassname, onChange}:FormInputProps){
     return <Fragment >
-    <label className={classNames("block text-gray-700", labelClassname,{})}>{children}</label>
+    <label className={classNames("block text-gray-700", labelClassname,{})}>
+      {children}
+      </label>
     <input
       type={type}
       name={name} 

@@ -22,4 +22,4 @@ function PaintingPreviewButtonPanel ({paint, ...rest}:PanelButton){
 </div>
 }
 
-export default PaintingPreviewButtonPanel;
+export default PaintingPreviewButtonPanel

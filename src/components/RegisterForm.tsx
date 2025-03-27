@@ -108,7 +108,7 @@ function RegisterForm({onClick}:LogInRegisterProps) {
             </div>
 
             <div className="col-span-2">
-              <FormInput type="text" name={formData.data.address} value={formData.data.address} onChange={handleChange}>Addrees* optional just for shipment</FormInput>
+              <FormInput type="text" name={"address"} value={formData.data.address} onChange={handleChange}>Addrees* optional just for shipment</FormInput>
             </div>
           </div>
     
