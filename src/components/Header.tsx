@@ -94,10 +94,21 @@ function Header(){
         </div>
 
     <div className="flex flex-row items-center gap-2 absolute bottom-2 2xl:right-32 md:right-4 right-12"> 
+    
+    <CustomLink to={"/user-panel"} className="flex flex-row items-center gap-1">
     <FaUserAlt size={16}/>
     <span className=" lg:max-2xl:block max-md:hidden ">Welcome name</span>
+    </CustomLink>
+    
+    
+    <CustomLink to={"/likes"}>
     <FcLike size={22}/>
-    <MdShoppingCart size={20}/> 
+    </CustomLink>
+    
+    <CustomLink to={"/cart"}>
+    <MdShoppingCart size={20} /> 
+    </CustomLink>
+    
 
     </div>
     <Modal isOpen={isModalOpen} onClose={closeModal} >

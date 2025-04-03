@@ -4,7 +4,6 @@ import CartItem from "./CartItem";
 import InfoChart from "../../components/InfoChart";
 import {CartItemInterface, Cup, Hat, Painting, Product, ProductCategory } from "../../types/typesIndex";
 
-
 import obra1 from "../../../public/assets/Images/imgObras/obra1.jpg"
 import obra2 from "../../../public/assets/Images/imgObras/obra2.jpg"
 import obra3 from "../../../public/assets/Images/imgObras/obra3.jpg"
@@ -18,13 +17,12 @@ import cup from "../../../public/assets/Images/productos/cups/customCup.png"
 import cup2 from "../../../public/assets/Images/productos/cups/cup2.png"
 
 
+
 function Cart() {
-  
-//Random data for testing
   const urbanCategory:ProductCategory={id:1, label:"Urbano", name:"Urban" }
-  const contemporaryArt:ProductCategory ={id:2, label:"Contemporaneo",name:"Comtemporary Art" }
-  
-// it suppose that this component will ask for the userCart and it will response with a array with all cartItems
+const contemporaryArt:ProductCategory ={id:2, label:"Contemporaneo",name:"Comtemporary Art" }
+
+
   const paintings: Painting[] = [
     {
       id: 1,
@@ -265,6 +263,8 @@ function Cart() {
       quantity: 1
     }
   ];
+// it suppose that this component will ask for the userCart and it will response with a array with all cartItems
+  
    
 
 
@@ -281,7 +281,7 @@ function Cart() {
           {/* Columna izquierda (ocupará el espacio restante y permitirá scroll) */}
           <div className="flex flex-col w-3/5 overflow-y-auto">
             {/* Contenedor de los elementos hijos (CartItem) */}
-            <div className="flex flex-col gap-4">
+            <div className="flex flex-col gap-4 p-4">
              { /*<CartItem />
               <CartItem />
               <CartItem />
@@ -298,7 +298,7 @@ function Cart() {
   
           {/* Columna derecha (altura fija de 420px) */}
           <div className="w-1/3 h-[420px] border border-black rounded-lg">
-            <InfoChart />
+            <InfoChart items={cart} />
           </div>
         </div>
       </div>
