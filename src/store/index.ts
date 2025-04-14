@@ -16,6 +16,7 @@ import { singleProductReducer } from "./slices/singleProductSlice";
 import { singlePaintingReducer } from "./slices/singlePaintingSlice";
 import { selectOptionsReducer } from "./slices/selectOpitonsSlice";
 import { changeOption } from "./slices/selectOpitonsSlice";
+import { cartItemReducer } from "./slices/cartItemsSlice";
 
 
 const store = configureStore({
@@ -29,6 +30,7 @@ const store = configureStore({
         singleProduct:singleProductReducer,
         singlePainting:singlePaintingReducer,
         selectOption: selectOptionsReducer,
+        cartItem:cartItemReducer,
     },
 });
 
@@ -44,6 +46,8 @@ export * from './thunks/deleteImagePainting'
 export * from './thunks/fetchPaintingById'
 export * from './thunks/addOption'
 export * from './thunks/fetchOptions'
+export * from './thunks/changeCartItemQuantity'
+export * from './thunks/deleteCartItem'
 
 export {updateForm, addImage,deleteImage, setSortBy,toggleSortOrder, beginSorting,updateStatePainting, deleteStateImage, changeOption }
 

@@ -7,7 +7,14 @@ export interface User {
     password: string;
     role: string;
     products: Product[];
+    firstName: string; 
+    lastName:string;
+    birthDate:string;// wehen the API got readry will be changed for a object to control dates 
+  addresses?:UserAddress[]
   }
+  // we can change the normal user For a DTO user so it will just have the needed values
+
+  
   export interface ImageProduct{
     id: number;
     productName: string;

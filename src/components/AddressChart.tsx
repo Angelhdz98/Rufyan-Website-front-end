@@ -7,13 +7,7 @@ import AddresSelector from "./AddressSelector";
 import { UserAddress } from "../types/typesIndex";
 import { info } from "console";
 
-
-function AddressChart ({isEditing, isInForm,changeIsEditing, changeIsInForm}:{isEditing:boolean, changeIsEditing:(value: boolean)=>void, isInForm:boolean,changeIsInForm:(value: boolean)=>void   }){
-
-    //define HTML structures
-    
-    // addresses will be filled by a HTTP request limit of 3
-  const addresses:UserAddress[]= [{addressLine1: "paseo de la loma bonita",
+export const addressesSample:UserAddress[]= [{addressLine1: "paseo de la loma bonita",
                           city:"Guadalajara",
                           state:  "Jalisco",
                           postalCode:"45180",
@@ -31,7 +25,21 @@ function AddressChart ({isEditing, isInForm,changeIsEditing, changeIsInForm}:{is
                           postalCode:"45180",
                         country:"México",
                       neighborhood:"Tabachines"}];
+    //{isEditing, isInForm,changeIsEditing, changeIsInForm}:{isEditing:boolean, changeIsEditing:(value: boolean)=>void, isInForm:boolean,changeIsInForm:(value: boolean)=>void   }
+
+function AddressChart ({isInForm, changeIsInForm}:{isInForm: boolean, changeIsInForm:(value: boolean)=>void }){
+  const [isEditing, setIsEditing] = useState(false);
+ 
+
+  const changeIsEditing = (value:boolean) =>{
+    setIsEditing(value);
+  }
+ 
+
+    //define HTML structures
     
+    // addresses will be filled by a HTTP request limit of 
+  
     const [addressForm, setAddressForm] = useState<UserAddress>({addressLine1: ""
       , state:  "",
     postalCode:"",
@@ -39,7 +47,7 @@ function AddressChart ({isEditing, isInForm,changeIsEditing, changeIsInForm}:{is
   neighborhood: ""});
     
     const [addressComponent, setAddressComponent] = useState("info");
-    const [selectedAddress, setSelectedAddress] = useState(addresses[1]);
+    const [selectedAddress, setSelectedAddress] = useState(addressesSample[1]);
     
     
 
@@ -107,7 +115,7 @@ function AddressChart ({isEditing, isInForm,changeIsEditing, changeIsInForm}:{is
     content= <AddressInfo address={selectedAddress}/>
   } else if (addressComponent == "edit"){
     content= <AddresSelector onSelectAddress={selectedAddressHandler}
-    userAddresses={addresses} 
+    userAddresses={addressesSample} 
     selectedAddress={selectedAddress}
     confirmAddress={confirmAddress} />
     //
@@ -118,7 +126,7 @@ function AddressChart ({isEditing, isInForm,changeIsEditing, changeIsInForm}:{is
   else if (addressComponent == "change" ){
     content= <AddresSelector    
     onSelectAddress={selectedAddressHandler}
-    userAddresses={addresses} 
+    userAddresses={addressesSample} 
                                 selectedAddress={selectedAddress} 
                                 confirmAddress={confirmAddress} 
                                 />
@@ -132,7 +140,7 @@ function AddressChart ({isEditing, isInForm,changeIsEditing, changeIsInForm}:{is
    <AddressButtons              onAddAddress={addAddressHandler} 
                                 onSelectAddress={ selectedAddressHandler} 
                                 onEditAddress={onEditAddressHandler}
-                                className={isInForm? "hidden" :"" }
+                                className={isInForm? "hidden" :" " }
                                 isEditing={isEditing}/>
                                 
   </div>

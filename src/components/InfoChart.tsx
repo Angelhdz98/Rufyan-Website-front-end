@@ -10,13 +10,8 @@ export interface InfoChartProps{
 
 function InfoChart({items}:InfoChartProps){
     
-  const [isEditing, setIsEditing] = useState(false);
   const [isInForm, setIsInForm] = useState(false);
-
-  const changeIsEditing = (value:boolean) =>{
-    setIsEditing(value);
-  }
-  const changeIsInForm = (value: boolean) =>{
+ const changeIsInForm = (value: boolean) =>{
     setIsInForm(value);
   }
   let precio =0; 
@@ -37,8 +32,7 @@ function InfoChart({items}:InfoChartProps){
     return <div className=" flex flex-row "> 
                 <div className=" flex flex-col ">
                    <span className="font-bold px-2"> Address</span>
-                 <AddressChart isEditing={isEditing}  isInForm={isInForm} changeIsEditing={changeIsEditing}
-                 changeIsInForm={changeIsInForm} />
+                 <AddressChart isInForm={isInForm} changeIsInForm={changeIsInForm} />
                   <div className={isInForm? " hidden": " "}>
                      <div className=" flex flex-col ">
                         <div className="flex flex-row justify-between mx-2 "> 

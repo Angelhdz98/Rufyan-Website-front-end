@@ -56,7 +56,7 @@ function Header(){
         document.removeEventListener("click", handler);
     }
     },[activeMenu])
-    return <div className="flex flex-row   items-end 2xl:gap-32 xl:gap-16 lg:gap-8     relative h-full min-h-36">
+    return <div className="flex flex-row   items-end 2xl:gap-32 xl:gap-16 lg:gap-8     relative h-32 min-h-36">
         <div className="w-1/12 h-full min-w-64 min-h-24"  >
          <Logo to="/"  />
                  </div>

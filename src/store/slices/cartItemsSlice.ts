@@ -14,6 +14,7 @@ import cup from "../../../public/assets/Images/productos/cups/customCup.png"
 import cup2 from "../../../public/assets/Images/productos/cups/cup2.png"
 import { createSlice } from "@reduxjs/toolkit";
 import { changeCartItemQuantity } from "../thunks/changeCartItemQuantity";
+import { deleteCartItem } from "../thunks/deleteCartItem";
 
 //Random data for testing
 const urbanCategory:ProductCategory={id:1, label:"Urbano", name:"Urban" }
@@ -277,15 +278,38 @@ export interface CartItemSlice {
     reducers:{
 
     },
+
+    //  La api inicialmente retornará el carrito completo
     extraReducers(builder){
-        builder.addCase(changeCartItemQuantity.pending, (state, action) =>{
+        builder.addCase(changeCartItemQuantity.pending, (state ) =>{
             state.isLoading=true;
             state.error= null;
         })
         builder.addCase(changeCartItemQuantity.fulfilled, (state, action) =>{
             state.isLoading=false;
+            state.data= action.payload;            
             
-        })  
+        })
+        builder.addCase(changeCartItemQuantity.rejected, (state, action) =>{
+          state.isLoading=false;
+          state.error= action.payload as string;             
+      })
+      builder.addCase(deleteCartItem.pending, (state ) =>{
+        state.isLoading=true;
+        state.error= null;
+    })
+    builder.addCase(deleteCartItem.fulfilled, (state, action) =>{
+        state.isLoading=false;
+        state.data= action.payload;            
+        
+    })
+    builder.addCase(deleteCartItem.rejected, (state, action) =>{
+      state.isLoading=false;
+      state.error= action.payload as string;             
+  })
+
     }
     
   });
+
+  export const cartItemReducer = cartItemSlice.reducer;
