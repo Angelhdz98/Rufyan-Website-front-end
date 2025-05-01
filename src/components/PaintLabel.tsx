@@ -48,9 +48,9 @@ function PaintLabel({paint, clicked, isVisible, onClick }:PaintLabelProps) {
         </p>
         {clicked ? botoneraObra(): <div className="flex flex-row place-self-center mt-1"><BiDownArrow className="text-[#CB3235]"/></div>  }
         
-        <div>
+       { /*<div>
             <span className="text-orange-500 absolute top-0 right-1 font-bold text-xs">Price: {paint.price}.00 MXN</span>
-        </div>
+        </div>*/}
     </div>
 }
 

@@ -9,6 +9,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import PaintingPreviewButtonPanel from "./PaintingPreviewButtonPanel";
 import obra2 from "../../public/assets/Images/imgObras/obra2.jpg"
+import { LikeButton } from "./LikeButton";
 
 interface PaintingPreviewProps {
     paint: Painting;
@@ -34,7 +35,7 @@ const examplePaint: Painting =
         medium: "Aceite",
         support_material: "Papel algodon",
         certificate_of_authenticity: true,
-        original_availability: true,
+        isOrginalAvailable: true,
         price_copy: 200,
         available_copies: 11,
         copies_made: 15 ,
@@ -61,7 +62,7 @@ function PaintingPreview({ paint }: PaintingPreviewProps) {
         setOriginalSelected(!originalSelected);
     }
     // cambiar el primer false por paint.original.available 
-    const availabilityTag = paint.original_availability ? <div className="flex">
+     const availabilityTag = paint.isOrginalAvailable ? <div className="flex">
         Original
         <IoIosCheckmarkCircle className="text-green-500 mt-1" />
     </div> : paint.available_copies > 0
@@ -95,17 +96,21 @@ function PaintingPreview({ paint }: PaintingPreviewProps) {
             className= " bg-slate-300 p-2 px-6 rounded-b-2xl h-[10%]">
                <PaintingPreviewButtonPanel  paint={examplePaint} isOriginalSelected={false} />
             </div>
-            <div className="flex gap-2 text-sm  original-available-tag absolute items-center z-10 bg-white/70 rounded top-2 right-4 px-1 ">
+            <div className="flex gap-2 text-sm  original-available-tag absolute items-center z-10 bg-white/70 rounded top-2 left-4 px-1 ">
                 {availabilityTag}
 
 
             </div>
             {availableCopies}
-            <div onClick={() => toggleOnSelectedHandler()} className="precios text-sm absolute z-20 right-2 bottom-12 bg-amber-500/80 rounded-lg px-2 ">{renderedPrice}
+            <div onClick={() => toggleOnSelectedHandler()} className="precios text-sm absolute z-20 right-2 top-2 bg-white/70 rounded-lg px-2 ">
+                {renderedPrice}
+               
 
             </div>
-
-        
+            <div className= {`text-[#eb4b1b] rounded-md text-3xl absolute z-10 bottom-12 right-2   border bg-white/70  cursor-pointer `} >
+                <LikeButton/>   
+                </div>
+                   
 
 
 
