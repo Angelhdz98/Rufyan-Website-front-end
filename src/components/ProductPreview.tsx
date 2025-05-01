@@ -4,6 +4,7 @@ import { IoIosCheckmarkCircle } from "react-icons/io";
 import { CiNoWaitingSign } from "react-icons/ci";
 import BuyNowButton from "./BuyNowButton";
 import AddToCartButton from "./AddToCartButton";
+import { LikeButton } from "./LikeButton";
 
 interface ProductPreviewProps {
     product: Product;
@@ -40,6 +41,9 @@ function ProductPreview({product}:ProductPreviewProps){
     <div className="flex gap-2 text-sm  original-available-tag absolute items-center z-10 bg-white/70 rounded top-2 right-4 px-1 ">
          {availabilityTag} 
         </div>
+        <div className= {`text-[#eb4b1b] rounded-md text-3xl absolute z-10 bottom-12 right-2   border bg-white/70  cursor-pointer `} >
+                <LikeButton/>   
+                </div>
 
         
     {/*<div className="prices absolute "></div>*/}
