@@ -43,7 +43,7 @@ const initialState: SinglePaintingsState = {
       medium: "Óleo",
       support_material: "Lienzo",
       certificate_of_authenticity: true,
-      original_availability: false,
+      isOrginalAvailable: false,
       available_copies: 2,
       copies_made: 8,
       price_copy:300,

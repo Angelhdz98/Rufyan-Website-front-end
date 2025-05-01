@@ -86,7 +86,7 @@ const toggleValueHandler = (field: keyof Painting) => {
   //dispatch(updateForm({ ...data, [field]: !data[field] }));
   
   dispatch(updateStatePainting({ ...data, [field]: !data[field] }))
-  console.log("original availability: ", data.original_availability, " Favorita: ", data.favorite);
+  console.log("original availability: ", data.isOrginalAvailable, " Favorita: ", data.favorite);
 
 };
 
@@ -190,7 +190,7 @@ const renderedUploadedImages = uploadedRenderedImages.map((image)=>{
 
 //const uploadedImages; 
 
-const stringOriginalAvailable = data.original_availability ? "true" : "false";
+const stringOriginalAvailable = data.isOrginalAvailable ? "true" : "false";
 const stringFavorite = data.favorite ? "true" : "false";
   
 
@@ -273,7 +273,7 @@ const stringFavorite = data.favorite ? "true" : "false";
           <div className="flex flex-row w-4/5 items-center">
 
             <CheckFormInput type={"checkbox"} name={"original_availability"}
-              checked={data.original_availability}
+              checked={data.isOrginalAvailable}
               value={stringOriginalAvailable}
               onChange={() => toggleValueHandler("original_availability")}
               labelClassname="w-full"
