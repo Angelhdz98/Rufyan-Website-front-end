@@ -48,7 +48,7 @@ const contemporaryArt:ProductCategory ={id:2, label:"Contemporaneo",name:"Comtem
         medium: "Óleo",
         support_material: "Lienzo",
         certificate_of_authenticity: true,
-        original_availability: false,
+        isOrginalAvailable: false,
         available_copies: 2,
         copies_made: 8,
         price_copy:280,
@@ -81,7 +81,7 @@ const contemporaryArt:ProductCategory ={id:2, label:"Contemporaneo",name:"Comtem
         medium: "Óleo",
         support_material: "Lienzo",
         certificate_of_authenticity: true,
-        original_availability: true,
+        isOrginalAvailable: true,
         available_copies: 0,
         copies_made: 12,
         price_copy:300,
@@ -114,7 +114,7 @@ const contemporaryArt:ProductCategory ={id:2, label:"Contemporaneo",name:"Comtem
         medium: "Óleo",
         support_material: "Lienzo",
         certificate_of_authenticity: true,
-        original_availability: true,
+        isOrginalAvailable: true,
         available_copies: 4,
         copies_made: 12,
         price_copy:400,
@@ -147,7 +147,7 @@ const contemporaryArt:ProductCategory ={id:2, label:"Contemporaneo",name:"Comtem
         medium: "Óleo",
         support_material: "Lienzo",
         certificate_of_authenticity: true,
-        original_availability: true,
+        isOrginalAvailable: true,
         available_copies: 4,
         copies_made: 12,
         price_copy:480.00,
@@ -275,13 +275,13 @@ const contemporaryArt:ProductCategory ={id:2, label:"Contemporaneo",name:"Comtem
     });
     
 
-    return (      <div className="m-6 h-dvh shadow-lg rounded-lg">
+    return (      <div className="m-6  shadow-lg rounded-lg h-fit">
         {/* Contenedor de las columnas */}
-        <div className="my-2 flex flex-row gap-8 place-content-center  h-full">
+        <div className="my-2 flex flex-col md:flex-row ]  gap-8 place-content-center  h-fit">
           {/* Columna izquierda (ocupará el espacio restante y permitirá scroll) */}
-          <div className="flex flex-col w-3/5 overflow-y-auto">
+          <div className="flex flex-col   w-full  sm:w-full  md:w-3/4 lg:3/5 md:overflow-y-scroll">
             {/* Contenedor de los elementos hijos (CartItem) */}
-            <div className="flex flex-col gap-4 p-4">
+            <div className="flex flex-col gap-4 p-4 w-full">
              { /*<CartItem />
               <CartItem />
               <CartItem />
@@ -297,7 +297,7 @@ const contemporaryArt:ProductCategory ={id:2, label:"Contemporaneo",name:"Comtem
           </div>
   
           {/* Columna derecha (altura fija de 420px) */}
-          <div className="w-1/3 h-[420px] border border-black rounded-lg">
+          <div className=" md:w-1/3 h-fit border border-black rounded-lg">
             <InfoChart items={cart} />
           </div>
         </div>
