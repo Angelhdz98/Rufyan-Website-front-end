@@ -12,7 +12,7 @@ function HomePage(){
 
     
 
-    return <div>
+    return <div className=" h-fit flex-grow">
         <SlideBanner/>
         <Panel name={"Favorite Artworks"}>
         <FavoritePaints/>
