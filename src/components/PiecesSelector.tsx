@@ -1,10 +1,14 @@
-import { useState } from "react";
+import { HtmlHTMLAttributes, useState } from "react";
 import { FaRegTrashAlt } from "react-icons/fa";
 import { AiFillPlusSquare } from "react-icons/ai";
 import { AiFillMinusSquare } from "react-icons/ai";
 
 
-function PiecesSelector(){
+export interface PiecesSelecteroProps extends HtmlHTMLAttributes<HTMLDivElement>{
+    
+}
+
+function PiecesSelector(props:PiecesSelecteroProps){
 
     const [pieces, setPieces] = useState(1);
     const addAPieceHandler = () =>{
@@ -24,7 +28,7 @@ function PiecesSelector(){
     const onePieceMoreButton = <AiFillPlusSquare  onClick={addAPieceHandler}
     className="text-xl text-[#C04D2A]"/>;
 
-    return <div className="  ">
+    return <div className={props.className}>
         <div className="">Piezas</div>
         
 <div className="flex flex-row  w-16 justify-around items-center border-black border rounded-md ">
