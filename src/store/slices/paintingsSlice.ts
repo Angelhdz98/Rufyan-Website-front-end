@@ -47,7 +47,8 @@ const initialState: PaintingsState = {
         medium: "Óleo",
         support_material: "Lienzo",
         certificate_of_authenticity: true,
-        original_availability: false,
+        isOrginalAvailable: false,
+        isOriginalSelected:true,
         available_copies: 2,
         copies_made: 8,
         price_copy:300,
@@ -80,7 +81,7 @@ const initialState: PaintingsState = {
         medium: "Óleo",
         support_material: "Lienzo",
         certificate_of_authenticity: true,
-        original_availability: true,
+        isOrginalAvailable: true,
         available_copies: 0,
         copies_made: 12,
         price_copy:300,
@@ -113,10 +114,11 @@ const initialState: PaintingsState = {
         medium: "Óleo",
         support_material: "Lienzo",
         certificate_of_authenticity: true,
-        original_availability: true,
+        isOrginalAvailable: true,
         available_copies: 4,
         copies_made: 12,
         price_copy:300,
+        isOriginalSelected:true
       }
     ,
     {
@@ -146,7 +148,7 @@ const initialState: PaintingsState = {
         medium: "Óleo",
         support_material: "Lienzo",
         certificate_of_authenticity: true,
-        original_availability: true,
+        isOrginalAvailable: true,
         available_copies: 4,
         copies_made: 12,
         price_copy:400.00,
@@ -182,7 +184,7 @@ const initialState: PaintingsState = {
         medium: "Óleo",
         support_material: "Lienzo",
         certificate_of_authenticity: true,
-        original_availability: true,
+        isOrginalAvailable: true,
         available_copies: 4,
         copies_made: 12,
         price_copy: 280.00
@@ -216,7 +218,7 @@ const initialState: PaintingsState = {
         medium: "Óleo",
         support_material: "Lienzo",
         certificate_of_authenticity: true,
-        original_availability: true,
+        isOrginalAvailable: true,
         available_copies: 4,
         copies_made: 12,
         price_copy: 450.00,
@@ -249,7 +251,7 @@ const initialState: PaintingsState = {
         medium: "Óleo",
         support_material: "Lienzo",
         certificate_of_authenticity: true,
-        original_availability: true,
+        isOrginalAvailable: true,
         available_copies: 4,
         copies_made: 12,
         price_copy:150.00,
@@ -282,7 +284,7 @@ const initialState: PaintingsState = {
         medium: "Óleo",
         support_material: "Lienzo",
         certificate_of_authenticity: true,
-        original_availability: true,
+        isOrginalAvailable: true,
         available_copies: 4,
         copies_made: 12,
         price_copy: 300,
@@ -316,7 +318,7 @@ const initialState: PaintingsState = {
         medium: "Óleo",
         support_material: "Lienzo",
         certificate_of_authenticity: true,
-        original_availability: true,
+        isOrginalAvailable: true,
         available_copies: 4,
         copies_made: 12,
         price_copy:320.00
@@ -351,7 +353,7 @@ const initialState: PaintingsState = {
         medium: "Acrilico",
         support_material: "Lienzo",
         certificate_of_authenticity: true,
-        original_availability: false,
+        isOrginalAvailable: false,
         available_copies: 12,
         copies_made: 15,
         price_copy:210.00,
@@ -376,6 +378,9 @@ const paintingsSlice = createSlice({
   name: 'paintings',
   initialState,
   reducers:{
+    
+    
+    
     
   },
   extraReducers(builder){
