@@ -12,6 +12,9 @@ import { FaCloudUploadAlt } from "react-icons/fa";
 import { FaRegCheckCircle } from "react-icons/fa";
 import FormApiSelect from "../../components/FormApiSelect";
 import { Form } from "react-router-dom";
+import { useState } from "react";
+import { ImageUploader } from "../../components/ImageUploader";
+
 
 export interface PaintingFormProps {
     
@@ -60,6 +63,8 @@ export interface formDataInterfacePainting {
 
 //import type { Painting } from "../../types/typesIndex";
 function AddPaintingForm() {
+  const [imagePreview, setImagePreview] = useState<string[]>([]);
+  const [uploadedFiles, setUploadedFiles] = useState<File[]>([]);
   
   const dispatch = useDispatch<AppDispatch>();
   const formData= useSelector((state: RootState)=>{
@@ -108,11 +113,54 @@ function AddPaintingForm() {
   const handleImageUpload =  (e: React.ChangeEvent<HTMLInputElement>) =>{
     e.preventDefault();
     const files = e.target.files;
-    if (files){
-      const selectedFiles = Array.from(files);
-      dispatch(addImage(selectedFiles));
+    if (files && files.length === 0) {
+ const selectedFiles = Array.from(files);
+
+
+      
+     
+
+      //verification for size and file type 
+      selectedFiles.forEach((file)=>{
+          
+          if (!file.type.match("image.*")){
+              alert("Por favor, selecciona un archivo de imagen valido");
+          }
+          if(file.size>2*1024*1024){
+              alert("La imagen no debe superar los 2 MB");
+              return;
+          }
+      })
+
         //dispatch(updateForm({...formData, "image":[...formData.image,files]}))
-      }  
+     dispatch(addImage(selectedFiles));
+
+     const readers= selectedFiles.map((file)=>{
+      return new Promise<string>((resolve,reject)=>{
+          const reader = new FileReader();
+
+          reader.onload =()=>{
+              if(typeof reader.result === "string"){
+                  resolve(reader.result);
+              }
+          };
+          reader.onerror = () => reject(reader.error);
+          reader.readAsDataURL(file);
+      
+
+      })
+  });
+
+  Promise.all(readers).then(results=>{
+      setImagePreview([...imagePreview,...results]);
+  })
+
+
+
+  setUploadedFiles((prev)=>{
+      return [...prev, ...selectedFiles]
+  })
+    }  
 
     
     };
@@ -127,11 +175,23 @@ function AddPaintingForm() {
       //console.log("formData: ", formData);
     };
 
-    const deleteImageUpload = (name:string) =>{
+    const deleteImageUpload = (value:string|number) =>{
 
-      dispatch(deleteImage(name));
+      if(typeof value === "number"){
+
+        setUploadedFiles((prev)=>{
+            return prev.filter((item,index )=> index!== value );
+        });
+        setImagePreview((prev)=>{
+            return prev.filter((item, index)=> index!==value)
+        });
+    }else{
+        //delete by name 
+         dispatch(deleteImage(value));
       
 
+    }
+     
     }
   
 
@@ -365,7 +425,7 @@ function AddPaintingForm() {
       {/**
              * Faltan las imagenes
              */}
-       <div className="h-[500px]">
+      {/* <div className="h-[500px]">
             <div className="flex flex-row items-center justify-between ">
                 <label className="block my-2">
                 Imágenes
@@ -382,9 +442,9 @@ function AddPaintingForm() {
               />
             </label>
           </div>
-                 {/*<Button primary rounded onClick={handleImageUpload}>+Imagen</Button>
+                 {<Button primary rounded onClick={handleImageUpload}>+Imagen</Button>
             
-          */}
+          }
                 
             </div>
             
@@ -398,11 +458,12 @@ function AddPaintingForm() {
           
         </div>
         
-        </div> 
+        </div> */}
        
       
         
-       <Button rounded primary className="w-fit  place-self-end  " >Add painting</Button>
+       {/*<Button rounded primary className="w-fit  place-self-end  " >Add painting</Button>*/}
+       <ImageUploader  handleImageUpload={handleImageUpload} deleteImageUpload={deleteImageUpload} imagePreview={imagePreview} uploadedFiles={uploadedFiles} className={" my-2"} />
     </div>
 
   </div>

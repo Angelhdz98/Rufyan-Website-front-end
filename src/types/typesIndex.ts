@@ -122,8 +122,14 @@ export interface User {
     date: string;
     collaborator?: string;
     description?: string;
-    images: string[],
+    images: ImageProduct[],
     
+  }
+  export interface ArtEvent extends Project{
+    place: string;
+    finishDate: string;
+    
+
   }
 
   export interface CartItemInterface<T extends Product=Product>{
