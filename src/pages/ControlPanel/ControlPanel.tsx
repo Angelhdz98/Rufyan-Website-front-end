@@ -5,6 +5,7 @@ import Navegacion from "./Navegacion";
 import EditAll from "./EditAll";
 import AddProductForm from "./AddProductForm";
 import AddEventForm from "./AddEventForm";
+import { EditBanner } from "./EditBanner";
 
 
 
@@ -27,7 +28,9 @@ function ControlPanel(){
             <Route path="/admin">
                 <AddPaintingForm/>
             </Route>
-            
+            <Route path="/admin/editBanners">
+                <EditBanner/>
+            </Route>
     </div>
 
     

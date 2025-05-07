@@ -7,6 +7,7 @@ function Navegacion() {
                     {label: "Agregar un producto", path: "/admin/addProduct"},
                     {label: "Agregar un evento", path: "/admin/addEvent"},
                     {label: "agregar una obra", path: "/admin"},
+                    {label: "Editar banners", path: "/admin/editBanners"},
     ];
     const renderedLinks = links.map((link)=>{
 

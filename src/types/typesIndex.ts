@@ -23,6 +23,10 @@ export interface User {
     
     
   }
+export interface Image{
+  id: number;
+  url: string;
+}
 
   export interface UserAddress{
     addressLine1: string;
@@ -44,7 +48,7 @@ export interface User {
     name: string;
     description: string;
     price: number;
-    category: ProductCategory;
+    category?: ProductCategory;
     favorite:boolean,
     creation_date: string;
     userId: number;
@@ -168,6 +172,12 @@ export interface User {
     snapback:boolean;
     flat:boolean;
 
+  }
+
+  export interface Banner{
+  id: number;
+  link:string;
+  image: Image;
   }
 
   export function isPainting(product:Product):product is Painting{
