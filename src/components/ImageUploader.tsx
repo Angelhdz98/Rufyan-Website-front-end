@@ -8,14 +8,17 @@ handleImageUpload:  (e: React.ChangeEvent<HTMLInputElement>) => void;
 deleteImageUpload: (value: number | string) => void;
 imagePreview: string[];
 uploadedFiles: File[];
+single?:boolean
 }
 
 
 export function ImageUploader(props: ImageUploaderProps) {
   //const divClassname = classNames(" flex flex-col w-full h-full  ", props.className,{});
 
-  const renderedImages = props.imagePreview.map((img, index) => (
-      <div className="relative aspect-square" key={index}> {/* Cambiado a aspect-square */}
+  const renderedImages = props.imagePreview.map((img, index) => {
+    if(img.length==0){
+        return
+    } else{    return <div className="relative aspect-square" key={index}> {/* Cambiado a aspect-square */}
           <div className="flex h-full w-full opacity-0 hover:opacity-85 absolute left-0 top-0 bg-slate-300 place-content-center items-center">
               <FaTrashAlt className="text-3xl" onClick={() => props.deleteImageUpload(index)} />
           </div>
@@ -24,7 +27,10 @@ export function ImageUploader(props: ImageUploaderProps) {
           </div>
           <img className="object-cover h-full w-full" src={img} alt="" />
       </div>
-  ));
+
+
+    }
+        });
 
   return (
       <div className={"flex flex-col w-full h-full md:h-2/3 flex-grow "+ props.className}>
@@ -44,11 +50,11 @@ export function ImageUploader(props: ImageUploaderProps) {
 
           {/* Contenedor de imágenes modificado */}
           <div className="flex-1  flex-col border border-gray-300 rounded-md">
-              <div className="grid grid-cols-3 auto-rows-min gap-2 h-full p-2 overflow-auto">
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 auto-rows-min gap-2 h-full p-2 overflow-auto">
                   {renderedImages}
               </div>
           </div>
-          <Button rounded primary className="w-fit  place-self-end my-2  " >Add painting</Button>
+          <Button rounded primary className="w-fit  place-self-end my-2  " >Add </Button>
       </div>
   );
 }
