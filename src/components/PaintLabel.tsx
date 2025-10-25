@@ -1,6 +1,6 @@
 import type { Painting } from "../types/typesIndex";
 import classNames from "classnames";
-import Button from "./Button";
+//import Button from "./Button";
 import { BiDownArrow } from "react-icons/bi";
 import { Fragment } from "react/jsx-runtime"
 import BuyNowButton from "./BuyNowButton";
@@ -16,7 +16,7 @@ export interface PaintLabelProps extends HTMLAttributes<HTMLDivElement>{
         return (<div className="flex flex-row justify-between ">
             
             <BuyNowButton/>
-            <AddToCartButton/>
+            <AddToCartButton onClick={()=>{}}/>
     </div>)
     };
 

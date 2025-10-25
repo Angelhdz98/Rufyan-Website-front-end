@@ -1,9 +1,8 @@
 import axios from "axios";
 import classNames from "classnames";
-import { Fragment, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { IoIosArrowDropleft } from "react-icons/io";
 import { useDispatch } from "react-redux";
-import { useParams } from "react-router-dom";
 import { AppDispatch, fetchProductsBycategory } from "../store";
 
 export interface productCategoryInterface {
@@ -57,7 +56,7 @@ function CategorySelector() {
 
     },[])
 
-    return <div onClick={categoriesClickHandler}
+    return loading?<div>loading</div>:<div onClick={categoriesClickHandler}
         className=
         {
             classNames("bg-gray-500 rounded-lg h-fit flex flex-col   mx-2 z-10 px-1 pl-2 transition-all duration-300 ease-in-out overflow-hidden w-fit ",{"max-h-6": !isSelected,

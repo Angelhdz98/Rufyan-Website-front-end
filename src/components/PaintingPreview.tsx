@@ -1,10 +1,6 @@
 import { Painting } from "../types/typesIndex";
 import { IoIosCheckmarkCircle } from "react-icons/io";
 import { CiNoWaitingSign } from "react-icons/ci";
-import BuyNowButton from "./BuyNowButton";
-import AddToCartButton from "./AddToCartButton";
-import { useDispatch } from "react-redux";
-import { AppDispatch } from "../store";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import PaintingPreviewButtonPanel from "./PaintingPreviewButtonPanel";
@@ -48,7 +44,7 @@ function PaintingPreview({ paint }: PaintingPreviewProps) {
     const [originalSelected, setOriginalSelected] = useState(false);
     const navigate= useNavigate();
 
-    const dispatch = useDispatch<AppDispatch>();
+    //const dispatch = useDispatch<AppDispatch>();
 
     
 

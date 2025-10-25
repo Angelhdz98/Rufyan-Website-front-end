@@ -1,10 +1,7 @@
-import TotalChart from "../../components/InfoChart";
-import Button from "../../components/Button";
 import CartItem from "./CartItem";
 import InfoChart from "../../components/InfoChart";
-import {CartItemInterface, Cup, Hat, Painting, Product, ProductCategory } from "../../types/typesIndex";
+import {CartItemInterface, Cup, Hat, Painting, ProductCategory } from "../../types/typesIndex";
 
-import obra1 from "../../../public/assets/Images/imgObras/obra1.jpg"
 import obra2 from "../../../public/assets/Images/imgObras/obra2.jpg"
 import obra3 from "../../../public/assets/Images/imgObras/obra3.jpg"
 import obra4 from "../../../public/assets/Images/imgObras/obra4.png"

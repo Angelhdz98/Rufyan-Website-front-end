@@ -1,4 +1,4 @@
-import { ReactEventHandler, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { FaEdit } from "react-icons/fa";
 import LoaderTag from "../../components/LoaderTag";
 import Button from "../../components/Button";
@@ -50,7 +50,7 @@ function ProfilePictureHandler({userImage}:{userImage:string}){
 
     };
 
-    const changeImageHandler= (e: React.MouseEvent<HTMLButtonElement>) =>{
+    const changeImageHandler= (_e: React.MouseEvent<HTMLButtonElement>) =>{
         console.log("Petición de cambio de imagen");
         setIsEditing(false);
     };
@@ -111,7 +111,7 @@ onClick={inputClickHandler} >
 </div>
 </div> 
 
-let content = isLoading? loadingContent: isEditing? editingContent: viewingContent;
+ //let content = isLoading? loadingContent: isEditing? editingContent: viewingContent;
 
 if(isLoading){
     return loadingContent

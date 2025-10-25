@@ -1,5 +1,4 @@
 import { FaEdit } from "react-icons/fa";
-import PaintingPreview from "../../components/PaintingPreview";
 import { Painting } from "../../types/typesIndex";
 import EditableLabel from "./EditableLabel";
 import { HTMLAttributes, useState } from "react";

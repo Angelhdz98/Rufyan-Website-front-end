@@ -1,105 +1,114 @@
-import { HtmlHTMLAttributes, useState } from "react";
-import AddressEdit from "./AddressEdit";
+import { useState } from "react";
 import AddressInfo from "./AddressInfo";
 import AddressButtons from "./AddressButtons";
 import AddressForm from "./AddressForm";
 import AddresSelector from "./AddressSelector";
 import { UserAddress } from "../types/typesIndex";
-import { info } from "console";
 
-export const addressesSample:UserAddress[]= [{addressLine1: "paseo de la loma bonita",
-                          city:"Guadalajara",
-                          state:  "Jalisco",
-                          postalCode:"45180",
-                          country:"México",
-                           neighborhood: "Lomas de tabachines"},
-                          {addressLine1: "Paseo de los alamos sur 17"
-                          ,state:  "Jalisco",
-                          city:"Guadalajara",
-                          postalCode:"45180",
-                          country:"México",
-                          neighborhood: "Constitución"},
-                          {addressLine1: "Robles 1428"
-                            , state:  "Jalisco",
-                            city:"Guadalajara",
-                          postalCode:"45180",
-                        country:"México",
-                      neighborhood:"Tabachines"}];
-    //{isEditing, isInForm,changeIsEditing, changeIsInForm}:{isEditing:boolean, changeIsEditing:(value: boolean)=>void, isInForm:boolean,changeIsInForm:(value: boolean)=>void   }
 
-function AddressChart ({isInForm, changeIsInForm}:{isInForm: boolean, changeIsInForm:(value: boolean)=>void }){
+export const addressesSample: UserAddress[] = [{
+  addressLine1: "paseo de la loma bonita",
+  city: "Guadalajara",
+  state: "Jalisco",
+  postalCode: "45180",
+  country: "México",
+  neighborhood: "Lomas de tabachines"
+},
+{
+  addressLine1: "Paseo de los alamos sur 17"
+  , state: "Jalisco",
+  city: "Guadalajara",
+  postalCode: "45180",
+  country: "México",
+  neighborhood: "Constitución"
+},
+{
+  addressLine1: "Robles 1428"
+  , state: "Jalisco",
+  city: "Guadalajara",
+  postalCode: "45180",
+  country: "México",
+  neighborhood: "Tabachines"
+}];
+//{isEditing, isInForm,changeIsEditing, changeIsInForm}:{isEditing:boolean, changeIsEditing:(value: boolean)=>void, isInForm:boolean,changeIsInForm:(value: boolean)=>void   }
+
+function AddressChart({ isInForm, changeIsInForm }: { isInForm: boolean, changeIsInForm: (value: boolean) => void }) {
   const [isEditing, setIsEditing] = useState(false);
- 
 
-  const changeIsEditing = (value:boolean) =>{
+
+  const changeIsEditing = (value: boolean) => {
     setIsEditing(value);
   }
- 
 
-    //define HTML structures
-    
-    // addresses will be filled by a HTTP request limit of 
-  
-    const [addressForm, setAddressForm] = useState<UserAddress>({addressLine1: ""
-      , state:  "",
-    postalCode:"",
-  country:"", 
-  neighborhood: ""});
-    
-    const [addressComponent, setAddressComponent] = useState("info");
-    const [selectedAddress, setSelectedAddress] = useState(addressesSample[1]);
-    
-    
 
-    const addressFormChange = (e: React.ChangeEvent<HTMLInputElement>) =>{
-      const {name, value}= e.target;
-      setAddressForm({...addressForm, [name]:value});
-    };
+  //define HTML structures
 
-    const onAddressEdit= (e: React.FormEvent) =>{
-      e.preventDefault();
-      console.log("edit Request done");
-      
-    }
+  // addresses will be filled by a HTTP request limit of 
 
-    const addAddressHandler = () =>{
-        setAddressComponent("add");
-        console.log("component: "+ addressComponent);
-          };
+  const [addressForm, setAddressForm] = useState<UserAddress>({
+    addressLine1: ""
+    , state: "",
+    postalCode: "",
+    country: "",
+    neighborhood: ""
+  });
 
-  const onEditAddressHandler = () =>{
-    if (isEditing){
+  const [addressComponent, setAddressComponent] = useState("info");
+  const [selectedAddress, setSelectedAddress] = useState(addressesSample[1]);
+
+
+
+  const addressFormChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setAddressForm({ ...addressForm, [name]: value });
+  };
+
+  const onAddressEdit = (e: React.FormEvent) => {
+    e.preventDefault();
+    console.log("edit Request done");
+
+  }
+
+  const addAddressHandler = () => {
+    setAddressComponent("add");
+    console.log("component: " + addressComponent);
+  };
+
+  const onEditAddressHandler = () => {
+    if (isEditing) {
       setAddressForm(selectedAddress);
       changeIsInForm(true),
-      setAddressComponent("form");
-      
-    }else{
+        setAddressComponent("form");
+
+    } else {
       setAddressComponent("edit");
       changeIsEditing(true);
-   console.log("component: "+ addressComponent);
+      console.log("component: " + addressComponent);
     }
-     };
-  
+  };
 
-  const selectedAddressHandler = (address:UserAddress) =>{
+
+  const selectedAddressHandler = (address: UserAddress) => {
     setSelectedAddress(address);
 
   }
-  const confirmAddress= () =>{
+  const confirmAddress = () => {
     setAddressComponent("info");
     changeIsEditing(false);
-    console.log("petición para que la direcciónde entrega sea: "+ selectedAddress);
+    console.log("petición para que la direcciónde entrega sea: " + selectedAddress);
   };
 
-  const cancelledHandler =()=>{
+  const cancelledHandler = () => {
     setAddressComponent("info");
     changeIsInForm(false);
     changeIsEditing(false);
-    setAddressForm({addressLine1: ""
-      , state:  "",
-    postalCode:"",
-  country:"", 
-  neighborhood: ""});
+    setAddressForm({
+      addressLine1: ""
+      , state: "",
+      postalCode: "",
+      country: "",
+      neighborhood: ""
+    });
   }
   /*
   const addressSelectHandler = () =>{
@@ -108,41 +117,41 @@ function AddressChart ({isInForm, changeIsInForm}:{isInForm: boolean, changeIsIn
   }*/
 
 
-  
-  let content = <AddressInfo address={selectedAddress}  />; 
 
-  if (addressComponent =="info"){
-    content= <AddressInfo address={selectedAddress}/>
-  } else if (addressComponent == "edit"){
-    content= <AddresSelector onSelectAddress={selectedAddressHandler}
-    userAddresses={addressesSample} 
-    selectedAddress={selectedAddress}
-    confirmAddress={confirmAddress} />
+  let content = <AddressInfo address={selectedAddress} />;
+
+  if (addressComponent == "info") {
+    content = <AddressInfo address={selectedAddress} />
+  } else if (addressComponent == "edit") {
+    content = <AddresSelector onSelectAddress={selectedAddressHandler}
+      userAddresses={addressesSample}
+      selectedAddress={selectedAddress}
+      confirmAddress={confirmAddress} />
     //
-  } else if (addressComponent == "form" ){
-    content= <AddressForm addressForm={addressForm} handleChange={addressFormChange} handleSubmit={onAddressEdit}
-    handleCancel={cancelledHandler} />
+  } else if (addressComponent == "form") {
+    content = <AddressForm addressForm={addressForm} handleChange={addressFormChange} handleSubmit={onAddressEdit}
+      handleCancel={cancelledHandler} />
   }
-  else if (addressComponent == "change" ){
-    content= <AddresSelector    
-    onSelectAddress={selectedAddressHandler}
-    userAddresses={addressesSample} 
-                                selectedAddress={selectedAddress} 
-                                confirmAddress={confirmAddress} 
-                                />
+  else if (addressComponent == "change") {
+    content = <AddresSelector
+      onSelectAddress={selectedAddressHandler}
+      userAddresses={addressesSample}
+      selectedAddress={selectedAddress}
+      confirmAddress={confirmAddress}
+    />
   }
 
-  else {content= <AddressInfo address={selectedAddress}/>}
-   
+  else { content = <AddressInfo address={selectedAddress} /> }
+
 
   return <div className="flex flex-col">
     {content}
-   <AddressButtons              onAddAddress={addAddressHandler} 
-                                onSelectAddress={ selectedAddressHandler} 
-                                onEditAddress={onEditAddressHandler}
-                                className={isInForm? "hidden" :" " }
-                                isEditing={isEditing}/>
-                                
+    <AddressButtons onAddAddress={addAddressHandler}
+      onSelectAddress={selectedAddressHandler}
+      onEditAddress={onEditAddressHandler}
+      className={isInForm ? "hidden" : " "}
+      isEditing={isEditing} />
+
   </div>
 
 

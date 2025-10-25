@@ -1,4 +1,4 @@
-import Cart from "../pages/cartPage/Cart";
+//import Cart from "../pages/cartPage/Cart";
 
 export interface User {
     id: number;
@@ -17,7 +17,7 @@ export interface User {
   
   export interface ImageProduct{
     id: number;
-    productName: string;
+    productName?: string;
     url:string;
   
     

@@ -1,5 +1,4 @@
 import { HTMLAttributes, useEffect } from "react";
-import { isPainting } from "../../hooks/isPainting";
 import { Product } from "../../types/typesIndex";
 import FormInput from "../../components/FormInput";
 import CheckFormInput from "../../components/CheckFormInput";
@@ -14,7 +13,7 @@ export interface EditingProductProps extends HTMLAttributes<HTMLDivElement> {
 product: Product;
 }
 // Cambiar los datos para que cumpla con un producto normal.
-function EditingProduct({product, ...rest}:EditingProductProps){
+function EditingProduct({product/*, ...rest*/}:EditingProductProps){
 
     useEffect(()=>{
         updateForm(product);
@@ -33,10 +32,16 @@ function EditingProduct({product, ...rest}:EditingProductProps){
   const toggleValueHandler = (field: keyof PaintingFormProps) => {
     dispatch(updateForm({ ...formData, [field]: !formData[field] }));
   };
-    
+  
+  const doneHandler = () =>{
+  console.log("update handle done");
+
+  }
+
+
   const stringOriginalAvailable = formData.original_available ? "true" : "false";
   const stringFavorite = formData.favorite ? "true" : "false";
-  return <form onSubmit={addProductHandler} className="flex flex-col m-6 " encType="multipart/form-data">
+  return <form onSubmit={doneHandler} className="flex flex-col m-6 " encType="multipart/form-data">
     <div className="flex flex-row flex-gow  gap-6">
     <div className="leftColumn flex flex-col w-1/2 ">
       <FormInput type={"text"} name={"name"}

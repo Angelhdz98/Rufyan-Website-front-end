@@ -1,6 +1,4 @@
-import AddresSelector from "./AddressSelector";
 
-import { FaEdit } from "react-icons/fa";
 import ItemAddressEdit from "./ItemAddressEdit";
 
 function AddressEdit (){

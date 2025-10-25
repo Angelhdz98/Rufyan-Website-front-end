@@ -15,11 +15,12 @@ const fetchSortedProduct = createAsyncThunk( 'products/sorted/fetchSortedProduct
 } );
 
 
+/*
 const  pause = (duration:number) =>{
     return new Promise((resolve)=>{
     setTimeout(resolve, duration);
     });
-    };
+    };*/
 
 
     export {fetchSortedProduct}

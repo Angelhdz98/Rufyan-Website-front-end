@@ -1,6 +1,5 @@
 import { IoIosCheckmarkCircle } from "react-icons/io";
-import { isPainting } from "../../hooks/isPainting";
-import { Painting, Product } from "../../types/typesIndex";
+import { Product } from "../../types/typesIndex";
 import { CiNoWaitingSign } from "react-icons/ci";
 
 
@@ -60,7 +59,7 @@ function EditableLabel({ product, ...rest }: EditableLabel) {
 
         <div className="flex flex-row gap-2 px-1">
         <span className="font-semibold" >Category: </span>
-        {product.category.name}
+        {product.category?.name}
         </div>
 
         <div className=" px-1 " >

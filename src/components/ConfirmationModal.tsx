@@ -1,7 +1,6 @@
 
 import { HTMLAttributes } from "react";
 import Button from "./Button";
-import Modal, { ModalProps } from "./Modal";
 
 
 export interface ConfirmationModalProps extends HTMLAttributes<HTMLDivElement> {

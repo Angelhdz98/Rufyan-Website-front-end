@@ -6,8 +6,8 @@ import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 //import { Fragment } from "react/jsx-runtime";
 import { Painting } from "../types/typesIndex";
-import { useEffect, useRef, useState } from "react";
-import { LoadingPaint } from "./LoadingPaint";
+import { useEffect, useRef } from "react";
+//import { LoadingPaint } from "./LoadingPaint";
 
 
 export interface imgSliderProps{
@@ -22,7 +22,7 @@ export interface imgSliderProps{
 function ImgSlider({paint}:imgSliderProps){
     //const [sliderHeight, setSliderHeight] = useState<number | null>(null);
   const firstImageRef= useRef<HTMLImageElement | null>(null);
-  const [refresh, setRefresh] = useState(0);
+  //const [refresh, setRefresh] = useState(0);
 
   /**
    * 

@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { Form } from "react-router-dom";
 import FormInput from "../../components/FormInput";
 import { Banner } from "../../types/typesIndex";
 import img1 from "../../../public/assets/Images/imgObras/obra12.jpg"
@@ -9,12 +8,11 @@ import Button from "../../components/Button";
 import { IoNavigateCircleOutline } from "react-icons/io5";
 import { FaTrashAlt } from "react-icons/fa";
 import { ImageUploader } from "../../components/ImageUploader";
-import Link from "../../components/Link";
 
 
 export function EditBanner(){
     const voidBanner:Banner = {id:0 ,image: {id:0, url:""}, link:""};
- const [newBannerData, setNewBannerData] = useState<Banner>({id:1, link:"", image:{id:0,url:""}});
+ const [newBannerData, setNewBannerData] = useState<Banner>(voidBanner);
     const [uploadedFile, setUploadedFile] = useState<File[]>([]);
     const [imagePreview, setImagePreview] = useState<string>("");
 
@@ -41,14 +39,17 @@ return prev.filter((banner)=> banner.id!== idToDelete)
     
     const addBannerHandle = ()=>{
         
-        setBannersData(prev=>{
+        /*
+        setNewBannerData((prev: Banner) =>{
             const newBanner:Banner ={
-                ...voidBanner, id:(prev.length +1 ), image:{
+                ...voidBanner, id:(prev.id +1 ), image:{
                     ...voidBanner.image, id: prev.length+1
                 }
             }
             return [...prev, newBanner];
         });
+        */
+
         
     }
 

@@ -1,13 +1,9 @@
 import { CartItemInterface, Cup, Hat, Painting, ProductCategory } from "../../types/typesIndex";
 
-
-import obra1 from "../../../public/assets/Images/imgObras/obra1.jpg"
 import obra2 from "../../../public/assets/Images/imgObras/obra2.jpg"
 import obra3 from "../../../public/assets/Images/imgObras/obra3.jpg"
 import obra4 from "../../../public/assets/Images/imgObras/obra4.png"
 import obra5 from "../../../public/assets/Images/imgObras/obra5.png"
-//import obra6 from "../../../public/assets/Images/imgObras/obra6.png"
-//import obra7 from "../../../public/assets/Images/imgObras/obra7.png"
 import nycap from "../../../public/assets/Images/productos/hats/nyCap.jpg"
 import nycap2 from "../../../public/assets/Images/productos/hats/nyCap2.jpg"
 import cup from "../../../public/assets/Images/productos/cups/customCup.png"

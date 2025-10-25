@@ -4,14 +4,14 @@ import { fetchFavPaintings } from '../thunks/fetchFavPaintings';
 import { fetchPaintings } from '../thunks/fetchPaintings';
 import { addPainting } from '../thunks/addPainting';
 
-
+/*
 import obra2 from "../../../public/assets/Images/imgObras/obra2.jpg"
 import obra3 from "../../../public/assets/Images/imgObras/obra3.jpg"
 import obra4 from "../../../public/assets/Images/imgObras/obra4.png"
 import obra5 from "../../../public/assets/Images/imgObras/obra5.png"
 import obra6 from "../../../public/assets/Images/imgObras/obra6.png"
 import obra7 from "../../../public/assets/Images/imgObras/obra7.png"
-
+*/
 
 export interface PaintingsState {
   data: Painting[];
@@ -23,7 +23,7 @@ export interface PaintingsState {
  // initial state for dev testing 
 const initialState: PaintingsState = {
   data:  [
-    {
+    /* {
       id: 1,
       name: "Paisaje Tranquilo",
       description: "Pintura al óleo de un paisaje sereno",
@@ -359,7 +359,7 @@ const initialState: PaintingsState = {
         price_copy:210.00,
       
     },
-
+    */
   ],
   isLoading: false,
   error: null,

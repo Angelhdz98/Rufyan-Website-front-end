@@ -60,7 +60,7 @@ function Header(){
         <div className="w-1/12 h-full min-w-64 min-h-24"  >
          <Logo to="/"  />
                  </div>
-            <div  className={classNames("",{"absolute navBoxShadow md:hidden flex flex-col md top-0 right-0 pl-5 pr-3 pt-10 gap-1 items-end    bg-blue-400 flex h-dvh z-10":activeMenu,
+            <div  className={classNames("",{"absolute navBoxShadow md:hidden  flex-col md top-0 right-0 pl-5 pr-3 pt-10 gap-1 items-end    bg-blue-400 flex h-dvh z-10":activeMenu,
                 ' flex flex-row max-md:hidden gap-4  max-md:top-1 max-md:right-2  ': !activeMenu,
              })}>
 

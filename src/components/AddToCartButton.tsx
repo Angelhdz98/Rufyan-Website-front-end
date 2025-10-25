@@ -1,4 +1,4 @@
-import Button, { buttonProps } from "./Button";
+import Button from "./Button";
     
 interface addTCartButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
     onClick: ()=>void;

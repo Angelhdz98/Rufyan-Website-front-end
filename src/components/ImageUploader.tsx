@@ -1,6 +1,5 @@
 import { HtmlHTMLAttributes } from "react";
 import { FaTrashAlt, FaCloudUploadAlt, FaRegCheckCircle } from "react-icons/fa";
-import classNames from "classnames";
 import Button from "./Button";
 
 export interface ImageUploaderProps extends HtmlHTMLAttributes<HTMLDivElement>{

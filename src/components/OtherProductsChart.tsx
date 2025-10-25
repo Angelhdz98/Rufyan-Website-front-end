@@ -1,15 +1,16 @@
-import { useSelector } from "react-redux";
-import { RootState } from "../store";
+// import { useSelector } from "react-redux";
+// import { RootState } from "../store";
 //import ImgSlider from "./ImgSlider";
 import ProductLabel from "./ProductLabel";
 import Button from "./Button";
+import { Product } from "../types/typesIndex";
 function OtherProductsChart() {
 
-    const products = useSelector((state: RootState) => state.otherProducts.data)
+    const products:Product[] = [];
     const renderendProducts = products.map((product) => {
         return <div key={product.name} className="h-[250px] rounded-lg overflow-hidden drop-shadow-lg">
             <div className="h-[55%] w-full ">
-                <img className="h-full w-full " src={product.image[0].data} alt="" />
+                <img className="h-full w-full " src={product.image[0].url} alt="" />
             </div>
             
             <ProductLabel className="h-[45%] mb-0" product={product} />
@@ -22,7 +23,7 @@ function OtherProductsChart() {
     </div>
     <div className="w-full flex flex-row  justify-between">
         {products.map((product)=>{
-            return <Button key={product.name} primary rounded>{product.category}</Button>
+            return <Button key={product.name} primary rounded>{product.category?.name}</Button>
         })}
     </div>
     </div>

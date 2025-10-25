@@ -1,18 +1,19 @@
 import {Swiper, SwiperSlide } from "swiper/react";
 import PaintingPreview from "./PaintingPreview";
 import { useDispatch } from "react-redux";
-import { Pagination, } from "swiper/modules";
-import { useEffect } from "react";
+import {  Pagination, } from "swiper/modules";
+import { Fragment, useEffect } from "react";
 import { AppDispatch, fetchPaintings, RootState } from "../store";
 import { useSelector } from "react-redux";
 import Button from "./Button";
 import { useNavigate } from "react-router-dom";
+import PaintingLoader from "./PaintingLoader";
 
 
 function SwiperPaintings(){
 const dispatch= useDispatch<AppDispatch>();
 const navigate = useNavigate();
-    const {data, isLoading, error} = useSelector((state: RootState)=>{
+    const {data ,isLoading, error} = useSelector((state: RootState)=>{
         return state.paintings;
     })
     
@@ -28,20 +29,30 @@ const navigate = useNavigate();
 
     }
   
-    
-    
+    let renderedPaints = <div></div>;
+
+    if(isLoading){
+
+      renderedPaints = <Fragment> <PaintingLoader/> <PaintingLoader/> <PaintingLoader/> <PaintingLoader/>  <PaintingLoader/> <PaintingLoader/> <PaintingLoader/> <PaintingLoader/>  </Fragment>    
+    }else if(error){
+      renderedPaints =  <div>Ha ocurrido un error: {error}</div>
+    }else{
+
+    }
+
     
     
 
     
-    const renderedPaints = data.map((paint)=>{
-        return  <SwiperSlide key={paint.id} className="drop-shadow-xl">
-          <PaintingPreview paint={paint}  />   
-           </SwiperSlide>
-           
-        
-
-      });
+     renderedPaints = (
+        <Fragment>
+          {data.map((paint) => (
+            <SwiperSlide key={paint.id} className="drop-shadow-xl">
+              <PaintingPreview paint={paint} />
+            </SwiperSlide>
+          ))}
+        </Fragment>
+      );
     
       
 

@@ -11,7 +11,7 @@ function ProjectCard({project}:ProjectCardProps){
     return <div 
     className=" m-2 flex flex-col overflow-hidden relative rounded-lg drop-shadow-lg bg-white  border-blue-300 border  "> {/** contenedo tarjetas */}
         <div className="h-32  " > {/** Contenedor imagen  */}
-            <img className="w-full h-full  " src={project.images[1]} alt="" />
+            <img className="w-full h-full  " src={project.images[1].url} alt="" />
         </div>
         <div className="">
         <div className="h-40    px-2" >{/** Contenedor texto  */}

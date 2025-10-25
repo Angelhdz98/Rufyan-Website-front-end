@@ -89,9 +89,12 @@ const router= createBrowserRouter([
 
 const path = router.routes[0]?.children;
 const paths=[];
+if(path?.length){
 for(let i=1; i<path?.length;i++){
   paths.push(path?.[i].path)
 }
+}
+
 
 paths.unshift("/")
 

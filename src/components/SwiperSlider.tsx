@@ -1,5 +1,5 @@
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Navigation, EffectCards, EffectFade, EffectCoverflow, EffectCube} from "swiper/modules";
+import { Navigation, EffectCube} from "swiper/modules";
 
 
 import "swiper/css/navigation"
@@ -11,16 +11,15 @@ import "swiper/css/effect-cards"
 
 
 
-import { ImageProduct, isPainting, Painting, Product } from "../types/typesIndex";
+import { ImageProduct, isPainting, Product } from "../types/typesIndex";
 import { HTMLAttributes, useState } from "react";
 import { IoIosCheckmarkCircle } from "react-icons/io";
 import { CiNoWaitingSign } from "react-icons/ci";
-import { FaHeart, FaRegHeart } from "react-icons/fa";
 import { LikeButton } from "./LikeButton";
 
 interface SwiperSliderProps extends HTMLAttributes<HTMLDivElement>{
     images: ImageProduct[]; 
-    product:Product;
+    product?:Product;
     className?:string;
 };
 
@@ -70,6 +69,7 @@ function SwiperSlider(props:SwiperSliderProps){
     </div>
 
 const availability = ()=>{
+    if(props.product)
     if(isPainting(props.product)&& props.product.isOrginalAvailable){
         return <div className="flex">
         Original
@@ -98,9 +98,12 @@ const availability = ()=>{
 
     </div>;
          
-         const availableCopies = isPainting(props.product)&& props.product.available_copies > 0 ?
+         const availableCopies = ()=>{
+            if(props.product)
+return isPainting(props.product)&& props.product.available_copies > 0 ?
         <div className="Available-copies text-xs bg-white/70 absolute z-10 left-3 rounded px-1  bottom-2">Copies: {props.product.available_copies}/{props.product.copies_made}</div> :
         <div className="z-10  text-red-500 font-bold text-xs bg-white/70 absolute left-3 rounded px-1  bottom-2">No copies available</div>
+         } 
 
   /*
   const liked = ()=>{
@@ -144,7 +147,7 @@ const availability = ()=>{
                 >  
                 {priceTag}   
                 {availabilityTag}  
-                {availableCopies}
+                {availableCopies()}
                 <div className= {`text-[#eb4b1b] rounded-md text-3xl absolute z-10 bottom-2 right-2   border bg-white/70  cursor-pointer `} >
                 <LikeButton/>   
                 </div>

@@ -10,12 +10,12 @@ import Button from "./Button";
 import { useEffect, useState } from "react";
 import FavoritePaint from "./FavoritePaint";
 import Masonry from "react-masonry-css";
-import { LoadingPaint } from "./LoadingPaint";
+//import { LoadingPaint } from "./LoadingPaint";
 import { useDispatch } from "react-redux";
 
 function FavoritePaints() {
   const dispatch = useDispatch<AppDispatch>();
-  const {data, isLoading, error} = useSelector((state: RootState)=> state.paintings);
+  const {data, isLoading /*,error*/} = useSelector((state: RootState)=> state.paintings);
 
   const [visibleLabels, setVisibleLabels] = useState<Record<number, boolean>>({})
   const [clickedPaints, setClickedPaints] = useState<Record<number, boolean>>({});

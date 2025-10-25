@@ -1,7 +1,6 @@
 import { Fragment } from "react/jsx-runtime";
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
-import { addOption, AppDispatch, fetchOptions, RootState } from "../store";
+import { addOption, AppDispatch } from "../store";
 import { useDispatch } from "react-redux";
 import Button from "./Button";
 import { TiPlus } from "react-icons/ti";
@@ -31,7 +30,7 @@ function FormApiSelect
     {id:3,name:"opcion3", label:"3era opción" }]);
 
   const [showOptionForm, setShowOptionForm] = useState(false);
-  const [showAddButton, setShowAddButton] = useState(false);
+  //const [showAddButton, setShowAddButton] = useState(false);
 
   //const [selectedOption, setSelectedOption] = useState<OptionSelect>({name:"", id:-1, label:""});
   const dispatch = useDispatch<AppDispatch>();
@@ -61,11 +60,11 @@ function FormApiSelect
   
   
 
-  
+  /*
   const optionsSlice = useSelector((state:RootState)=>{
     return state.selectOption.data;
   })
-
+*/
   
   
   
@@ -114,6 +113,8 @@ function FormApiSelect
     // console.log(selectedOption);
 
   }
+    
+
 
   const handleAddOption = (event: React.FormEvent) =>{
     event.preventDefault();
@@ -124,12 +125,12 @@ function FormApiSelect
 
 
 
-
+/*
   const addOptionHandler = ()=>{
 
     setShowOptionForm(true);
     console.log("valor de showOptionForm ", showOptionForm )
-  };
+  };*/
 
   
   const renderedOptions = options.map((option)=>{
@@ -157,7 +158,7 @@ function FormApiSelect
         name="name"
         
         value={newOption.name}
-        //onChange={handleInputChange}
+        onChange={handleInputChange}
         
         required
         className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200"

@@ -1,5 +1,5 @@
 import ProjectCard from "../../components/ProjectCard";
-import { Project } from "../../types/typesIndex";
+import { Image, Project } from "../../types/typesIndex";
 import imgProject from "../../../public/assets/Images/imgProyectos/pexels-anastasia-shuraeva-8467265.jpg"
 import imgProject2 from "../../../public/assets/Images/imgProyectos/pexels-felicity-tai-7952074.jpg"
 import imgProject3 from "../../../public/assets/Images/imgProyectos/pexels-olgakalinina-9741685.jpg"
@@ -10,6 +10,13 @@ import imgProject6 from "../../../public/assets/Images/imgProyectos/pexels-vanes
 
 function ProjectsPage(){
 
+  const proy : Image = {id:120, url: imgProject};
+  const proy2 : Image = {id:121, url: imgProject2};
+  const proy3 : Image = {id:122, url: imgProject3};
+  const proy4 : Image = {id:120, url: imgProject4};
+  const proy5 : Image = {id:121, url: imgProject5};
+  const proy6 : Image = {id:122, url: imgProject6};
+
     const projects: Project[] = [
         {
           id: 1,
@@ -17,7 +24,7 @@ function ProjectsPage(){
           date: "2024-03-15",
           collaborator: "Adobe",
           description: "Colección de ilustraciones digitales que exploran la identidad a través del color y la forma.",
-          images: [imgProject, imgProject2]
+          images: [proy, proy2]
         },
         {
           id: 2,
@@ -25,14 +32,14 @@ function ProjectsPage(){
           date: "2024-06-01",
           collaborator: "Philips Hue",
           description: "Instalación interactiva que utiliza iluminación inteligente para crear ambientes inmersivos Lorem ipsum dolor sit amet consectetur, adipisicing elit. Dignissimos culpa veniam, consequatur deserunt omnis excepturi consequuntur, aliquid impedit iste illo repudiandae enim provident! Iure porro rem magni quibusdam, eligendi soluta?.",
-          images: [imgProject3, imgProject4]
+          images: [proy3, proy4]
         },
         {
           id: 3,
           title: "Serie de Pinturas 'Naturaleza Fragmentada'",
           date: "2023-11-20",
           description: "Obras que reinterpretan paisajes naturales con técnicas de abstracción geométrica Lorem ipsum dolor sit amet consectetur adipisicing elit. Placeat delectus dolore quis explicabo ipsa voluptate autem dolorum! Quaerat, in tempore atque aspernatur cupiditate consequuntur optio harum sed voluptatibus autem debitis?.",
-          images: [imgProject5, imgProject6]
+          images: [proy5, proy6]
         },
         {
             id: 4,
@@ -40,7 +47,7 @@ function ProjectsPage(){
             date: "2024-03-15",
             collaborator: "Adobe",
             description: "Colección de ilustraciones digitales que exploran la identidad a través del color y la forma.",
-            images: [imgProject, imgProject2]
+            images: [proy, proy2]
           },
           {
             id: 5,
@@ -48,14 +55,14 @@ function ProjectsPage(){
             date: "2024-06-01",
             collaborator: "Philips Hue",
             description: "Instalación interactiva que utiliza iluminación inteligente para crear ambientes inmersivos Lorem ipsum dolor sit amet consectetur, adipisicing elit. Dignissimos culpa veniam, consequatur deserunt omnis excepturi consequuntur, aliquid impedit iste illo repudiandae enim provident! Iure porro rem magni quibusdam, eligendi soluta?.",
-            images: [imgProject3, imgProject4]
+            images: [proy3, proy4]
           },
           {
             id: 6,
             title: "Serie de Pinturas 'Naturaleza Fragmentada'",
             date: "2023-11-20",
             description: "Obras que reinterpretan paisajes naturales con técnicas de abstracción geométrica Lorem ipsum dolor sit amet consectetur adipisicing elit. Placeat delectus dolore quis explicabo ipsa voluptate autem dolorum! Quaerat, in tempore atque aspernatur cupiditate consequuntur optio harum sed voluptatibus autem debitis?.",
-            images: [imgProject5, imgProject6]
+            images: [proy5, proy6]
           },
        
       ];

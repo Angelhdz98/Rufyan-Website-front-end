@@ -1,7 +1,7 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { paintingsReducer } from "./slices/paintingsSlice";
 import { projectsReducer } from "./slices/projectsSlice";
-import { otherProductSliceReducer } from "./slices/otherProductSlice";
+//import { otherProductSliceReducer } from "./slices/otherProductSlice";
 import { formPaintingReducer,
         updateForm,
          addImage,
@@ -23,7 +23,6 @@ const store = configureStore({
     reducer:{
         paintings:paintingsReducer,
         projects:projectsReducer,
-        otherProducts:otherProductSliceReducer,
         formPainting:formPaintingReducer,
         products:productsReducer,
         sortProducts:sortProductsReducer,

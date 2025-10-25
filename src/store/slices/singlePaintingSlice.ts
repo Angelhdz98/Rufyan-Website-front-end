@@ -24,7 +24,7 @@ const initialState: SinglePaintingsState = {
     name: "Obra no cargada",
     description: "Pintura al óleo de un paisaje sereno",
     price: 1200.00,
-    category: {id:1,name:"painting"},
+    category: {id:1,name:"painting", label: "pintura"},
     favorite:false,
     creation_date: "2023-05-15",
     userId: 1,

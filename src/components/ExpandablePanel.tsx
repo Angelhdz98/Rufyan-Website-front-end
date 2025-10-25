@@ -39,7 +39,7 @@ return <div className={finalClassname} onClick={onClick}>
      </div>
       { expanded && <div > <hr className="border-t-2 border-black" />
       <div className="px-4">
-        Aqui va el children 
+       {children}
         </div>
         </div>}
       </div>

@@ -1,5 +1,4 @@
 import { UserAddress } from "../types/typesIndex";
-import AddressButtons from "./AddressButtons";
 
 function AddressInfo({address}:{address:UserAddress}){
 

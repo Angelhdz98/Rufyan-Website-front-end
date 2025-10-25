@@ -1,24 +1,26 @@
-import { Painting, Product } from "../types/typesIndex";
+import { Product } from "../types/typesIndex";
 import { IoIosCheckmarkCircle } from "react-icons/io";
 
 import { CiNoWaitingSign } from "react-icons/ci";
 import BuyNowButton from "./BuyNowButton";
 import AddToCartButton from "./AddToCartButton";
 import { LikeButton } from "./LikeButton";
+import { HtmlHTMLAttributes } from "react";
 
-interface ProductPreviewProps {
+interface ProductPreviewProps extends HtmlHTMLAttributes<HTMLDivElement> {
     product: Product;
 }
 
 
-function ProductPreview({product}:ProductPreviewProps){
+function ProductPreview({product,onClick}:ProductPreviewProps){
     
 
     const originalAvailable= true; // momentaneo para pruebas
 
-    const handleClick = () =>{
+    /*const handleClick = () =>{
         console.log("Navegar a obra especifica")
     }
+    */
     // cambiar el primer false por paint.original.available 
     const availabilityTag= originalAvailable ? <div  className="flex">Availability:  <IoIosCheckmarkCircle className="text-green-500 mt-1" /> </div> : <div className="flex items-center" >Availability: <CiNoWaitingSign className="text-red-500 stroke-2 "  /></div>;
 
@@ -34,7 +36,7 @@ function ProductPreview({product}:ProductPreviewProps){
 
     {/*src={`http://localhost:8080${product.image[0].url}` }*/ }
 
-    return <div className="relative h-[90%] flex flex-col border-2 border-black rounded-2xl"> 
+    return <div onClick={onClick} className="relative h-[90%] flex flex-col border-2 border-black rounded-2xl"> 
     <img className="rounded-t-2xl curosr-pointer object-cover h-full " 
     src={product.image[0].url}
     alt={product.image[0].productName} /> 

@@ -1,6 +1,4 @@
-import { HtmlHTMLAttributes } from "react";
 import { UserAddress } from "../types/typesIndex";
-import AddressButtons, { AddressButtonsProps } from "./AddressButtons";
 import AddressCheck from "./AddressCheck"
 import Button from "./Button";
 
@@ -15,7 +13,7 @@ interface AddressSelectorProps  {
 
 function AddresSelector( addressSelectorProps:AddressSelectorProps){
 
-    const addressNumber=2;
+    //const addressNumber=2;
     
     const addressChecks =addressSelectorProps.userAddresses.map((address)=>{
       return  <AddressCheck address={address} onClick={()=> addressSelectorProps.onSelectAddress(address)} key={address.addressLine1} 

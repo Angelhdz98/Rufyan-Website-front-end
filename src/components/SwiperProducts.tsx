@@ -5,12 +5,13 @@ import { useEffect } from "react";
 import { AppDispatch, fetchPaintings, RootState } from "../store";
 import { useSelector } from "react-redux";
 import ProductPreview from "./ProductPreview";
+import PaintingLoader from "./PaintingLoader";
 
 
 function SwiperProducts() {
   const dispatch = useDispatch<AppDispatch>();
   const { data, isLoading, error } = useSelector((state: RootState) => {
-    return state.otherProducts;
+    return state.products;
   })
 
   useEffect(() => {
@@ -28,14 +29,21 @@ function SwiperProducts() {
 
   const renderedPaints = data.map((paint) => {
     return <SwiperSlide key={paint.id} className="drop-shadow-xl">
-      <ProductPreview product={paint} />
+      <ProductPreview product={paint} onClick={handleClick} />
     </SwiperSlide>
 
   });
+  
+  let response = <div></div>;
 
+  if(isLoading){
+    response = <PaintingLoader/>
 
+  }else if(error) {
+     <div>ha ocurrido un error: {error}</div>
+  }
 
-  return <div className="flex flex-col w-full">
+    response = <div className="flex flex-col w-full">
     <span className="mb-1">
       Otros productos
     </span>
@@ -86,6 +94,9 @@ function SwiperProducts() {
 
   </div>
 
+
+
+  return response;
 }
 
 export default SwiperProducts

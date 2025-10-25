@@ -12,7 +12,7 @@ export interface AddressButtonsProps{
 }
 
 
-function AddressButtons({onAddAddress,onEditAddress,onSelectAddress, isEditing, className}:AddressButtonsProps){
+function AddressButtons({/*onAddAddress,*/onEditAddress,/*onSelectAddress,*/ isEditing, className}:AddressButtonsProps){
 
     const addressNumber = 2;
     

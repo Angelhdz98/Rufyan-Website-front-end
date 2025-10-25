@@ -1,7 +1,5 @@
 import { useState } from "react";
 import FormInput from "../../components/FormInput";
-import PaintingLoader from "../../components/PaintingLoader";
-import ProjectLoader from "../../components/ProjectLoader";
 import { Product } from "../../types/typesIndex";
 import CheckFormInput from "../../components/CheckFormInput";
 import { ImageUploader } from "../../components/ImageUploader";
@@ -91,10 +89,10 @@ function AddProductForm(){
 if(typeof value === "number"){
 
         setUploadedFiles((prev)=>{
-            return prev.filter((item,index )=> index!== value );
+            return prev.filter((_,index )=> index!== value );
         });
         setImagePreview((prev)=>{
-            return prev.filter((item, index)=> index!==value)
+            return prev.filter((_, index)=> index!==value)
         });
     }else{
         //delete by name

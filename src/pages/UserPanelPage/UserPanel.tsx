@@ -1,11 +1,8 @@
 import userImage from '../../../public/assets/Images/imgPruebas/userImage.jpeg'
-import { FaEdit } from "react-icons/fa";
 import UserInfo from './UserInfo';
-import AddresSelector from '../../components/AddressSelector';
-import AddressChart, { addressesSample } from '../../components/AddressChart';
+import AddressChart from '../../components/AddressChart';
 import { useState } from 'react';
 import ProfilePictureHandler from './ProfilePictureHandler';
-import FotoPerfil from './Recomendation';
 import UserLikes from '../LikedPage/UserLikes';
 
 function UserPanel(){

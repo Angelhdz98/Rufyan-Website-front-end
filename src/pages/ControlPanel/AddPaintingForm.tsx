@@ -1,17 +1,11 @@
 import FormInput from "../../components/FormInput";
 import CheckFormInput from "../../components/CheckFormInput";
-import Button from "../../components/Button";
 import { useDispatch } from "react-redux";
 import {  addImage, AppDispatch, RootState, updateForm } from "../../store";
 import { addPainting } from "../../store/thunks/addPainting";
 import { useSelector } from "react-redux";
-import { FaTrashAlt } from "react-icons/fa";
 import { deleteImage } from "../../store/slices/formPaintingSlice";
-import { ImageProduct } from "../../types/typesIndex";
-import { FaCloudUploadAlt } from "react-icons/fa";
-import { FaRegCheckCircle } from "react-icons/fa";
 import FormApiSelect from "../../components/FormApiSelect";
-import { Form } from "react-router-dom";
 import { useState } from "react";
 import { ImageUploader } from "../../components/ImageUploader";
 
@@ -180,10 +174,10 @@ function AddPaintingForm() {
       if(typeof value === "number"){
 
         setUploadedFiles((prev)=>{
-            return prev.filter((item,index )=> index!== value );
+            return prev.filter((_,index )=> index!== value );
         });
         setImagePreview((prev)=>{
-            return prev.filter((item, index)=> index!==value)
+            return prev.filter((_, index)=> index!==value)
         });
     }else{
         //delete by name 
@@ -195,7 +189,7 @@ function AddPaintingForm() {
     }
   
 
-  
+  /*
     const renderedImages = formData.image.map((img: File, index)=>{
             if(img != null && img instanceof File ){  
         return <div className="relative" key={index}>
@@ -216,7 +210,10 @@ function AddPaintingForm() {
         </div>
       }
       
-    })
+    });
+    */
+
+
 
 
   /*

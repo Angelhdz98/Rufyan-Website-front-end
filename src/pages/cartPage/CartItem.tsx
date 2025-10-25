@@ -1,6 +1,4 @@
 
-import { Fragment } from "react/jsx-runtime";
-import exampleImage from "../../../public/assets/Images/imgObras/obra12.jpg"
 import Button from "../../components/Button";
 import PiecesSelector from "../../components/PiecesSelector";
 import { Product } from "../../types/typesIndex";
@@ -12,7 +10,7 @@ interface cartItemProps{
     isCopy:boolean;
 }
 
-function CartItem({product,quantity,isCopy}:cartItemProps){
+function CartItem({product,/*quantity,*/isCopy}:cartItemProps){
 
     const price= () =>{
         if(isPainting(product)){

@@ -1,4 +1,4 @@
-import React, { HTMLAttributes } from "react";
+import  { HTMLAttributes } from "react";
 import { FaTrashAlt } from "react-icons/fa";
 import { ImageProduct } from "../../types/typesIndex";
 

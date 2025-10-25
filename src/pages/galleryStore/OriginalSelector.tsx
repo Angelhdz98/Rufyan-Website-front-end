@@ -1,5 +1,4 @@
 import { useState } from "react";
-import AddToCartButton from "../../components/AddToCartButton";
 import Button from "../../components/Button";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store";
@@ -7,9 +6,9 @@ import { isPainting } from "../../hooks/isPainting";
 import { Painting } from "../../types/typesIndex";
 
 
-function OriginalSelecetor() {
+function OriginalSelector() {
     const [originalSelected, setOriginalSelected] = useState(true);
-    const { data, isLoading, error } = useSelector((state: RootState) => state.singleProduct);
+    const { data/*, isLoading, error*/ } = useSelector((state: RootState) => state.singleProduct);
 
     const selectOriginalHandler = () => {
         setOriginalSelected(true);
@@ -109,4 +108,4 @@ function OriginalSelecetor() {
     </div>
 }
 
-export default OriginalSelecetor;
+export default OriginalSelector;

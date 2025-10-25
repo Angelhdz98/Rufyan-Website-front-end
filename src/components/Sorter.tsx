@@ -15,7 +15,7 @@ interface SorterProps {
 
 function Sorter(props: SorterProps) {
     const dispatch = useDispatch<AppDispatch>();
-    const {sortBy, sortOrder} = useSelector((state: RootState)=>state.sortProducts);
+    const {sortBy /*, sortOrder*/} = useSelector((state: RootState)=>state.sortProducts);
     const changeSortingHandle = (sortingValue:string) =>{
         
         if(sortingValue==sortBy){

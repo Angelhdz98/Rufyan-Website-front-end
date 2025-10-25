@@ -1,13 +1,13 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { Project } from "../../types/typesIndex";
-
+/*
 import project1 from "../../../public/assets/Images/imgProyectos/Imagen1-Banner.png";
 import project2 from "../../../public/assets/Images/imgProyectos/image 18.png";
 import project3 from "../../../public/assets/Images/imgProyectos/image 20.png";
 import project4 from "../../../public/assets/Images/imgProyectos/image 22.png";
 import project5 from "../../../public/assets/Images/imgProyectos/image 23.png";
 import project6 from "../../../public/assets/Images/imgProyectos/image 24.png";
-
+*/
 
 
 export interface ProjectsState{
@@ -17,7 +17,7 @@ export interface ProjectsState{
 }
 
 const projectsInitialState:ProjectsState= {
-    data:[
+    data:[/*
         {   id:1,
             title: "Heineken colaboration", 
             date: new Date(2022,7,12).toISOString(),
@@ -131,7 +131,7 @@ const projectsInitialState:ProjectsState= {
         }
           
         
-    ],
+    */],
     isLoading: false,
     error: null,
     

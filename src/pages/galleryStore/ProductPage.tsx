@@ -5,7 +5,7 @@ import { useDispatch } from "react-redux";
 import { AppDispatch, RootState } from "../../store";
 import { fetchProductById, RequestParams } from "../../store/thunks/fetchProductById";
 import { useSelector } from "react-redux";
-import OriginalSelecetor from "./OriginalSelecetor";
+import OriginalSelector from "./OriginalSelector";
 import { isPainting } from "../../hooks/isPainting";
 import { Painting } from "../../types/typesIndex";
 
@@ -82,7 +82,7 @@ function ProductPage() {
                 <span className="font-semibold">
                         Category:
                     </span>
-                    {" " + data[0].category.name }
+                    {" " + data[0].category?.name }
                 </div> 
                 </div>
               
@@ -90,7 +90,7 @@ function ProductPage() {
             </div>
             <div className="second-column   md:w-8/12 ">
                  <div>
-                 <OriginalSelecetor/>
+                 <OriginalSelector/>
                  </div>
 
                  {renderedProperties() }

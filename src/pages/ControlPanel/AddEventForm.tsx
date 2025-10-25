@@ -1,8 +1,8 @@
 import { useState } from "react";
 import FormInput from "../../components/FormInput";
-import { ArtEvent, ImageProduct } from "../../types/typesIndex";
-import { FaCloudUploadAlt, FaRegCheckCircle, FaTrashAlt } from "react-icons/fa";
-import { resolve } from "path";
+import { ArtEvent, /*ImageProduct*/ } from "../../types/typesIndex";
+//import { FaCloudUploadAlt, FaRegCheckCircle, FaTrashAlt } from "react-icons/fa";
+//import { resolve } from "path";
 import { ImageUploader } from "../../components/ImageUploader";
 
 
@@ -78,10 +78,10 @@ function AddEventForm(){
 if(typeof value === "number"){
 
         setUploadedFiles((prev)=>{
-            return prev.filter((item,index )=> index!== value );
+            return prev.filter((_,index )=> index!== value );
         });
         setImagePreview((prev)=>{
-            return prev.filter((item, index)=> index!==value)
+            return prev.filter((_, index)=> index!==value)
         });
     }else{
         //delete by name

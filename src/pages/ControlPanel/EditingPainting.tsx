@@ -1,5 +1,5 @@
 import { HTMLAttributes,  useEffect,  useState } from "react";
-import { EditPainting, Painting } from "../../types/typesIndex";
+import { Painting } from "../../types/typesIndex";
 import FormInput from "../../components/FormInput";
 import CheckFormInput from "../../components/CheckFormInput";
 
@@ -8,7 +8,7 @@ import FormImage from "./FormImage";
 import { useSelector } from "react-redux";
 import { AppDispatch, deleteImagePainting, DeleteImageParams, fetchPaintingById, RootState, updatePainting, updatePaintingParams } from "../../store";
 import { useDispatch } from "react-redux";
-import { deleteStateImage, updateStatePainting } from "../../store/slices/singlePaintingSlice";
+import { updateStatePainting } from "../../store/slices/singlePaintingSlice";
 import ConfirmationModal from "../../components/ConfirmationModal";
 import Modal from "../../components/Modal";
 
@@ -91,7 +91,7 @@ const toggleValueHandler = (field: keyof Painting) => {
 };
 
 const updatePaintingHandler = (event: React.FormEvent<HTMLFormElement>)=>{
-  //event.preventDefault();
+  event.preventDefault();
   const form = new FormData();
   //form.append('id', paintingId.toString());
   form.append('altura_cm',data.altura_cm.toString());
@@ -107,9 +107,11 @@ const updatePaintingHandler = (event: React.FormEvent<HTMLFormElement>)=>{
   form.append('description',data.description);
   form.append('price',data.price.toString());
   form.append('favorite',data.favorite.valueOf().toString());
-  form.append('category',data.category.name); // prueba ambas opciones 
+  if(data.category){
+    form.append('category',data.category.name); // prueba ambas opciones 
   form.append('categoryId', data.category.id.toString());
-  
+  }
+    
   
 if(uploadedFiles.length==0){
   form.append("imageFiles", uploadedFiles[0]);
@@ -218,7 +220,7 @@ const stringFavorite = data.favorite ? "true" : "false";
       </FormInput>
 
       <FormInput type={"text"} name={"category"}
-        value={data.category.name}
+        value={data.category? data.category.name : ""}
         onChange={handleChange}>
         Estilo
       </FormInput>
@@ -275,7 +277,7 @@ const stringFavorite = data.favorite ? "true" : "false";
             <CheckFormInput type={"checkbox"} name={"original_availability"}
               checked={data.isOrginalAvailable}
               value={stringOriginalAvailable}
-              onChange={() => toggleValueHandler("original_availability")}
+              onChange={() => toggleValueHandler("isOrginalAvailable")}
               labelClassname="w-full"
             >
               Original disponible

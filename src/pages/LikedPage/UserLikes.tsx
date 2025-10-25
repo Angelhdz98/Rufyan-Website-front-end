@@ -6,7 +6,7 @@ import Masonry from "react-masonry-css";
 
 function UserLikes(){
 
-    const {data, isLoading, error} = useSelector((state: RootState)=> state.paintings);
+    const {data, isLoading} = useSelector((state: RootState)=> state.paintings);
     const [visibleLabels, setVisibleLabels] = useState<Record<number, boolean>>({})
   const [clickedPaints, setClickedPaints] = useState<Record<number, boolean>>({});
   const handleMouseEnter = (id: number) => {
