@@ -1,4 +1,4 @@
-import { createBrowserRouter,  RouterProvider } from "react-router-dom"
+import { createBrowserRouter, RouterProvider } from "react-router-dom"
 import HomePage from "./pages/home/HomePage";
 import AboutRufyanPage from "./pages/aboutRufyan/AboutRufyanPage";
 import CommitmentPage from "./pages/Commitment/CommitmentPage";
@@ -15,6 +15,9 @@ import EditAll from "./pages/ControlPanel/EditAll";
 import Cart from "./pages/cartPage/Cart";
 import UserLikes from "./pages/LikedPage/UserLikes";
 import UserPanel from "./pages/UserPanelPage/UserPanel";
+import PrivateRoute from "./components/PrivateRoute";
+import LogInForm from "./components/LogInForm";
+import AddProductForm from "./pages/ControlPanel/AddProductForm";
 //import { homeLoader } from "./pages/home/homeLoader";
 //import store from "./store";
 
@@ -24,75 +27,104 @@ const homeLoader:LoaderFunction = async () =>{
   return null;
 }
 */
-const router= createBrowserRouter([
-{
-  path: '/',
-  element: <Root/>,
-  children:[
-    {
-      index: true,
-      element:<HomePage/>
-      
-    },
-    {path:'/aboutRufyan',
-    element: <AboutRufyanPage/>
-    },
-    {path:'/aboutRufyan/commitment',
-    element: <CommitmentPage/>
-    },
-    {path:'/aboutRufyan/profesionalDevelopment',
-    element: <ProfessionalDevPage/>
-    },
-    {path:'/store',
-    element: <StorePage/>
-    },
-    {path:'/store/:category?',
-      element:<ProductList/>
+const router = createBrowserRouter([
+  {
+    path: "/login",
+    element: <LogInForm onClick={() => {
+      console.log("no importa!");
 
-    },
-    {path:'/store/:category/:id',
-      element:<ProductPage/>
+    }} />,
+  },
+  {
+    path: '/',
+    element: <Root />,
+    children: [
+      {
+        /* //delete this comments to filter
+        element: <PrivateRoute />,
+        children: [
+          {
+        */
+            index: true,
+            element: <HomePage />
 
-    },
+          },
+          {
+            path: '/aboutRufyan',
+            element: <AboutRufyanPage />
+          },
+          {
+            path: '/aboutRufyan/commitment',
+            element: <CommitmentPage />
+          },
+          {
+            path: '/aboutRufyan/profesionalDevelopment',
+            element: <ProfessionalDevPage />
+          },
+          {
+            path: '/store',
+            element: <StorePage />
+          },
+          {
+            path: '/store/:category?',
+            element: <ProductList />
 
-    {path:'/projects',
-    element: <ProjectsPage/>
-    },
-    {path:'/shipment',
-    element: <ShipmentPage/>
-    },
-    {path:'/admin',
-      element:<ControlPanel/>
-    },
-    {
-      path:'/admin/edit',
-      element:<EditAll/>
-    },
-    {
-      path:'/cart',
-      element:<Cart/>
-    },
-    {
-      path:'/likes',
-      element:<UserLikes/>
-    },
-    {
-      path:'/user-panel',
-      element:<UserPanel/>
-    }
+          },
+          {
+            path: '/store/:category/:id',
+            element: <ProductPage />
 
-  ]
-}
-])
+          },
+
+          {
+            path: '/projects',
+            element: <ProjectsPage />
+          },
+          {
+            path: '/shipment',
+            element: <ShipmentPage />
+          },
+          {
+            path: '/admin',
+            element: <ControlPanel />
+          },
+          {
+            path: '/admin/edit',
+            element: <EditAll />
+          },
+          {
+            path: '/cart',
+            element: <Cart />
+          },
+          {
+            path: '/likes',
+            element: <UserLikes />
+          },
+          {
+            path: '/user-panel',
+            element: <UserPanel />
+          }
+          ,{path:'/add-product-form',
+            element : <AddProductForm/>
+          }
+        ]
+      }
+
+
+
+    ]
+ /* }
+]*/
+)
 
 
 
 const path = router.routes[0]?.children;
-const paths=[];
-if(path?.length){
-for(let i=1; i<path?.length;i++){
-  paths.push(path?.[i].path)
-}
+const paths = [];
+if (path?.length) {
+  for (let i = 1; i < path?.length; i++) {
+    paths.push(path?.[i].path)
+  }
 }
 
 
@@ -100,13 +132,13 @@ paths.unshift("/")
 
 
 function App() {
-  
-return <RouterProvider router={router}/>
+
+  return <RouterProvider router={router} />
 }
 
 export default App
 
-export {paths};
+export { paths };
 
 
 
