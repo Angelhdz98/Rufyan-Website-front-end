@@ -1,4 +1,4 @@
-import type { Painting } from "../types/typesIndex";
+import type { PaintingDomainDetails, Product } from "../types/typesIndex";
 import classNames from "classnames";
 //import Button from "./Button";
 import { BiDownArrow } from "react-icons/bi";
@@ -7,7 +7,7 @@ import BuyNowButton from "./BuyNowButton";
 import AddToCartButton from "./AddToCartButton";
 import { HTMLAttributes } from "react";
 export interface PaintLabelProps extends HTMLAttributes<HTMLDivElement>{
-    paint: Painting;
+    paint: Product;
     hidden?: boolean;
     clicked?: boolean;
     isVisible: boolean;
@@ -28,6 +28,7 @@ function PaintLabel({paint, clicked, isVisible, onClick }:PaintLabelProps) {
             
         }
         )
+        const paintingDomainDetails:PaintingDomainDetails = paint.productDomainDetails as PaintingDomainDetails;
 
 
     return <div className={finalClassname}
@@ -36,14 +37,14 @@ function PaintLabel({paint, clicked, isVisible, onClick }:PaintLabelProps) {
             <span className="font-bold">{paint.name}</span>
         </div>
         <p className="text-xs">
-            <span  >Technique:</span> <span>{paint.medium}</span>  <br />
+            <span  >Technique:</span> <span>{}</span>  <br />
             <span>
-            Measures: { paint.largo_cm} x {paint.altura_cm} 
+            Measures: { paintingDomainDetails.largoCm} x {paintingDomainDetails.alturaCm} 
             </span> 
             <br />
             <span>Description: </span> <span>{paint.description}</span> 
             <br />
-            {paint.price_copy && (<Fragment><span>Price Per Copy: </span> <span>{paint.price_copy}</span> <br /> </Fragment>
+            {paint.productPricing && (<Fragment><span>Price Per Copy: </span> <span>{}</span> <br /> </Fragment>
                 ) } 
         </p>
         {clicked ? botoneraObra(): <div className="flex flex-row place-self-center mt-1"><BiDownArrow className="text-[#CB3235]"/></div>  }
