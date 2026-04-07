@@ -7,6 +7,7 @@ function FormInput({type, name, value, className, children, labelClassname, onCh
       {children}
       </label>
     <input
+      min={0}
       type={type}
       name={name} 
       value={value}
