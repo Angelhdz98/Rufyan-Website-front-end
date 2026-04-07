@@ -1,10 +1,11 @@
 import { useState } from "react";
 import FormInput from "../../components/FormInput";
-import { PricingTypeEnum, Product, ProductStock, ProductTypeEnum } from "../../types/typesIndex";
-import CheckFormInput from "../../components/CheckFormInput";
+import { PricingTypeEnum,ProductTypeEnum } from "../../types/typesIndex";
+
 import { ImageUploader } from "../../components/ImageUploader";
 import ProductStockForm from "./ProductStockForm";
 import ProductPricingForm from "./ProductPricingForm";
+import { useImageUpload } from "../../hooks/useImageUpload";
 
 /*import image1 from "../../../public/assets/Images/imgObras/obra1.jpg"
 import image2 from "../../../public/assets/Images/imgObras/obra2.jpg"
@@ -12,6 +13,7 @@ import image3 from "../../../public/assets/Images/imgObras/obra3.jpg"
 import styled from "styled-components";
 */
 function AddProductForm() {
+    const { handleImageUpload, deleteImageUpload, imagePreview, uploadedFiles } = useImageUpload();
 
     const [productTypeEnum, setProductTypeEnum] = useState<ProductTypeEnum>(ProductTypeEnum.PAINTING)
     const productPricing: PricingTypeEnum = productTypeEnum == ProductTypeEnum.PAINTING ? PricingTypeEnum.ORIGINAL : PricingTypeEnum.SINGLE;
@@ -84,14 +86,20 @@ function AddProductForm() {
             Description
         </FormInput>
 
+        <ImageUploader deleteImageUpload={deleteImageUpload}
+            handleImageUpload={handleImageUpload}
+            imagePreview={imagePreview}
+            uploadedFiles={uploadedFiles}
+            className={"flex-1 min-h-96"} />
+
         {typeSelector()}
-       
+
         <h2> Stock</h2>
         <ProductStockForm productType={productTypeEnum} />
         <div>
 
         </div>
-       
+
         <span>Pricing</span>
         <ProductPricingForm pricingType={productPricing} />
 
