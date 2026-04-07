@@ -1,4 +1,4 @@
-import { Painting } from "../types/typesIndex";
+import { Painting, PaintingPricing, PaintingStock } from "../types/typesIndex";
 import { IoIosCheckmarkCircle } from "react-icons/io";
 import { CiNoWaitingSign } from "react-icons/ci";
 import { useState } from "react";
@@ -11,42 +11,34 @@ interface PaintingPreviewProps {
     paint: Painting;
 }
 
-const examplePaint: Painting = 
-    {
+const examplePaint: Painting =
+{
+    id: 1,
+    name: "Paisaje Tranquilo",
+    description: "Pintura al óleo de un paisaje sereno",
+    productPricing: { pricePerOriginal: 1200, pricePerCopy: 400, pricingType: "ORIGINAL" },
+
+
+    images: [{
         id: 1,
-        name: "Paisaje Tranquilo",
-        description: "Pintura al óleo de un paisaje sereno",
-        price: 1200.00,
-        category: { id: 1, name: "painting", label: "Pintura" },
-        favorite: false,
-        creation_date: "2023-05-15",
-        userId: 1,
-        image: [{
-            id: 1,
-            productName: "una obra fea",
-            url: obra2,
-        }],
-        largo_cm: 30,
-        altura_cm:50,
-        medium: "Aceite",
-        support_material: "Papel algodon",
-        certificate_of_authenticity: true,
-        isOrginalAvailable: true,
-        price_copy: 200,
-        available_copies: 11,
-        copies_made: 15 ,
-        available: true,
-    }
+        productName: "una obra fea",
+        url: obra2,
+    }],
+    productDomainDetails: { largoCm: 30, alturaCm: 50, creationDate: new Date("10-12-2020"), medium: "Aceite", supportMaterial: "Algodon" },
+    productStock: { stockType: "ORIGINAL_STOCK", stockCopies: 10, copiesMade:15, isOriginalAvailable:true }, 
+    productTypeEnum:"PAINTING",
+    isFavorite:true
+}
 
 
 function PaintingPreview({ paint }: PaintingPreviewProps) {
 
     const [originalSelected, setOriginalSelected] = useState(false);
-    const navigate= useNavigate();
+    const navigate = useNavigate();
 
     //const dispatch = useDispatch<AppDispatch>();
 
-    
+
 
     //const originalAvailable = true; // momentaneo para pruebas
 
@@ -58,10 +50,14 @@ function PaintingPreview({ paint }: PaintingPreviewProps) {
         setOriginalSelected(!originalSelected);
     }
     // cambiar el primer false por paint.original.available 
-     const availabilityTag = paint.isOrginalAvailable ? <div className="flex">
+    const paintingStock =  paint.productStock as PaintingStock; 
+       const paintingPricing = paint.productPricing as PaintingPricing; 
+    const availabilityTag = ()=>{ 
+        
+      return paintingStock.isOriginalAvailable ? <div className="flex">
         Original
         <IoIosCheckmarkCircle className="text-green-500 mt-1" />
-    </div> : paint.available_copies > 0
+    </div> : paintingStock.stockCopies > 0
         ?
         <div className="flex items-center" >
             Original
@@ -70,43 +66,43 @@ function PaintingPreview({ paint }: PaintingPreviewProps) {
         : <div className="font-bold text-red-500">
             Sold out
         </div>;
-
-    const availableCopies = paint.available_copies > 0 ?
-        <div className="Available-copies text-xs bg-white/70 absolute z-10 left-3 rounded px-1  bottom-12">Copies: {paint.available_copies}/{paint.copies_made}</div> :
+}
+    const availableCopies = paintingStock.stockCopies > 0 ?
+        <div className="Available-copies text-xs bg-white/70 absolute z-10 left-3 rounded px-1  bottom-12">Copies: {paintingStock.stockCopies}/{paintingStock.copiesMade}</div> :
         <div className="z-10  text-red-500 font-bold text-xs bg-white/70 absolute left-3 rounded px-1  bottom-12">No copies available</div>
 
     // cambiar este ultimo booleano por paint.original_availability 
-    const renderedPrice = originalSelected ? (<div >Price original: <br /> {paint.price}.00 MXN</div>) : (<div>Price p/copy: <br /> {paint.price_copy}.00 MXN</div>);
+    const renderedPrice = originalSelected ? (<div >Price original: <br /> {paintingPricing.pricePerOriginal}.00 MXN</div>) : (<div>Price p/copy: <br /> {paintingPricing.pricePerCopy}.00 MXN</div>);
 
-    
+
 
     {/*`http://localhost:8080${paint.image[0].url}`*/ }
 
     return <div className="flex flex-col relative h-[90%] border-2 border-black rounded-2xl ">
 
-            <img onClick={()=>{handleClick(paint.id)}} 
-            className="rounded-t-2xl cursor-pointer object-cover h-full  " 
-            src={paint.image[0].url}
-            alt={paint.image[0].productName} />
-            <div 
-            className= " bg-slate-300 p-2 px-6 rounded-b-2xl h-[10%]">
-               <PaintingPreviewButtonPanel  paint={examplePaint} isOriginalSelected={false} />
-            </div>
-            <div className="flex gap-2 text-sm  original-available-tag absolute items-center z-10 bg-white/70 rounded top-2 left-4 px-1 ">
-                {availabilityTag}
+        <img onClick={() => { handleClick(paint.id) }}
+            className="rounded-t-2xl cursor-pointer object-cover h-full  "
+            src={paint.images[0].url}
+            alt={paint.images[0].productName} />
+        <div
+            className=" bg-slate-300 p-2 px-6 rounded-b-2xl h-[10%]">
+            <PaintingPreviewButtonPanel paint={examplePaint} isOriginalSelected={false} />
+        </div>
+        <div className="flex gap-2 text-sm  original-available-tag absolute items-center z-10 bg-white/70 rounded top-2 left-4 px-1 ">
+            {availabilityTag()}
 
 
-            </div>
-            {availableCopies}
-            <div onClick={() => toggleOnSelectedHandler()} className="precios text-sm absolute z-20 right-2 top-2 bg-white/70 rounded-lg px-2 ">
-                {renderedPrice}
-               
+        </div>
+        {availableCopies}
+        <div onClick={() => toggleOnSelectedHandler()} className="precios text-sm absolute z-20 right-2 top-2 bg-white/70 rounded-lg px-2 ">
+            {renderedPrice}
 
-            </div>
-            <div className= {`text-[#eb4b1b] rounded-md text-3xl absolute z-10 bottom-12 right-2   border bg-white/70  cursor-pointer `} >
-                <LikeButton/>   
-                </div>
-                   
+
+        </div>
+        <div className={`text-[#eb4b1b] rounded-md text-3xl absolute z-10 bottom-12 right-2   border bg-white/70  cursor-pointer `} >
+            <LikeButton />
+        </div>
+
 
 
 
@@ -117,5 +113,5 @@ function PaintingPreview({ paint }: PaintingPreviewProps) {
 
 }
 
-export default PaintingPreview; 
-export  {examplePaint};
+export default PaintingPreview;
+export { examplePaint };

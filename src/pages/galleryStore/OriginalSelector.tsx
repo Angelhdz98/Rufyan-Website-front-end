@@ -3,7 +3,7 @@ import Button from "../../components/Button";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store";
 import { isPainting } from "../../hooks/isPainting";
-import { Painting } from "../../types/typesIndex";
+//import { Painting } from "../../types/typesIndex";
 
 
 function OriginalSelector() {
@@ -17,15 +17,16 @@ function OriginalSelector() {
         setOriginalSelected(false);
     }
     if (isPainting(data[0])) {
-        const painting = data[0] as Painting;
+        //const painting = data[0] as Painting;
         return <div className="flex flex-col p-3">
             <div className="w-full flex justify-center p-1 text-[#c25f40] ">
                 {originalSelected ? <span className="font-semibold">Original price </span> : <span className="font-semibold">Copy price</span>}
-                {originalSelected ?
-                    <span> {": " + painting.price}MXN </span> :
+                {/*originalSelected ? 
+                    <span> {": " + painting.productPricing.}MXN </span> :
                     <span> {": " + painting.price_copy}MXN
-                    </span>}
-                
+                    </span>
+                    */}
+
             </div>
             <hr className="border  border-[#c25f40] mb-2 -mt-1" />
             <div className="flex flex-row w-full gap-3">
@@ -71,7 +72,7 @@ function OriginalSelector() {
     return <div className="flex flex-col p-1 w-full">
         <div>
             <span>Price: </span>
-            {originalSelected ? <span>{data[0].price} </span> : <span></span>}
+            {/*originalSelected ? <span>{data[0]} </span> : <span></span>*/}
         </div>
         <div className="flex flex-row w-full gap-3">
             {originalSelected ? <Button className="w-1/2" onClick={selectOriginalHandler} secondary rounded >

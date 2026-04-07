@@ -10,10 +10,10 @@ function OtherProductsChart() {
     const renderendProducts = products.map((product) => {
         return <div key={product.name} className="h-[250px] rounded-lg overflow-hidden drop-shadow-lg">
             <div className="h-[55%] w-full ">
-                <img className="h-full w-full " src={product.image[0].url} alt="" />
+                <img className="h-full w-full " src={product.images[0].url} alt="" />
             </div>
             
-            <ProductLabel className="h-[45%] mb-0" product={product} />
+            <ProductLabel className="h-[45%] mb-0" product={product} isVisible ={true} />
         </div>
     })
 
@@ -23,7 +23,7 @@ function OtherProductsChart() {
     </div>
     <div className="w-full flex flex-row  justify-between">
         {products.map((product)=>{
-            return <Button key={product.name} primary rounded>{product.category?.name}</Button>
+            return <Button key={product.name} primary rounded>{product.productTypeEnum.toString()}</Button>
         })}
     </div>
     </div>

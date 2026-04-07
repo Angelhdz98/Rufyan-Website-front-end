@@ -1,21 +1,20 @@
 import FormInput from "../../components/FormInput";
 import CheckFormInput from "../../components/CheckFormInput";
 import { useDispatch } from "react-redux";
-import {  addImage, AppDispatch, RootState, updateForm } from "../../store";
+import { AppDispatch, RootState, updateForm } from "../../store";
 import { addPainting } from "../../store/thunks/addPainting";
 import { useSelector } from "react-redux";
-import { deleteImage } from "../../store/slices/formPaintingSlice";
 import FormApiSelect from "../../components/FormApiSelect";
-import { useState } from "react";
 import { ImageUploader } from "../../components/ImageUploader";
+import { useImageUpload } from "../../hooks/useImageUpload";
 
 
 export interface PaintingFormProps {
-    
+
   name: string;
   price: number;
   description: string;
-  category: 
+  category:
   {
     id: number,
     category: string;
@@ -30,7 +29,7 @@ export interface PaintingFormProps {
   support_material: string;
   medium: string;
   image: File[];
-  
+
 };
 
 
@@ -57,137 +56,60 @@ export interface formDataInterfacePainting {
 
 //import type { Painting } from "../../types/typesIndex";
 function AddPaintingForm() {
-  const [imagePreview, setImagePreview] = useState<string[]>([]);
-  const [uploadedFiles, setUploadedFiles] = useState<File[]>([]);
-  
+  const { handleImageUpload, deleteImageUpload, imagePreview, uploadedFiles } = useImageUpload();
+
   const dispatch = useDispatch<AppDispatch>();
-  const formData= useSelector((state: RootState)=>{
-    return state.formPainting.data 
-  } );
-  
-  
-  const addProductHandler = (event: React.FormEvent<HTMLFormElement>) =>{
+  const formData = useSelector((state: RootState) => {
+    return state.formPainting.data
+  });
+
+
+  const addProductHandler = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     const form = new FormData();
-    form.append('altura_cm',formData.altura_cm.toString());
-    form.append('largo_cm',formData.largo_cm.toString());
-    form.append('medium',formData.medium);
-    form.append('support_material',formData.support_material);
-    form.append('available_copies',formData.available_copies.toString());
-    form.append('copies_made',formData.copies_made.toString());
-    form.append('price_copy',formData.price_copy.toString());
+    form.append('altura_cm', formData.altura_cm.toString());
+    form.append('largo_cm', formData.largo_cm.toString());
+    form.append('medium', formData.medium);
+    form.append('support_material', formData.support_material);
+    form.append('available_copies', formData.available_copies.toString());
+    form.append('copies_made', formData.copies_made.toString());
+    form.append('price_copy', formData.price_copy.toString());
     //form.append('original_available',formData.original_available.valueOf().toString());
-    form.append('name',formData.name);
-    form.append('description',formData.description);
-    form.append('price',formData.price.toString());
-    form.append('favorite',formData.favorite.valueOf().toString());
-    form.append('category',formData.category.toString()); // prueba ambas opciones 
+    form.append('name', formData.name);
+    form.append('description', formData.description);
+    form.append('price', formData.price.toString());
+    form.append('favorite', formData.favorite.valueOf().toString());
+    form.append('category', formData.category.toString()); // prueba ambas opciones 
     //form.append('category',"paintings");
-    formData.image.forEach((image) =>{
-        form.append("image", image);
+    formData.image.forEach((image) => {
+      form.append("image", image);
     })
 
-    console.log (form); 
-    
+    console.log(form);
+
     dispatch(addPainting(form));
-    
+
 
   };
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const {name, value} = e.target;
-    dispatch(updateForm({...formData, [name]:value}));
+    const { name, value } = e.target;
+    dispatch(updateForm({ ...formData, [name]: value }));
   };
   const toggleValueHandler = (field: keyof PaintingFormProps) => {
     dispatch(updateForm({ ...formData, [field]: !formData[field] }));
   };
 
-
-
-  const handleImageUpload =  (e: React.ChangeEvent<HTMLInputElement>) =>{
+  const handleOptionSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
     e.preventDefault();
-    const files = e.target.files;
-    if (files && files.length === 0) {
- const selectedFiles = Array.from(files);
+    const { name, value } = e.target;
+    //console.log("name: ",name, " value: ", value);
 
+    dispatch(updateForm({ ...formData, [name]: value }));
 
-      
-     
+    //console.log("formData: ", formData);
+  };
 
-      //verification for size and file type 
-      selectedFiles.forEach((file)=>{
-          
-          if (!file.type.match("image.*")){
-              alert("Por favor, selecciona un archivo de imagen valido");
-          }
-          if(file.size>2*1024*1024){
-              alert("La imagen no debe superar los 2 MB");
-              return;
-          }
-      })
-
-        //dispatch(updateForm({...formData, "image":[...formData.image,files]}))
-     dispatch(addImage(selectedFiles));
-
-     const readers= selectedFiles.map((file)=>{
-      return new Promise<string>((resolve,reject)=>{
-          const reader = new FileReader();
-
-          reader.onload =()=>{
-              if(typeof reader.result === "string"){
-                  resolve(reader.result);
-              }
-          };
-          reader.onerror = () => reject(reader.error);
-          reader.readAsDataURL(file);
-      
-
-      })
-  });
-
-  Promise.all(readers).then(results=>{
-      setImagePreview([...imagePreview,...results]);
-  })
-
-
-
-  setUploadedFiles((prev)=>{
-      return [...prev, ...selectedFiles]
-  })
-    }  
-
-    
-    };
-
-    const handleOptionSelect = (e: React.ChangeEvent<HTMLSelectElement>) =>{
-      e.preventDefault();
-      const {name, value} = e.target;
-      //console.log("name: ",name, " value: ", value);
-
-      dispatch(updateForm({...formData, [name]:value}));
-
-      //console.log("formData: ", formData);
-    };
-
-    const deleteImageUpload = (value:string|number) =>{
-
-      if(typeof value === "number"){
-
-        setUploadedFiles((prev)=>{
-            return prev.filter((_,index )=> index!== value );
-        });
-        setImagePreview((prev)=>{
-            return prev.filter((_, index)=> index!==value)
-        });
-    }else{
-        //delete by name 
-         dispatch(deleteImage(value));
-      
-
-    }
-     
-    }
-  
 
   /*
     const renderedImages = formData.image.map((img: File, index)=>{
@@ -228,184 +150,184 @@ function AddPaintingForm() {
   })
             */
 
-/*  const handleImageUpload = (uploadedImages: string[]) => {
-
-
-    setFormData((prevState) => ({
-      ...prevState,
-      data: {...prevState.data, ["image"]:  uploadedImages  }
-    }));
-  };
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setFormData((prevState) => ({
-      ...prevState,
+  /*  const handleImageUpload = (uploadedImages: string[]) => {
+  
+  
+      setFormData((prevState) => ({
+        ...prevState,
+        data: {...prevState.data, ["image"]:  uploadedImages  }
+      }));
+    };
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+      const { name, value } = e.target;
+      setFormData((prevState) => ({
+        ...prevState,
+        data: {
+          ...prevState.data,
+          [name]: value,
+        },
+      }));
+    };
+    const toggleValueHandler = (field: "original_available" | "favorite") => {
+  
+      setFormData((prevState) => ({
+        ...prevState,
+        data: {
+          ...prevState.data,
+          [field]: !prevState.data[field],
+        },
+      }));
+  
+    };
+  
+  
+    const [formData, setFormData] = useState<formDataInterfacePainting>({
       data: {
-        ...prevState.data,
-        [name]: value,
-      },
-    }));
-  };
-  const toggleValueHandler = (field: "original_available" | "favorite") => {
+        name: '',
+        price: 1000,
+        description: '',
+        category: '',
+        altura_cm: 40,
+        largo_cm: 30,
+        available_copies: 12,
+        copies_made: 15,
+        price_copy: 300,
+        original_available: true,
+        favorite: false,
+        support_material: '',
+        medium: '',
+        image: [],
+      }
+    });
+    */
 
-    setFormData((prevState) => ({
-      ...prevState,
-      data: {
-        ...prevState.data,
-        [field]: !prevState.data[field],
-      },
-    }));
-
-  };
-
-
-  const [formData, setFormData] = useState<formDataInterfacePainting>({
-    data: {
-      name: '',
-      price: 1000,
-      description: '',
-      category: '',
-      altura_cm: 40,
-      largo_cm: 30,
-      available_copies: 12,
-      copies_made: 15,
-      price_copy: 300,
-      original_available: true,
-      favorite: false,
-      support_material: '',
-      medium: '',
-      image: [],
-    }
-  });
-  */
- 
 
   const stringOriginalAvailable = formData.original_available ? "true" : "false";
   const stringFavorite = formData.favorite ? "true" : "false";
   return <form onSubmit={addProductHandler} className="flex flex-col m-6 " encType="multipart/form-data">
     <div className="flex flex-row flex-gow  gap-6">
-    <div className="leftColumn flex flex-col w-1/2 ">
-      <FormInput type={"text"} name={"name"}
-        value={formData.name}
-        onChange={handleChange}>
-        Titulo
-      </FormInput>
-
-      <FormInput type={"number"} name={"price"}
-        value={formData.price.toString()}
-        onChange={handleChange}>
-        Precio original
-      </FormInput>
-
-      <FormInput type={"text"} name={"description"}
-        value={formData.description}
-        onChange={handleChange}>
-        Descripción
-      </FormInput>
-
-      <FormInput type={"text"} name={"category"}
-        value={formData.category.category}
-        onChange={handleChange}>
-        Estilo
-      </FormInput>
-      <div className="flex flex-row">
-        <div className="flex flex-col w-1/2">
-          <FormInput type={"number"} name={"altura_cm"}
-            value={formData.altura_cm.toString()}
-            onChange={handleChange}>
-            Alto
-          </FormInput>
-        </div>
-
-
-        <div className="flex flex-col w-1/2">
-          <FormInput type={"number"} name={"largo_cm"}
-            value={formData.largo_cm.toString()}
-            onChange={handleChange}>
-            Ancho
-          </FormInput>
-        </div>
-
-      </div>
-
-      <div className="flex flex-row">
-        <div className="flex flex-col w-1/2">
-          <FormInput type={"number"} name={"available_copies"}
-            value={formData.available_copies.toString()}
-            onChange={handleChange}>
-            Copias disponibles
-          </FormInput></div>
-
-        <div className="flex flex-col w-1/2"><FormInput type={"number"} 
-          name={"copies_made"}
-          value={formData.copies_made.toString()}
+      <div className="leftColumn flex flex-col w-1/2 ">
+        <FormInput type={"text"} name={"name"}
+          value={formData.name}
           onChange={handleChange}>
-          Copias realizadas
+          Titulo
         </FormInput>
-        </div>
-      </div>
 
-      <div className="flex flex-row">
-        <div className="w-4/5">
-          <FormInput type={"number"} name={"price_copy"}
-            value={formData.price_copy.toString()}
+        <FormInput type={"number"} name={"price"}
+          value={formData.price.toString()}
+          onChange={handleChange}>
+          Precio original
+        </FormInput>
+
+        <FormInput type={"text"} name={"description"}
+          value={formData.description}
+          onChange={handleChange}>
+          Descripción
+        </FormInput>
+
+        <FormInput type={"text"} name={"category"}
+          value={formData.category.category}
+          onChange={handleChange}>
+          Estilo
+        </FormInput>
+        <div className="flex flex-row">
+          <div className="flex flex-col w-1/2">
+            <FormInput type={"number"} name={"altura_cm"}
+              value={formData.altura_cm.toString()}
+              onChange={handleChange}>
+              Alto
+            </FormInput>
+          </div>
+
+
+          <div className="flex flex-col w-1/2">
+            <FormInput type={"number"} name={"largo_cm"}
+              value={formData.largo_cm.toString()}
+              onChange={handleChange}>
+              Ancho
+            </FormInput>
+          </div>
+
+        </div>
+
+        <div className="flex flex-row">
+          <div className="flex flex-col w-1/2">
+            <FormInput type={"number"} name={"available_copies"}
+              value={formData.available_copies.toString()}
+              onChange={handleChange}>
+              Copias disponibles
+            </FormInput></div>
+
+          <div className="flex flex-col w-1/2"><FormInput type={"number"}
+            name={"copies_made"}
+            value={formData.copies_made.toString()}
             onChange={handleChange}>
-            Precio por copia
+            Copias realizadas
           </FormInput>
+          </div>
         </div>
 
-        <div className="flex flex-col items-center w-full ">
-
-          <div className="flex flex-row w-4/5 items-center">
-
-            <CheckFormInput type={"checkbox"} name={"original_available"}
-              checked={formData.original_available}
-              value={stringOriginalAvailable}
-              onChange={() => toggleValueHandler("original_available")}
-              labelClassname="w-full"
-            >
-              Original disponible
-            </CheckFormInput>
-
-          </div>
-          <div className="flex flex-row w-4/5 items-center">
-            <CheckFormInput type={"checkbox"} name={"favorite"}
-              checked={formData.favorite}
-              value={stringFavorite}
-
-              onChange={() => toggleValueHandler("favorite")}
-              labelClassname="w-full"
-            >
-              Favorita(o)
-            </CheckFormInput>
+        <div className="flex flex-row">
+          <div className="w-4/5">
+            <FormInput type={"number"} name={"price_copy"}
+              value={formData.price_copy.toString()}
+              onChange={handleChange}>
+              Precio por copia
+            </FormInput>
           </div>
 
+          <div className="flex flex-col items-center w-full ">
+
+            <div className="flex flex-row w-4/5 items-center">
+
+              <CheckFormInput type={"checkbox"} name={"original_available"}
+                checked={formData.original_available}
+                value={stringOriginalAvailable}
+                onChange={() => toggleValueHandler("original_available")}
+                labelClassname="w-full"
+              >
+                Original disponible
+              </CheckFormInput>
+
+            </div>
+            <div className="flex flex-row w-4/5 items-center">
+              <CheckFormInput type={"checkbox"} name={"favorite"}
+                checked={formData.favorite}
+                value={stringFavorite}
+
+                onChange={() => toggleValueHandler("favorite")}
+                labelClassname="w-full"
+              >
+                Favorita(o)
+              </CheckFormInput>
+            </div>
+
+          </div>
         </div>
+
+
+        <FormApiSelect field={"category"}
+          label={"Categoría"}
+          apiEndpoint={"https://catfact.ninja/facts"}
+          onChange={handleOptionSelect}
+          value={formData.category.category}
+          onOptionSelect={handleOptionSelect}
+        />
+
+
+
+
+
       </div>
 
+      <div className="rightColumn flex flex-col w-1/2">
+        <FormInput type={"text"} name={"support_material"}
+          value={formData.support_material}
+          onChange={handleChange}>
+          Material de soporte
+        </FormInput>
 
-          <FormApiSelect  field={"category"} 
-                          label={"Categoría"} 
-                          apiEndpoint={"https://catfact.ninja/facts"} 
-                           onChange={ handleOptionSelect} 
-                           value={formData.category.category}
-                           onOptionSelect={handleOptionSelect}
-                           />
-
-                          
-
-
-
-    </div>
-
-    <div className="rightColumn flex flex-col w-1/2">
-      <FormInput type={"text"} name={"support_material"}
-        value={formData.support_material}
-        onChange={handleChange}>
-        Material de soporte
-      </FormInput>
-
-  {/*    <FormApiSelect 
+        {/*    <FormApiSelect 
                 field="support_material" 
                 label={"Material de soporte"}
                 apiEndpoint={"https://catfact.ninja/facts"}
@@ -413,16 +335,16 @@ function AddPaintingForm() {
                 Material de soporte
       </FormApiSelect>
 */
-}
-      <FormInput type={"text"} name={"medium"}
-        value={formData.medium}
-        onChange={handleChange}>
-        Medio
-      </FormInput>
-      {/**
+        }
+        <FormInput type={"text"} name={"medium"}
+          value={formData.medium}
+          onChange={handleChange}>
+          Medio
+        </FormInput>
+        {/**
              * Faltan las imagenes
              */}
-      {/* <div className="h-[500px]">
+        {/* <div className="h-[500px]">
             <div className="flex flex-row items-center justify-between ">
                 <label className="block my-2">
                 Imágenes
@@ -456,19 +378,22 @@ function AddPaintingForm() {
         </div>
         
         </div> */}
-       
-      
-        
-       {/*<Button rounded primary className="w-fit  place-self-end  " >Add painting</Button>*/}
-       <ImageUploader  handleImageUpload={handleImageUpload} deleteImageUpload={deleteImageUpload} imagePreview={imagePreview} uploadedFiles={uploadedFiles} className={" my-2"} />
+
+
+
+        {/*<Button rounded primary className="w-fit  place-self-end  " >Add painting</Button>*/}
+        <ImageUploader handleImageUpload={handleImageUpload} deleteImageUpload={deleteImageUpload} imagePreview={imagePreview} uploadedFiles={uploadedFiles} className={" my-2"} />
+      </div>
+
     </div>
 
-  </div>
-       
   </form>
 }
 
 export default AddPaintingForm;
+export { useImageUpload };
+
+
 
 
 

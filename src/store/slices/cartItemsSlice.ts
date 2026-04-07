@@ -1,31 +1,23 @@
-import { CartItemInterface, Cup, Hat, Painting, ProductCategory } from "../../types/typesIndex";
-
-import obra2 from "../../../public/assets/Images/imgObras/obra2.jpg"
-import obra3 from "../../../public/assets/Images/imgObras/obra3.jpg"
-import obra4 from "../../../public/assets/Images/imgObras/obra4.png"
-import obra5 from "../../../public/assets/Images/imgObras/obra5.png"
-import nycap from "../../../public/assets/Images/productos/hats/nyCap.jpg"
-import nycap2 from "../../../public/assets/Images/productos/hats/nyCap2.jpg"
-import cup from "../../../public/assets/Images/productos/cups/customCup.png"
-import cup2 from "../../../public/assets/Images/productos/cups/cup2.png"
+import { CartItemInterface, Cup, Hat, Painting } from "../../types/typesIndex";
 import { createSlice } from "@reduxjs/toolkit";
 import { changeCartItemQuantity } from "../thunks/changeCartItemQuantity";
 import { deleteCartItem } from "../thunks/deleteCartItem";
 
 //Random data for testing
-const urbanCategory:ProductCategory={id:1, label:"Urbano", name:"Urban" }
+/*const urbanCategory:ProductCategory={id:1, label:"Urbano", name:"Urban" }
 const contemporaryArt:ProductCategory ={id:2, label:"Contemporaneo",name:"Comtemporary Art" }
+*/
 
 
 export interface CartItemSlice {
-    data: CartItemInterface[];
-    isLoading: boolean;
-    error: string|null;
- 
-  }
+  data: CartItemInterface[];
+  isLoading: boolean;
+  error: string | null;
 
-  const paintings: Painting[] = [
-    {
+}
+
+const paintings: Painting[] = [
+  /*  {
       id: 1,
       name: "Paisaje Tranquilo",
       description: "Pintura al óleo de un paisaje sereno",
@@ -154,10 +146,10 @@ export interface CartItemSlice {
         price_copy:480.00,
      
     },
-   
-  ];
+   */
+];
 
-  const hats: Hat[] = [
+const hats: Hat[] = [/*
     {
       id: 123,
       size_inchs: 18,
@@ -215,9 +207,9 @@ export interface CartItemSlice {
       ],
       available: true
     }
-  ]
+  */]
 
-  const cups: Cup[] = [{
+const cups: Cup[] = [/*{
     capacity_ml: 256,
     isMagic: false,
     material: "Ceramic",
@@ -239,73 +231,73 @@ export interface CartItemSlice {
       url: cup2
     }],
     available: false
-  },]
+  },*/]
 
 
-  const cart: Array<CartItemInterface<Painting>|CartItemInterface<Hat>| CartItemInterface<Cup>> =[
-     {
-      id: 1, // Puedes usar un ID único para el CartItem o el ID del producto
-      product: paintings[0] ,
-      isCopy: false, // Asumimos que es el original (ajusta según necesidad)
-      quantity: 1
-    },
-    // Primer hat (índice 0)
-    {
-      id: 2,
-      product: hats[0], 
-      isCopy: false, // No aplica para hats pero lo mantenemos por consistencia
-      quantity: 1
-    },
-    // Primer cup (índice 0)
-    {
-      id: 3,
-      product: cups[0],
-      isCopy: false, // No aplica para cups
-      quantity: 1
-    }
-  ];
-  const initialState:CartItemSlice = {
-    data:cart, error:null, isLoading:false
-  };
+const cart: Array<CartItemInterface<Painting> | CartItemInterface<Hat> | CartItemInterface<Cup>> = [
+  {
+    id: 1, // Puedes usar un ID único para el CartItem o el ID del producto
+    product: paintings[0],
+    isCopy: false, // Asumimos que es el original (ajusta según necesidad)
+    quantity: 1
+  },
+  // Primer hat (índice 0)
+  {
+    id: 2,
+    product: hats[0],
+    isCopy: false, // No aplica para hats pero lo mantenemos por consistencia
+    quantity: 1
+  },
+  // Primer cup (índice 0)
+  {
+    id: 3,
+    product: cups[0],
+    isCopy: false, // No aplica para cups
+    quantity: 1
+  }
+];
+const initialState: CartItemSlice = {
+  data: cart, error: null, isLoading: false
+};
 
-  const cartItemSlice = createSlice({
-    name:"cartItems",
-    initialState,
-    reducers:{
+const cartItemSlice = createSlice({
+  name: "cartItems",
+  initialState,
+  reducers: {
 
-    },
+  },
 
-    //  La api inicialmente retornará el carrito completo
-    extraReducers(builder){
-        builder.addCase(changeCartItemQuantity.pending, (state ) =>{
-            state.isLoading=true;
-            state.error= null;
-        })
-        builder.addCase(changeCartItemQuantity.fulfilled, (state, action) =>{
-            state.isLoading=false;
-            state.data= action.payload;            
-            
-        })
-        builder.addCase(changeCartItemQuantity.rejected, (state, action) =>{
-          state.isLoading=false;
-          state.error= action.payload as string;             
-      })
-      builder.addCase(deleteCartItem.pending, (state ) =>{
-        state.isLoading=true;
-        state.error= null;
+  //  La api inicialmente retornará el carrito completo
+  extraReducers(builder) {
+    builder.addCase(changeCartItemQuantity.pending, (state) => {
+      state.isLoading = true;
+      state.error = null;
     })
-    builder.addCase(deleteCartItem.fulfilled, (state, action) =>{
-        state.isLoading=false;
-        state.data= action.payload;            
-        
+    builder.addCase(changeCartItemQuantity.fulfilled, (state, action) => {
+      state.isLoading = false;
+      state.data = action.payload;
+
     })
-    builder.addCase(deleteCartItem.rejected, (state, action) =>{
-      state.isLoading=false;
-      state.error= action.payload as string;             
-  })
+    builder.addCase(changeCartItemQuantity.rejected, (state, action) => {
+      state.isLoading = false;
+      state.error = action.payload as string;
+    })
+    builder.addCase(deleteCartItem.pending, (state) => {
+      state.isLoading = true;
+      state.error = null;
+    })
+    builder.addCase(deleteCartItem.fulfilled, (state, action) => {
+      state.isLoading = false;
+      state.data = action.payload;
 
-    }
-    
-  });
+    })
+    builder.addCase(deleteCartItem.rejected, (state, action) => {
+      state.isLoading = false;
+      state.error = action.payload as string;
+    })
 
-  export const cartItemReducer = cartItemSlice.reducer;
+  }
+
+});
+
+export const cartItemReducer = cartItemSlice.reducer;

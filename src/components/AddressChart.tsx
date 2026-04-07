@@ -15,8 +15,8 @@ export const addressesSample: UserAddress[] = [{
   neighborhood: "Lomas de tabachines"
 },
 {
-  addressLine1: "Paseo de los alamos sur 17"
-  , state: "Jalisco",
+  addressLine1: "Paseo del paseado"
+  , state: "Hungaria ",
   city: "Guadalajara",
   postalCode: "45180",
   country: "México",

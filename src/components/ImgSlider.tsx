@@ -60,7 +60,7 @@ function ImgSlider({paint}:imgSliderProps){
               
         <Slider {...settings} className="z-10">
           {
-          paint.image.map((image, index)  =>        
+          paint.images.map((image, index)  =>        
  //           <div key={index} //className="h-full w-full">
               <img  ref = {index== 0?firstImageRef:null}
                     //onLoad={forceUpdate}

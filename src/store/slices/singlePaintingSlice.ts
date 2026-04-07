@@ -1,5 +1,5 @@
-import { createSlice} from '@reduxjs/toolkit';
-import { Painting} from '../../types/typesIndex';
+import { createSlice } from '@reduxjs/toolkit';
+import { Painting, ProductTypeEnum } from '../../types/typesIndex';
 
 
 import obra2 from "../../../public/assets/Images/imgObras/obra2.jpg"
@@ -13,40 +13,36 @@ import { fetchPaintingById } from '../thunks/fetchPaintingById';
 export interface SinglePaintingsState {
   data: Painting;
   isLoading: boolean;
-  error: string|null;
-  
+  error: string | null;
+
 }
 
- // initial state for dev testing 
+// initial state for dev testing 
 const initialState: SinglePaintingsState = {
-  data:   {
+  data: {
     id: 100000,
     name: "Obra no cargada",
     description: "Pintura al óleo de un paisaje sereno",
-    price: 1200.00,
-    category: {id:1,name:"painting", label: "pintura"},
-    favorite:false,
-    creation_date: "2023-05-15",
-    userId: 1,
-    image: [{
+    productPricing: { pricePerCopy: 500, pricePerOriginal: 1500, pricingType: 'ORIGINAL' },
+    isFavorite: false,
+
+
+    images: [{
       id: 1,
       productName: "una obra fea",
       url: obra2,
     },
-    {id: 2,
-    productName: "una obra fea",
-     url: obra3}
+    {
+      id: 2,
+      productName: "una obra fea",
+      url: obra3
+    }
     ],
-      largo_cm: 60,
-      altura_cm:90,
-      available: true,
-      medium: "Óleo",
-      support_material: "Lienzo",
-      certificate_of_authenticity: true,
-      isOrginalAvailable: false,
-      available_copies: 2,
-      copies_made: 8,
-      price_copy:300,
+    productDomainDetails: { alturaCm: 90, largoCm: 60, medium: "Óleo", creationDate: new Date(), supportMaterial: "Lienzo" },
+    productStock: { isOriginalAvailable: false, copiesMade: 8, stockCopies: 2, stockType: 'ORIGINAL_STOCK' },
+    productTypeEnum: ProductTypeEnum.PAINTING.toString()
+
+
 
 
   },
@@ -66,71 +62,71 @@ const initialState: SinglePaintingsState = {
 const singlePaintingSlice = createSlice({
   name: 'paintings',
   initialState,
-  reducers:{
+  reducers: {
 
-    updateStatePainting: (state, action)=>{
-    state.data=action.payload;
+    updateStatePainting: (state, action) => {
+      state.data = action.payload;
     },
-    deleteStateImage: (state, action)=>{
-      const update = state.data.image.filter((img)=>img.id != action.payload as number);
+    deleteStateImage: (state, action) => {
+      const update = state.data.images.filter((img) => img.id != action.payload as number);
 
-      state.data.image= update;
+      state.data.images = update;
 
     }
-    
+
   },
-  extraReducers(builder){
+  extraReducers(builder) {
 
-    
 
-    builder.addCase(fetchPaintingById.pending, (state)=>{
-        state.isLoading=true;
-        state.error=null;
-      });
-      builder.addCase(fetchPaintingById.fulfilled, (state, action)=>{
-          state.isLoading=false;
-          state.data=action.payload;
-        });
-  
-        builder.addCase(fetchPaintingById.rejected, (state, action)=>{
-          state.isLoading=false;
-          state.error=action.payload as string;
-        });
 
-    builder.addCase(deleteImagePainting.pending, (state)=>{
-        state.isLoading=true;
-        state.error=null;
-      });
-      builder.addCase(deleteImagePainting.fulfilled, (state, action)=>{
-          state.isLoading=false;
-          state.data=action.payload;
-        });
-  
-        builder.addCase(deleteImagePainting.rejected, (state, action)=>{
-          state.isLoading=false;
-          state.error=action.payload as string;
-        });
-
-    builder.addCase(updatePainting.pending, (state)=>{
-      state.isLoading=true;
-      state.error=null;
+    builder.addCase(fetchPaintingById.pending, (state) => {
+      state.isLoading = true;
+      state.error = null;
     });
-    builder.addCase(updatePainting.fulfilled, (state, action)=>{
-        state.isLoading=false;
-        state.data=action.payload;
-      });
+    builder.addCase(fetchPaintingById.fulfilled, (state, action) => {
+      state.isLoading = false;
+      state.data = action.payload;
+    });
 
-      builder.addCase(updatePainting.rejected, (state, action)=>{
-        state.isLoading=false;
-        state.error=action.payload as string;
-      });
-      
+    builder.addCase(fetchPaintingById.rejected, (state, action) => {
+      state.isLoading = false;
+      state.error = action.payload as string;
+    });
+
+    builder.addCase(deleteImagePainting.pending, (state) => {
+      state.isLoading = true;
+      state.error = null;
+    });
+    builder.addCase(deleteImagePainting.fulfilled, (state, action) => {
+      state.isLoading = false;
+      state.data = action.payload;
+    });
+
+    builder.addCase(deleteImagePainting.rejected, (state, action) => {
+      state.isLoading = false;
+      state.error = action.payload as string;
+    });
+
+    builder.addCase(updatePainting.pending, (state) => {
+      state.isLoading = true;
+      state.error = null;
+    });
+    builder.addCase(updatePainting.fulfilled, (state, action) => {
+      state.isLoading = false;
+      state.data = action.payload;
+    });
+
+    builder.addCase(updatePainting.rejected, (state, action) => {
+      state.isLoading = false;
+      state.error = action.payload as string;
+    });
+
 
   },
 });
 
 
-export const singlePaintingReducer =singlePaintingSlice.reducer;
-export const {updateStatePainting, deleteStateImage} =singlePaintingSlice.actions;
+export const singlePaintingReducer = singlePaintingSlice.reducer;
+export const { updateStatePainting, deleteStateImage } = singlePaintingSlice.actions;
 
 

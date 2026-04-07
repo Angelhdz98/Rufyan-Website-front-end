@@ -2,7 +2,7 @@ import { useSelector } from "react-redux";
 import NavProduct from "../../components/NavProduct";
 import { RootState } from "../../store";
 import { isPainting } from "../../hooks/isPainting";
-import { Painting } from "../../types/typesIndex";
+import { Painting, Product } from "../../types/typesIndex";
 import EditablePainting from "./EditablePainting";
 import EditableProduct from "./EditableProduct";
 import { Fragment, useState } from "react";
@@ -29,7 +29,7 @@ function EditAll(){
 
 
          products = <Fragment>
-                     {data.map((product)=>{
+                     {data.map((product:Product)=>{
             if (isPainting(product)) {
                 return <EditablePainting 
                 onClick={() =>{ 
@@ -38,13 +38,9 @@ function EditAll(){
                 paint={product as Painting} 
                 key={product.id}/>
             }    
-            
-
-            
             // Mas typeguards
-
             else{
-                return <EditableProduct  product={product} key={product.id}/>
+                return <EditableProduct  product={product} />
             }
                     
             })}

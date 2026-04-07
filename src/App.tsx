@@ -15,7 +15,7 @@ import EditAll from "./pages/ControlPanel/EditAll";
 import Cart from "./pages/cartPage/Cart";
 import UserLikes from "./pages/LikedPage/UserLikes";
 import UserPanel from "./pages/UserPanelPage/UserPanel";
-import PrivateRoute from "./components/PrivateRoute";
+//import PrivateRoute from "./components/PrivateRoute";
 import LogInForm from "./components/LogInForm";
 import AddProductForm from "./pages/ControlPanel/AddProductForm";
 //import { homeLoader } from "./pages/home/homeLoader";
