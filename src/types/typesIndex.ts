@@ -44,25 +44,25 @@ export interface ProductCategory {
 }
 
 export enum ProductTypeEnum {
-  PAINTING,
-  SINGLE,
-  CLOTHING,
-  PRINT,
+  PAINTING = "PAINTING",
+  SINGLE = "SINGLE",
+  CLOTHING = "CLOTHING",
+  PRINT = "PRINT",
 
 }
 
 export enum BodyClothingSizeEnum {
-  XS,
-  S,
-  M,
-  L,
-  XL
+  XS = "XS",
+  S = "S",
+  M = "M",
+  L = "L",
+  XL = "XL"
 
 }
 
-export enum PricingTypeEnum{
+export enum PricingTypeEnum {
   ORIGINAL,
-  SINGLE, 
+  SINGLE,
 
 }
 
@@ -73,12 +73,14 @@ export type PaintingDomainDetails = {
   medium: string;
   supportMaterial: string;
   creationDate: Date;
+  productType: ProductTypeEnum.PAINTING;
 }
 
 export type BodyClothingDomainDetails = {
   material: string;
   type: string;
   printingTechnique: string;
+  productType: ProductTypeEnum.CLOTHING;
 }
 
 export type ProductDomainDetails = BodyClothingDomainDetails | PaintingDomainDetails;
@@ -92,15 +94,15 @@ export type PaintingPricing = {
 }
 
 export type SinglePricing = {
-  pricingType: "SINGLE_PRICE";
+  pricingType: "SIMPLE";
   price: number;
 }
 export type ProductPricing = SinglePricing | PaintingPricing;
 
 
 export type PaintingStock = {
-  stockType: "ORIGINAL_STOCK";
-  stockCopies: number;
+  stockType: "PAINTING_STOCK";
+  availableCopies: number;
   copiesMade: number;
   isOriginalAvailable: boolean;
 
@@ -112,11 +114,10 @@ export type SingleStock = {
 }
 export type ClothingStock = {
   stockType: "CLOTHING_STOCK";
-  stock: Map<BodyClothingSizeEnum, number>;
+  stockPerSize: Record<BodyClothingSizeEnum, number>;
 }
 
 export type ProductStock = SingleStock | PaintingStock | ClothingStock;
-
 
 
 
@@ -140,13 +141,75 @@ export interface Product {
 export interface Painting extends Product {
 
 
-productStock:PaintingStock;
-productPricing:PaintingPricing;
-productDomainDetails:PaintingDomainDetails;
+  productStock: PaintingStock;
+  productPricing: PaintingPricing;
+  productDomainDetails: PaintingDomainDetails;
 
 
 }
+export type ProductSpecs = {
+  name: string;
+  description: string;
+  productStock: ProductStock;
+  productPricing: ProductPricing;
+  productTypeEnum: ProductTypeEnum;
+  isFavorite: boolean;
+};
 
+export type ProductDetails = PaintingDetails | BodyClothingDetails;
+
+export enum MediumEnum {
+  OIL_PAINT,
+  ACRYLYC_PAINT,
+  PEN,
+  CHARCOAL,
+  WATERCOLOR
+}
+
+export enum SupportMaterialEnum {
+  WOOD,
+  COTTON_PAPER,
+  PAPER
+}
+export enum ClothingMaterial {
+  COTTON = "COTTON",
+  POLYESTER = "POLYESTER",
+  OTHER = "OTHER"
+}
+
+export enum BodyClotheTypeEnum {
+  T_SHIRT = "T_SHIRT",
+  SHIRT = "SHIRT",
+  HOODIE = "HOODIE",
+}
+export enum PrintingTechniqueEnum {
+  SERIGRAPHY,
+  SUBLIMATION,
+  AEROGRAPHY,
+}
+
+export type PaintingDetails = {
+  alturaCm: number;
+  largoCm: number;
+  medium: MediumEnum;
+  supportMaterial: SupportMaterialEnum;
+  creationDate: Date;
+  productTypeEnum: ProductTypeEnum;
+
+};
+
+export type BodyClothingDetails = {
+  material: ClothingMaterial;
+  type: BodyClotheTypeEnum;
+  printingTechique: PrintingTechniqueEnum;
+  productTypeEnum: ProductTypeEnum;
+
+}
+
+export type CreateProductCommand = {
+  productSpecs: ProductSpecs;
+  productDetails: ProductDomainDetails;
+};
 
 export interface OptionSelectRequest {
   name: string;

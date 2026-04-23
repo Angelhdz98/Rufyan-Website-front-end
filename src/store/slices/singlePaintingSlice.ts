@@ -2,11 +2,11 @@ import { createSlice } from '@reduxjs/toolkit';
 import { Painting, ProductTypeEnum } from '../../types/typesIndex';
 
 
-import obra2 from "../../../public/assets/Images/imgObras/obra2.jpg"
-import obra3 from "../../../public/assets/Images/imgObras/obra3.jpg"
+import obra2 from "../../../public/assets/Images/imgObras/obra2.jpg";
+import obra3 from "../../../public/assets/Images/imgObras/obra3.jpg";
 import { deleteImagePainting } from '../thunks/deleteImagePainting';
-import { updatePainting } from '../thunks/updatePainting';
 import { fetchPaintingById } from '../thunks/fetchPaintingById';
+import { updatePainting } from '../thunks/updatePainting';
 //import { deleteImage } from './formPaintingSlice';
 
 
@@ -38,8 +38,8 @@ const initialState: SinglePaintingsState = {
       url: obra3
     }
     ],
-    productDomainDetails: { alturaCm: 90, largoCm: 60, medium: "Óleo", creationDate: new Date(), supportMaterial: "Lienzo" },
-    productStock: { isOriginalAvailable: false, copiesMade: 8, stockCopies: 2, stockType: 'ORIGINAL_STOCK' },
+    productDomainDetails: { alturaCm: 90, largoCm: 60, medium: "Óleo", creationDate: new Date(), supportMaterial: "Lienzo", productType: ProductTypeEnum.PAINTING },
+    productStock: { isOriginalAvailable: false, copiesMade: 8, availableCopies: 2, stockType: 'PAINTING_STOCK' },
     productTypeEnum: ProductTypeEnum.PAINTING.toString()
 
 

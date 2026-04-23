@@ -33,7 +33,7 @@ function ProductPage() {
                 </div>
                 <div className="flex flex-row">
                     <span className="font-semibold">Available copies </span>
-                    <span>{": " + painting.productStock.stockCopies}/{painting.productStock.copiesMade}</span>
+                    <span>{": " + painting.productStock.availableCopies}/{painting.productStock.copiesMade}</span>
                 </div>
                 <div className="flex flex-row">
                     <span className="font-semibold">Measures </span>

@@ -30,7 +30,7 @@ function InfoChart({ items }: InfoChartProps) {
         break;
       }
 
-      case "SINGLE_PRICE": {
+      case "SIMPLE": {
         const singlePricing = item.product.productPricing as SinglePricing;
         precio = precio + singlePricing.price;
         break;
