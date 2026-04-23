@@ -30,7 +30,7 @@ export interface PaintingFormProps {
   medium: string;
   image: File[];
 
-};
+}
 
 
 export interface formDataInterfacePainting {
