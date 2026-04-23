@@ -1,10 +1,10 @@
 import { PaintingPricing, ProductPricing, SinglePricing } from "../types/typesIndex";
 
-export interface PriceTagProps{
-    productPricing:ProductPricing
+export interface PriceTagProps {
+    productPricing: ProductPricing
 }
 
-function PriceTag({productPricing}: PriceTagProps) {
+function PriceTag({ productPricing }: PriceTagProps) {
     let pricing: ProductPricing;
     let pricingTags;
     switch (productPricing.pricingType) {
@@ -15,7 +15,7 @@ function PriceTag({productPricing}: PriceTagProps) {
                 <span>Copia seriada: ${pricing.pricePerCopy}.00MXN</span>
             </div>
             break;
-        case "SINGLE_PRICE":
+        case "SIMPLE":
             pricing = productPricing as SinglePricing;
             pricingTags = <div>
                 <span> precio: ${productPricing.price}</span>
