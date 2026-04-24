@@ -1,59 +1,70 @@
 import React, { useState } from "react";
-import FormInput from "../../components/FormInput";
-import { BodyClothingSizeEnum, ClothingStock, PaintingStock, ProductTypeEnum } from "../../types/typesIndex";
 import CheckFormInput from "../../components/CheckFormInput";
+import FormInput from "../../components/FormInput";
+import { BodyClothingSizeEnum, ClothingStock, PaintingStock, ProductStock, ProductTypeEnum, SingleStock } from "../../types/typesIndex";
 
 type ProductStockFormProps = {
-    productType: ProductTypeEnum
+    productType: ProductTypeEnum,
+    handleStockChange: (stock: ProductStock) => void
 }
 
-function ProductStockForm({ productType }: ProductStockFormProps) {
-    const initialStockPerSize = new Map<BodyClothingSizeEnum, number>();
-    initialStockPerSize.set(BodyClothingSizeEnum.XS, 0);
-    initialStockPerSize.set(BodyClothingSizeEnum.S, 0);
-    initialStockPerSize.set(BodyClothingSizeEnum.M, 0);
-    initialStockPerSize.set(BodyClothingSizeEnum.L, 0);
-    initialStockPerSize.set(BodyClothingSizeEnum.XL, 0);
+function ProductStockForm({ productType, handleStockChange }: ProductStockFormProps) {
+    const initialStockPerSize: Record<BodyClothingSizeEnum, number> = {
+        [BodyClothingSizeEnum.XS]: 0,
+        [BodyClothingSizeEnum.S]: 0,
+        [BodyClothingSizeEnum.M]: 0,
+        [BodyClothingSizeEnum.L]: 0,
+        [BodyClothingSizeEnum.XL]: 0
+    };
 
     const [paintingStockData, setPaintingStockData] = useState<PaintingStock>({
         isOriginalAvailable: true,
-        stockCopies: 1,
+        availableCopies: 1,
         copiesMade: 1,
-        stockType: "ORIGINAL_STOCK"
+        stockType: "PAINTING_STOCK"
     });
 
     const [bodyClothingStock, setBodyClothingStock] = useState<ClothingStock>({
         stockType: "CLOTHING_STOCK",
-        stock: initialStockPerSize
+        stockPerSize: initialStockPerSize
     });
 
-    const [singleStock, setSigleStock] = useState<number>(1);
+    const [singleStock, setSigleStock] = useState<SingleStock>({ stock: 1, stockType: "SINGLE_STOCK" });
 
     const paintingStockForm = () => {
+
         const paintingStockHandleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
             const { name, value } = e.target;
             const parsedValue = parseInt(value);
-            setPaintingStockData((prev) => ({
-                ...prev,
-                [name]: isNaN(parsedValue) ? prev[name as keyof PaintingStock] : parsedValue
-            }))
+            const updatedStock = {
+                ...paintingStockData, [name]: isNaN(parsedValue) ? paintingStockData[name as keyof PaintingStock] : parsedValue
+            };
+            console.log("painting stockData: " + JSON.stringify(updatedStock))
+
+            setPaintingStockData(updatedStock);
+            handleStockChange(updatedStock);
+
+
         }
+        const toggleIsOriginalAvailable = () => {
+            const updatedStock = { ...paintingStockData, ["isOriginalAvailable"]: !paintingStockData.isOriginalAvailable } as PaintingStock;
+            setPaintingStockData(updatedStock);
+            handleStockChange(updatedStock);
+        };
 
         return <div>
             <CheckFormInput type={"checkbox"} name={"isOriginalAvailable"}
                 checked={paintingStockData.isOriginalAvailable}
                 value={paintingStockData.isOriginalAvailable ? "true" : "false"}
-                onChange={() => setPaintingStockData((prev) => {
-                    return { ...prev, ["isOriginalAvailable"]: !prev.isOriginalAvailable }
-                })}
+                onChange={toggleIsOriginalAvailable}
                 labelClassname="w-full"
             >
                 Original disponible
             </CheckFormInput>
-            <FormInput name="stockCopies"
+            <FormInput name="availableCopies"
                 onChange={paintingStockHandleChange}
                 type="number"
-                value={paintingStockData.stockCopies.toString()}
+                value={paintingStockData.availableCopies.toString()}
             >
                 Copias disponibles
             </FormInput>
@@ -67,41 +78,56 @@ function ProductStockForm({ productType }: ProductStockFormProps) {
         </div>
     }
 
-    const bodyClothingStockForm = () => {
-        const handleBodyClothingStockChange = (size: BodyClothingSizeEnum, value: string) => {
-            setBodyClothingStock((prev) => {
-                const updatedStock = new Map(prev.stock);
-                const parsedValue = parseInt(value);
-                updatedStock.set(size, isNaN(parsedValue) ? (prev.stock.get(size) || 0) : parsedValue);
-                return {
-                    ...prev,
-                    stock: updatedStock
-                };
-            });
+    const handleBodyClothingStockChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const { name, value } = e.target;
+        const parsedValue = parseInt(value);
+        const updatedStock = {
+            ...bodyClothingStock.stockPerSize,
+            [name]: isNaN(parsedValue) ? bodyClothingStock.stockPerSize[name as BodyClothingSizeEnum] : parsedValue
         };
 
-        const renderedStock = Array.from(bodyClothingStock.stock.entries()).map(([size, quantity]) => (
+
+        const updatedClothingStock: ClothingStock = { ["stockPerSize"]: updatedStock, stockType: "CLOTHING_STOCK" };
+        handleStockChange(updatedClothingStock);
+        setBodyClothingStock(updatedClothingStock);
+        console.log("Valor de stock actualizado: " + JSON.stringify(updatedClothingStock));
+
+
+    };
+
+    const bodyClothingStockForm = () => {
+
+
+        const renderedStock = Object.entries(bodyClothingStock.stockPerSize).map(([size, quantity]) => (
             <FormInput
                 key={size}
-                name={`size_${size}`}
+                name={size}
                 type="number"
                 value={quantity.toString()}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                    handleBodyClothingStockChange(size, e.target.value)
+                onChange={
+                    handleBodyClothingStockChange
                 }
             >
-                {`Talla ${BodyClothingSizeEnum[size]}`}
+                {`Talla ${size}`}
             </FormInput>
         ));
 
         return <div>{renderedStock}</div>;
     }
+    const handleSingleStockFormChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const value = e.target.value;
+        const parsedValue = parseInt(value);
+        const updatedSingleStock: SingleStock = {
+            ...singleStock,
+            stock: isNaN(parsedValue) ? singleStock.stock : parsedValue
+        }
+        handleStockChange(updatedSingleStock);
+        setSigleStock(updatedSingleStock);
+
+    }
 
     const singleStockForm = () => {
-        return <FormInput type="number" name="stock" value={singleStock.toString()} onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-            const value = e.target.value;
-            setSigleStock((prev) => parseInt(value) || prev);
-        }}  >Piezas disponibles</FormInput>
+        return <FormInput type="number" name="stock" value={singleStock.stock.toString()} onChange={handleSingleStockFormChange}  >Piezas disponibles</FormInput>
     };
 
     let stockForm: React.ReactNode;

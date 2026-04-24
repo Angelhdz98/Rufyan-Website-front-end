@@ -1,11 +1,14 @@
 import { useState } from "react";
 import FormInput from "../../components/FormInput";
-import { PricingTypeEnum,ProductTypeEnum } from "../../types/typesIndex";
+import { BodyClotheTypeEnum, BodyClothingDomainDetails, ClothingMaterial, CreateProductCommand, MediumEnum, PaintingDomainDetails, PaintingPricing, PaintingStock, PricingTypeEnum, PrintingTechniqueEnum, ProductDomainDetails, ProductPricing, ProductSpecs, ProductStock, ProductTypeEnum, SupportMaterialEnum } from "../../types/typesIndex";
 
+import Button from "../../components/Button";
+import CheckFormInput from "../../components/CheckFormInput";
 import { ImageUploader } from "../../components/ImageUploader";
-import ProductStockForm from "./ProductStockForm";
-import ProductPricingForm from "./ProductPricingForm";
 import { useImageUpload } from "../../hooks/useImageUpload";
+import ProductDomainDetailsForm from "./ProductDomainDetailsForm";
+import ProductPricingForm from "./ProductPricingForm";
+import ProductStockForm from "./ProductStockForm";
 
 /*import image1 from "../../../public/assets/Images/imgObras/obra1.jpg"
 import image2 from "../../../public/assets/Images/imgObras/obra2.jpg"
@@ -16,7 +19,37 @@ function AddProductForm() {
     const { handleImageUpload, deleteImageUpload, imagePreview, uploadedFiles } = useImageUpload();
 
     const [productTypeEnum, setProductTypeEnum] = useState<ProductTypeEnum>(ProductTypeEnum.PAINTING)
-    const productPricing: PricingTypeEnum = productTypeEnum == ProductTypeEnum.PAINTING ? PricingTypeEnum.ORIGINAL : PricingTypeEnum.SINGLE;
+    const productPricing: PricingTypeEnum = productTypeEnum === ProductTypeEnum.PAINTING ? PricingTypeEnum.ORIGINAL : PricingTypeEnum.SINGLE;
+
+    const handleProductchange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+        const value = e.target.value;
+        let productTypeSelected: ProductTypeEnum;
+        switch (value) {
+            case ProductTypeEnum.PAINTING.toString():
+                productTypeSelected = ProductTypeEnum.PAINTING;
+                setProductDomainDetails(paintingDetails);
+
+                break;
+
+            case ProductTypeEnum.CLOTHING.toString():
+                productTypeSelected = ProductTypeEnum.CLOTHING;
+                setProductDomainDetails(clothingDetails);
+                break;
+            case ProductTypeEnum.SINGLE.toString():
+                productTypeSelected = ProductTypeEnum.SINGLE;
+
+                break;
+            default:
+                productTypeSelected = ProductTypeEnum.PAINTING;
+        }
+
+        setProductTypeEnum(productTypeSelected);
+        const updatedCommonData: ProductSpecs = {
+            ...commonData, ["productTypeEnum"]: productTypeSelected
+        }
+        setCommonData(updatedCommonData);
+
+    }
     const typeSelector = () => {
         return (
             <div className="flex flex-col w-fit">
@@ -25,27 +58,8 @@ function AddProductForm() {
                 </label>
                 <select
                     id="productType"
-                    value={productTypeEnum}
-                    onChange={(e: React.ChangeEvent<HTMLSelectElement>) => {
-                        const value = e.target.value;
-                        let productTypeSelected: ProductTypeEnum;
-                        switch (value) {
-                            case ProductTypeEnum.PAINTING.toString():
-                                productTypeSelected = ProductTypeEnum.PAINTING;
-                                break;
-
-                            case ProductTypeEnum.CLOTHING.toString():
-                                productTypeSelected = ProductTypeEnum.CLOTHING;
-                                break;
-                            case ProductTypeEnum.SINGLE.toString():
-                                productTypeSelected = ProductTypeEnum.SINGLE;
-                                break;
-                            default:
-                                productTypeSelected = ProductTypeEnum.PAINTING;
-                        }
-
-                        setProductTypeEnum(productTypeSelected)
-                    }}
+                    value={productTypeEnum.toString()}
+                    onChange={handleProductchange}
                     className="px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                 >
                     <option value={ProductTypeEnum.PAINTING}>Painting</option>
@@ -55,14 +69,51 @@ function AddProductForm() {
             </div>
         );
     }
+    const initialPaintingStock: ProductStock = { copiesMade: 0, isOriginalAvailable: true, availableCopies: 0, stockType: "PAINTING_STOCK" } as PaintingStock;
 
-    const [commonData, setCommonData] = useState({
-        id: 0,
+    const initialProductPricing: ProductPricing = { pricePerCopy: 500, pricePerOriginal: 1000, pricingType: "ORIGINAL" } as PaintingPricing;
+
+    const [commonData, setCommonData] = useState<ProductSpecs>({
         name: "",
-        images: [],
-        description: ""
-
+        description: "",
+        productStock: initialPaintingStock,
+        productPricing: initialProductPricing,
+        productTypeEnum,
+        isFavorite: false,
     });
+
+    const paintingDetails: PaintingDomainDetails = {
+        alturaCm: 30,
+        largoCm: 25,
+        creationDate: new Date(),
+        medium: MediumEnum.ACRYLYC_PAINT.toString(),
+        supportMaterial: SupportMaterialEnum.COTTON_PAPER.toString(),
+        productType: ProductTypeEnum.PAINTING
+    };
+    const clothingDetails: BodyClothingDomainDetails = { material: ClothingMaterial.COTTON.toString(), printingTechnique: PrintingTechniqueEnum.AEROGRAPHY.toString(), productType: ProductTypeEnum.CLOTHING, type: BodyClotheTypeEnum.HOODIE.toString() };
+    const [productDomainDetails, setProductDomainDetails] = useState<ProductDomainDetails>(paintingDetails);
+
+    const handlePriceChanging = (pricing: ProductPricing) => {
+        setCommonData((prev) => {
+            return { ...prev, productPricing: pricing };
+        });
+    };
+    const handleStockChanging = (stock: ProductStock) => {
+        setCommonData((prev) => {
+            return { ...prev, ["productStock"]: stock };
+        });
+
+    }
+    const toggleIsFavorite = () => {
+        const updateCommonData = { ...commonData, ["isFavorite"]: !commonData.isFavorite } as ProductSpecs;
+        console.log("commonData en is Favoritee: " + JSON.stringify(updateCommonData));
+        setCommonData(updateCommonData);
+    }
+
+    const handleDetailsChange = (details: ProductDomainDetails) => {
+        setProductDomainDetails(details);
+
+    };
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
@@ -70,6 +121,80 @@ function AddProductForm() {
             return { ...prev, [name]: value }
         })
 
+    };
+
+    const handleFormSubmit = async () => {
+        try {
+            // Crear el objeto de detalles según el tipo de producto
+
+
+            // Crear el comando
+            const command: CreateProductCommand = {
+                productSpecs: { ...commonData, productTypeEnum: productTypeEnum },
+                productDetails: productDomainDetails,
+            };
+
+            // Crear FormData para enviar multipart
+            const formData = new FormData();
+
+            console.log("Comando a enviar:", JSON.stringify(command, null, 2));
+
+            //{...command,["creationDate"]:}
+            // Añadir comando como JSON
+
+            if (command.productDetails.productType == ProductTypeEnum.PAINTING) {
+                const adaptedDated = command.productDetails.creationDate.toISOString().split("T")[0];
+                const paintingDetailsCommand = { ...command.productDetails, creationDate: adaptedDated };
+
+                const newCommand = { ...command, productDomainDetails: paintingDetailsCommand };
+                formData.append("command", new Blob([JSON.stringify(newCommand)], { type: "application/json" }));
+            } else {
+                formData.append("command", new Blob([JSON.stringify(command)], { type: "application/json" }));
+                console.log("FormData entries:");
+                formData.forEach((value, key) => {
+                    if (value instanceof File) {
+                        console.log(`${key}: File(${value.name})`);
+                    } else {
+                        console.log(`${key}: ${value}`);
+                    }
+                });
+
+
+            }
+
+
+
+            // Añadir imágenes
+            uploadedFiles.forEach((file: File) => {
+                formData.append("images", file);
+            });
+
+            console.log("FormData entries:");
+            formData.forEach((value, key) => {
+                if (value instanceof File) {
+                    console.log(`${key}: File(${value.name})`);
+                } else {
+                    console.log(`${key}: ${value}`);
+                }
+            });
+
+            // Enviar petición POST
+            const response = await fetch("/api/products", {
+                method: "POST",
+                body: formData,
+            });
+
+            if (!response.ok) {
+                throw new Error(`Error: ${response.statusText}`);
+            }
+
+            const data = await response.json();
+            console.log("Producto creado exitosamente:", data);
+            // Aquí puedes redirigir o mostrar un mensaje de éxito
+        } catch (error) {
+            console.error("Error al crear el producto:", error);
+            // Mostrar mensaje de error al usuario
+        }
     };
 
     return <div>
@@ -86,6 +211,14 @@ function AddProductForm() {
             Description
         </FormInput>
 
+        <CheckFormInput
+            type={"checkbox"} name="isFavorite"
+            value={commonData.isFavorite ? "true" : "false"}
+            onChange={toggleIsFavorite}
+            className=" w-full " checked={commonData.isFavorite}   >
+            Obra favorita
+        </CheckFormInput>
+
         <ImageUploader deleteImageUpload={deleteImageUpload}
             handleImageUpload={handleImageUpload}
             imagePreview={imagePreview}
@@ -95,13 +228,18 @@ function AddProductForm() {
         {typeSelector()}
 
         <h2> Stock</h2>
-        <ProductStockForm productType={productTypeEnum} />
-        <div>
+        <ProductStockForm handleStockChange={handleStockChanging} productType={productTypeEnum} />
 
-        </div>
+        <span>Details</span>
+        <ProductDomainDetailsForm onDetailsChange={handleDetailsChange} productTypeEnum={productTypeEnum} />
+
+
 
         <span>Pricing</span>
-        <ProductPricingForm pricingType={productPricing} />
+        <ProductPricingForm pricingType={productPricing} onChangePrice={handlePriceChanging} />
+        <div className="my-4">
+            <Button success rounded onClick={handleFormSubmit} >Subir producto</Button>
+        </div>
 
     </div>
 

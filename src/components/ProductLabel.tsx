@@ -1,5 +1,5 @@
-import type { PaintingPricing, Product, SinglePricing } from "../types/typesIndex";
 import classNames from "classnames";
+import type { PaintingPricing, Product, SinglePricing } from "../types/typesIndex";
 import Button from "./Button";
 //import { BiDownArrow } from "react-icons/bi";
 //import { Fragment } from "react/jsx-runtime";
@@ -22,7 +22,7 @@ function ProductLabel({ product, className, isVisible }: ProductLabelProps) {
 
     const priceTags = (() => {
         switch (product.productPricing.pricingType) {
-            case "ORIGINAL":
+            case "ORIGINAL": {
                 const paintingPrices = product.productPricing as PaintingPricing;
                 return <div className="">
                     <div> Precio original: ${paintingPrices.pricePerOriginal}
@@ -33,18 +33,19 @@ function ProductLabel({ product, className, isVisible }: ProductLabelProps) {
                     </div>
 
                 </div>;
-                break;
-            case "SINGLE_PRICE":
+            }
+            case "SIMPLE": {
                 const singlePrice = product.productPricing as SinglePricing;
                 return <div>
                     <div>
                         precio: ${singlePrice.price}
                     </div>
                 </div>
+            }
 
             default:
 
-        };
+        }
 
     })
 

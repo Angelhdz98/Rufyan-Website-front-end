@@ -1,11 +1,11 @@
-import { Painting, PaintingPricing, PaintingStock } from "../types/typesIndex";
-import { IoIosCheckmarkCircle } from "react-icons/io";
-import { CiNoWaitingSign } from "react-icons/ci";
 import { useState } from "react";
+import { CiNoWaitingSign } from "react-icons/ci";
+import { IoIosCheckmarkCircle } from "react-icons/io";
 import { useNavigate } from "react-router-dom";
-import PaintingPreviewButtonPanel from "./PaintingPreviewButtonPanel";
-import obra2 from "../../public/assets/Images/imgObras/obra2.jpg"
+import obra2 from "../../public/assets/Images/imgObras/obra2.jpg";
+import { Painting, PaintingPricing, PaintingStock, ProductTypeEnum } from "../types/typesIndex";
 import { LikeButton } from "./LikeButton";
+import PaintingPreviewButtonPanel from "./PaintingPreviewButtonPanel";
 
 interface PaintingPreviewProps {
     paint: Painting;
@@ -24,10 +24,11 @@ const examplePaint: Painting =
         productName: "una obra fea",
         url: obra2,
     }],
-    productDomainDetails: { largoCm: 30, alturaCm: 50, creationDate: new Date("10-12-2020"), medium: "Aceite", supportMaterial: "Algodon" },
-    productStock: { stockType: "ORIGINAL_STOCK", stockCopies: 10, copiesMade:15, isOriginalAvailable:true }, 
-    productTypeEnum:"PAINTING",
-    isFavorite:true
+    productDomainDetails: { largoCm: 30, alturaCm: 50, creationDate: new Date("10-12-2020"), medium: "Aceite", supportMaterial: "Algodon", productType: ProductTypeEnum.PAINTING, },
+    productStock: { stockType: "PAINTING_STOCK", availableCopies: 10, copiesMade: 15, isOriginalAvailable: true },
+
+    isFavorite: true,
+    productTypeEnum: ProductTypeEnum.PAINTING.toString()
 }
 
 
@@ -50,25 +51,25 @@ function PaintingPreview({ paint }: PaintingPreviewProps) {
         setOriginalSelected(!originalSelected);
     }
     // cambiar el primer false por paint.original.available 
-    const paintingStock =  paint.productStock as PaintingStock; 
-       const paintingPricing = paint.productPricing as PaintingPricing; 
-    const availabilityTag = ()=>{ 
-        
-      return paintingStock.isOriginalAvailable ? <div className="flex">
-        Original
-        <IoIosCheckmarkCircle className="text-green-500 mt-1" />
-    </div> : paintingStock.stockCopies > 0
-        ?
-        <div className="flex items-center" >
+    const paintingStock = paint.productStock as PaintingStock;
+    const paintingPricing = paint.productPricing as PaintingPricing;
+    const availabilityTag = () => {
+
+        return paintingStock.isOriginalAvailable ? <div className="flex">
             Original
-            <CiNoWaitingSign className="text-red-500 stroke-2 " />
-        </div>
-        : <div className="font-bold text-red-500">
-            Sold out
-        </div>;
-}
-    const availableCopies = paintingStock.stockCopies > 0 ?
-        <div className="Available-copies text-xs bg-white/70 absolute z-10 left-3 rounded px-1  bottom-12">Copies: {paintingStock.stockCopies}/{paintingStock.copiesMade}</div> :
+            <IoIosCheckmarkCircle className="text-green-500 mt-1" />
+        </div> : paintingStock.availableCopies > 0
+            ?
+            <div className="flex items-center" >
+                Original
+                <CiNoWaitingSign className="text-red-500 stroke-2 " />
+            </div>
+            : <div className="font-bold text-red-500">
+                Sold out
+            </div>;
+    }
+    const availableCopies = paintingStock.availableCopies > 0 ?
+        <div className="Available-copies text-xs bg-white/70 absolute z-10 left-3 rounded px-1  bottom-12">Copies: {paintingStock.availableCopies}/{paintingStock.copiesMade}</div> :
         <div className="z-10  text-red-500 font-bold text-xs bg-white/70 absolute left-3 rounded px-1  bottom-12">No copies available</div>
 
     // cambiar este ultimo booleano por paint.original_availability 

@@ -1,24 +1,29 @@
 import React, { ReactNode, useState } from "react";
 import FormInput from "../../components/FormInput";
-import { PaintingPricing, PricingTypeEnum, SinglePricing } from "../../types/typesIndex";
+import { PaintingPricing, PricingTypeEnum, ProductPricing, SinglePricing } from "../../types/typesIndex";
 
 type ProductPricingFormProps = {
-    pricingType: PricingTypeEnum
+    pricingType: PricingTypeEnum;
+    onChangePrice: (pricing: ProductPricing) => void;
 }
 
-function ProductPricingForm({ pricingType }: ProductPricingFormProps) {
+function ProductPricingForm({ pricingType, onChangePrice }: ProductPricingFormProps) {
 
-    const [singlePrice, setSinglePrice] = useState<SinglePricing>({ price: 500, pricingType: "SINGLE_PRICE" });
+    const [singlePrice, setSinglePrice] = useState<SinglePricing>({ price: 500, pricingType: "SIMPLE" });
     const singlePriceForm = () => {
 
         return <FormInput name="price"
             type="number"
             onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                 const value = e.target.value;
-                setSinglePrice((prev) => {
-                    const parsedValue = parseInt(value);
-                    return { ...prev, ["price"]: isNaN(parsedValue) ? prev.price || 0 : parsedValue }
-                });
+                const parsedValue = parseInt(value);
+                const updatedPricing = {
+
+                    ...singlePrice, ["price"]: isNaN(parsedValue) ? singlePrice.price || 0 : parsedValue
+                }
+
+                setSinglePrice(updatedPricing);
+                onChangePrice(updatedPricing);
             }}
             value={singlePrice.price.toString()}
         >Price</FormInput>
@@ -35,9 +40,13 @@ function ProductPricingForm({ pricingType }: ProductPricingFormProps) {
             const { value, name } = e.target;
             const parsedValue = parseInt(value);
 
-            setOriginalPrice((prev) => {
-                return { ...prev, [name]: isNaN(parsedValue) ? prev[name as keyof PaintingPricing] : parsedValue }
-            })
+            const updatePricing =
+                { ...originalPrice, [name]: isNaN(parsedValue) ? originalPrice[name as keyof PaintingPricing] : parsedValue }
+
+            setOriginalPrice(updatePricing)
+
+            onChangePrice(updatePricing);
+
 
         }
         return <div>
@@ -60,9 +69,11 @@ function ProductPricingForm({ pricingType }: ProductPricingFormProps) {
     switch (pricingType) {
         case PricingTypeEnum.ORIGINAL:
             stockForm = originalPriceForm();
+            //onChangePrice(originalPrice);
             break;
         case PricingTypeEnum.SINGLE:
             stockForm = singlePriceForm();
+            //onChangePrice(singlePrice);
             break;
 
     }
