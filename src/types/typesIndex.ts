@@ -19,9 +19,12 @@ export interface ImageProduct {
   id: number;
   productName?: string;
   url: string;
-
-
-
+}
+export type UpdateProductSpecs = {
+  productSpecs: ProductSpecs,
+  productTypeEnum: ProductTypeEnum,
+  productDomainDetails: ProductDomainDetails,
+  images: ImageProduct[],
 }
 export interface Image {
   id: number;
@@ -61,8 +64,8 @@ export enum BodyClothingSizeEnum {
 }
 
 export enum PricingTypeEnum {
-  ORIGINAL,
-  SINGLE,
+  ORIGINAL = "ORIGINAL",
+  SINGLE = "SINGLE",
 
 }
 
@@ -210,7 +213,12 @@ export type CreateProductCommand = {
   productSpecs: ProductSpecs;
   productDetails: ProductDomainDetails;
 };
+export type UpdateProductCommand = {
+  productSpecs: ProductSpecs;
+  productDetails: ProductDomainDetails;
+  images: ImageProduct[];
 
+}
 export interface OptionSelectRequest {
   name: string;
   label: string;

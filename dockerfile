@@ -1,25 +1,23 @@
-# Etapa 1: build
 FROM node:18-alpine AS build
 
 WORKDIR /app
 
 COPY package.json package-lock.json ./
+
 RUN npm ci
 
 COPY . .
+
 RUN npm run build
 
-# Etapa 2: nginx
-FROM nginx:alpine
+# contenedor simple para servir archivos (opcional)
 
+FROM node:18-alpine
 
-# Copiar build
-COPY --from=build /app/dist /usr/share/nginx/html
-# Copiar config SPA
-COPY nginx.conf /etc/nginx/conf.d/default.conf
+WORKDIR /app
 
+RUN npm install -g serve
 
+COPY --from=build /app/dist ./dist
 
-EXPOSE 80
-
-CMD ["nginx", "-g", "daemon off;"]
+CMD ["serve", "-s", "dist", "-l", "5173"]

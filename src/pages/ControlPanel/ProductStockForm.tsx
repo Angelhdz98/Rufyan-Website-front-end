@@ -35,7 +35,7 @@ function ProductStockForm({ productType, handleStockChange }: ProductStockFormPr
 
         const paintingStockHandleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
             const { name, value } = e.target;
-            const parsedValue = parseInt(value);
+            const parsedValue = value === "" ? 0 : parseInt(value);
             const updatedStock = {
                 ...paintingStockData, [name]: isNaN(parsedValue) ? paintingStockData[name as keyof PaintingStock] : parsedValue
             };

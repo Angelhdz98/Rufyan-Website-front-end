@@ -6,36 +6,39 @@ import EditAll from "./EditAll";
 import AddProductForm from "./AddProductForm";
 import AddEventForm from "./AddEventForm";
 import { EditBanner } from "./EditBanner";
+//import { CreateProductCommand, ProductTypeEnum } from "../../types/typesIndex";
 
 
 
-function ControlPanel(){
+function ControlPanel() {
 
 
-    return  <NavigationProvider>
-        <Navegacion/>
+
+
+    return <NavigationProvider>
+        <Navegacion />
         <div>
 
             <Route path="/admin/edit">
-                <EditAll/>
+                <EditAll />
             </Route>
             <Route path="/admin/addProduct">
-                <AddProductForm/>
+                <AddProductForm />
             </Route>
             <Route path="/admin/addEvent">
-                <AddEventForm/>
+                <AddEventForm />
             </Route>
             <Route path="/admin">
-                <AddPaintingForm/>
+                <AddPaintingForm />
             </Route>
             <Route path="/admin/editBanners">
-                <EditBanner/>
+                <EditBanner />
             </Route>
-    </div>
+        </div>
 
-    
+
     </NavigationProvider>
-    
+
 }
 
 export default ControlPanel;
