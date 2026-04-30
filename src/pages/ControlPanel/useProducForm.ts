@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { ProductTypeEnum, ProductStock, PaintingStock, ProductPricing, PaintingPricing, ProductSpecs, PaintingDomainDetails, MediumEnum, SupportMaterialEnum, BodyClothingDomainDetails, ClothingMaterial, PrintingTechniqueEnum, BodyClotheTypeEnum, ProductDomainDetails, CreateProductCommand, UpdateProductCommand, ImageProduct, UpdateProductSpecs } from "../../types/typesIndex";
+import { ProductTypeEnum, ProductStock, PaintingStock, ProductPricing, PaintingPricing, ProductSpecs, PaintingDomainDetails, MediumEnum, SupportMaterialEnum, BodyClothingDomainDetails, ClothingMaterial, PrintingTechniqueEnum, BodyClotheTypeEnum, ProductDomainDetails, CreateProductCommand, UpdateProductCommand} from "../../types/typesIndex";
 import { useImageUpload } from "./AddPaintingForm";
 export const useProductForm = () => {
 
@@ -105,58 +105,42 @@ export const useProductForm = () => {
         }
     };
 
-    const handleUpdateFormSubmit = async ({ productSpecs, productTypeEnum, productDomainDetails, images }: UpdateProductSpecs) => {
+    const handleUpdateFormSubmit = async () => {
         try {
-            // Crear el objeto de detalles según el tipo de producto
+            // Preparar los detalles del producto con la fecha adaptada si es necesario
+            let productDetailsToSend = productDomainDetails;
 
+            if (productDomainDetails.productType === ProductTypeEnum.PAINTING) {
+                const paintingDetails = productDomainDetails as PaintingDomainDetails;
+                const adaptedDate = paintingDetails.creationDate.toISOString().split("T")[0];
+                productDetailsToSend = {
+                    ...paintingDetails,
+                    creationDate: new Date(adaptedDate),
+                };
+            }
 
-            // Crear el comando
+            // Crear el comando de actualización
             const updateCommand: UpdateProductCommand = {
-                productSpecs: { ...productSpecs, productTypeEnum: productTypeEnum },
-                productDetails: productDomainDetails,
-                images,
+                productSpecs: { ...commonData, productTypeEnum: productTypeEnum },
+                productDetails: productDetailsToSend,
+                images: [],
             };
-
 
             // Crear FormData para enviar multipart
             const formData = new FormData();
 
-            console.log("Comando a enviar:", JSON.stringify(updateCommand, null, 2));
+            // Añadir el comando como JSON con el nombre correcto "updateCommand"
+            formData.append(
+                "updateCommand",
+                new Blob([JSON.stringify(updateCommand)], { type: "application/json" })
+            );
 
-            //{...command,["creationDate"]:}
-            // Añadir comando como JSON
-
-            if (updateCommand.productDetails.productType == ProductTypeEnum.PAINTING) {
-                const adaptedDated = updateCommand.productDetails.creationDate.toISOString().split("T")[0];
-                const paintingDetailsCommand = { ...updateCommand.productDetails, creationDate: adaptedDated };
-
-                const newCommand = { ...updateCommand, productDomainDetails: paintingDetailsCommand };
-                formData.append("command", new Blob([JSON.stringify(newCommand)], { type: "application/json" }));
-            } else {
-                formData.append("command", new Blob([JSON.stringify(updateCommand)], { type: "application/json" }));
-                console.log("FormData entries:");
-                formData.forEach((value, key) => {
-                    if (value instanceof File) {
-                        console.log(`${key}: File(${value.name})`);
-                    } else {
-                        console.log(`${key}: ${value}`);
-                    }
-                });
-
-
-            }
-
-
-
-            // Añadir imágenes
+            // Añadir las nuevas imágenes con el nombre "addedImages"
             uploadedFiles.forEach((file: File) => {
                 formData.append("addedImages", file);
             });
-            updateCommand.images.forEach((image: ImageProduct) => {
-                formData.append("images", new Blob([JSON.stringify(image)], { type: "application/json" }));
-            });
 
-            console.log("FormData entries:");
+            console.log("FormData a enviar:");
             formData.forEach((value, key) => {
                 if (value instanceof File) {
                     console.log(`${key}: File(${value.name})`);
@@ -176,13 +160,64 @@ export const useProductForm = () => {
             }
 
             const data = await response.json();
-            console.log("Producto creado exitosamente:", data);
-            // Aquí puedes redirigir o mostrar un mensaje de éxito
+            console.log("Producto actualizado exitosamente:", data);
         } catch (error) {
-            console.error("Error al crear el producto:", error);
-            // Mostrar mensaje de error al usuario
+            console.error("Error al actualizar el producto:", error);
+
         }
     };
+    const handleGetPagedProducts = async (pageNumber: number, pageSize: number) => {
+        try {
+            // Construir la URL con parámetros de paginación
+            const url = new URL("/api/admin/products-paged-custom", window.location.origin);
+            url.searchParams.append("pageNumber", pageNumber.toString());
+            url.searchParams.append("pageSize", pageSize.toString());
+
+            console.log("Obteniendo productos paginados desde:", url.toString());
+
+            // Realizar petición GET
+            const response = await fetch(url.toString(), {
+                method: "GET",
+                headers: {
+                    "Accept": "application/json",
+                },
+            });
+
+            if (!response.ok) {
+                throw new Error(`Error: ${response.statusText}`);
+            }
+
+            const data = await response.json();
+            console.log("Productos obtenidos exitosamente:", data);
+            return data; // Retorna Page<Product>
+        } catch (error) {
+            console.error("Error al obtener los productos paginados:", error);
+            throw error;
+        }
+    };
+
+    const handleGetProductEntityForEditingById = async (productId: number) => {
+        try{
+            const response = await fetch("/find-product-entity-by-id/"+productId, {
+                method: "GET",
+                headers: {
+                    "Accept": "application/json",
+                },
+            });
+        if (!response.ok) {
+                throw new Error(`Error: ${response.statusText}`);
+            }
+
+            const data = await response.json();
+            console.log("Productos obtenidos exitosamente:", data);
+            return data;
+        }catch (error) {
+            console.error("Error al obtener el producto por id:", error);
+            throw error;
+        }
+    }
+
+
 
     const paintingDetails: PaintingDomainDetails = {
         alturaCm: 30,
@@ -226,7 +261,7 @@ export const useProductForm = () => {
     };
 
 
-    const handleProductChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const handleProductTypeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
         const value = e.target.value;
         let productTypeSelected: ProductTypeEnum;
         switch (value) {
@@ -262,7 +297,7 @@ export const useProductForm = () => {
 
 
     return {
-        handleChange, toggleIsFavorite, handleProductchange: handleProductChange, handleDetailsChange, handleStockChanging, handlePriceChanging,
+        handleChange, toggleIsFavorite, handleProductTypeChange, handleDetailsChange, handleStockChanging, handlePriceChanging,
         /*     handleUpdateProductChange,*/
         handleUpdateFormSubmit,
         handleImageUpload,
@@ -270,7 +305,7 @@ export const useProductForm = () => {
         imagePreview,
         uploadedFiles,
         setImagePreview,
-        setUploadedFiles, handleAddFormSubmit, productTypeEnum, commonData, productDomainDetails
+        setUploadedFiles, handleAddFormSubmit, productTypeEnum, commonData, productDomainDetails, handleGetPagedProducts,handleGetProductEntityForEditingById
     };
 }
 
