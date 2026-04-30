@@ -1,6 +1,9 @@
 import classNames from "classnames";
-import type { PaintingPricing, Product, SinglePricing } from "../types/typesIndex";
+import type { Product } from "../types/typesIndex";
 import Button from "./Button";
+import PriceTag from "./PriceTag";
+import StockTag from "./StockTag";
+import DetailsTag from "./DetailsTag";
 //import { BiDownArrow } from "react-icons/bi";
 //import { Fragment } from "react/jsx-runtime";
 export interface ProductLabelProps {
@@ -20,7 +23,7 @@ function ProductLabel({ product, className, isVisible }: ProductLabelProps) {
 
     })
 
-    const priceTags = (() => {
+ /*   const priceTags = (() => {
         switch (product.productPricing.pricingType) {
             case "ORIGINAL": {
                 const paintingPrices = product.productPricing as PaintingPricing;
@@ -47,9 +50,9 @@ function ProductLabel({ product, className, isVisible }: ProductLabelProps) {
 
         }
 
-    })
+    }) */
 
-
+    
 
     const botoneraObra = () => {
         return (<div className="flex flex-row justify-between absolute w-[90%] bottom-1">
@@ -75,9 +78,9 @@ function ProductLabel({ product, className, isVisible }: ProductLabelProps) {
         {botoneraObra()}
 
         <div>
-            {priceTags()
-                /* <span className="text-orange-500 absolute top-0 right-1 font-bold text-xs">Price: {product.price}.00 MXN</span>*/
-            }
+            <DetailsTag productDetails={product.productDomainDetails} />
+            <PriceTag productPricing={product.productPricing}/>
+            <StockTag productStock={product.productStock}/>
         </div>
     </div>
 }
