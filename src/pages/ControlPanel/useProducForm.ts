@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { ProductTypeEnum, ProductStock, PaintingStock, ProductPricing, PaintingPricing, ProductSpecs, PaintingDomainDetails, MediumEnum, SupportMaterialEnum, BodyClothingDomainDetails, ClothingMaterial, PrintingTechniqueEnum, BodyClotheTypeEnum, ProductDomainDetails, CreateProductCommand, UpdateProductCommand} from "../../types/typesIndex";
+import { ProductTypeEnum, ProductStock, PaintingStock, ProductPricing, PaintingPricing, ProductSpecs, PaintingDomainDetails, MediumEnum, SupportMaterialEnum, BodyClothingDomainDetails, ClothingMaterial, PrintingTechniqueEnum, BodyClotheTypeEnum, ProductDomainDetails, CreateProductCommand, UpdateProductCommand, Product } from "../../types/typesIndex";
 import { useImageUpload } from "./AddPaintingForm";
 export const useProductForm = () => {
 
@@ -17,7 +17,7 @@ export const useProductForm = () => {
     */
 
 
-    const initialPaintingStock: ProductStock = { copiesMade: 0, isOriginalAvailable: true, availableCopies: 0, stockType: "PAINTING_STOCK" } as PaintingStock;
+    const initialPaintingStock: ProductStock = { copiesMade: 0, isOriginalAvailable: true, stockCopies: 0, stockType: "PAINTING_STOCK" } as PaintingStock;
 
     const initialProductPricing: ProductPricing = { pricePerCopy: 500, pricePerOriginal: 1000, pricingType: "ORIGINAL" } as PaintingPricing;
 
@@ -45,6 +45,7 @@ export const useProductForm = () => {
             const formData = new FormData();
 
             console.log("Comando a enviar:", JSON.stringify(command, null, 2));
+            //console.log("uploaded files: " + uploadedFiles);
 
             //{...command,["creationDate"]:}
             // Añadir comando como JSON
@@ -75,9 +76,9 @@ export const useProductForm = () => {
             // Añadir imágenes
             uploadedFiles.forEach((file: File) => {
                 formData.append("images", file);
+               // console.log("los archivos subidos son" + file.name);
             });
 
-            console.log("FormData entries:");
             formData.forEach((value, key) => {
                 if (value instanceof File) {
                     console.log(`${key}: File(${value.name})`);
@@ -98,12 +99,13 @@ export const useProductForm = () => {
 
             const data = await response.json();
             console.log("Producto creado exitosamente:", data);
-            // Aquí puedes redirigir o mostrar un mensaje de éxito
+            return data as Product;
         } catch (error) {
             console.error("Error al crear el producto:", error);
-            // Mostrar mensaje de error al usuario
+            throw error;
         }
     };
+
 
     const handleUpdateFormSubmit = async () => {
         try {
@@ -161,6 +163,7 @@ export const useProductForm = () => {
 
             const data = await response.json();
             console.log("Producto actualizado exitosamente:", data);
+            return data as Product;
         } catch (error) {
             console.error("Error al actualizar el producto:", error);
 
@@ -197,21 +200,21 @@ export const useProductForm = () => {
     };
 
     const handleGetProductEntityForEditingById = async (productId: number) => {
-        try{
-            const response = await fetch("/find-product-entity-by-id/"+productId, {
+        try {
+            const response = await fetch("/find-product-entity-by-id/" + productId, {
                 method: "GET",
                 headers: {
                     "Accept": "application/json",
                 },
             });
-        if (!response.ok) {
+            if (!response.ok) {
                 throw new Error(`Error: ${response.statusText}`);
             }
 
             const data = await response.json();
             console.log("Productos obtenidos exitosamente:", data);
             return data;
-        }catch (error) {
+        } catch (error) {
             console.error("Error al obtener el producto por id:", error);
             throw error;
         }
@@ -248,12 +251,14 @@ export const useProductForm = () => {
     }
 
     const handleDetailsChange = (details: ProductDomainDetails) => {
+
         setProductDomainDetails(details);
 
     };
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
+
         setCommonData((prev) => {
             return { ...prev, [name]: value }
         })
@@ -305,7 +310,7 @@ export const useProductForm = () => {
         imagePreview,
         uploadedFiles,
         setImagePreview,
-        setUploadedFiles, handleAddFormSubmit, productTypeEnum, commonData, productDomainDetails, handleGetPagedProducts,handleGetProductEntityForEditingById
+        setUploadedFiles, handleAddFormSubmit, productTypeEnum, commonData, productDomainDetails, handleGetPagedProducts, handleGetProductEntityForEditingById
     };
 }
 
