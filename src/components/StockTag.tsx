@@ -16,7 +16,7 @@ function StockTag({ productStock }: StockTagProps) {
                     {stock.isOriginalAvailable ? "Obra original disponible" : "Obra original no disponible"}
                 </span>
                 <span>
-                    Copias disponibles {stock.availableCopies} / {stock.copiesMade}
+                    Copias disponibles {stock.stockCopies} / {stock.copiesMade}
                 </span>
 
             </div>

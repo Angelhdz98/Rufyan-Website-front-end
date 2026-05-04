@@ -254,7 +254,7 @@ function EditingPainting({ paintingId, ...rest }: EditingPaintingProps) {
           <div className="flex flex-row">
             <div className="flex flex-col w-1/2">
               <FormInput type={"number"} name={"available_copies"}
-                value={paintingStock.availableCopies.toString()}
+                value={paintingStock.stockCopies.toString()}
                 onChange={handleChange}>
                 Copias disponibles
               </FormInput></div>

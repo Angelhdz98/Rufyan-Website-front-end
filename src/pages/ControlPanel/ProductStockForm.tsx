@@ -19,7 +19,7 @@ function ProductStockForm({ productType, handleStockChange }: ProductStockFormPr
 
     const [paintingStockData, setPaintingStockData] = useState<PaintingStock>({
         isOriginalAvailable: true,
-        availableCopies: 1,
+        stockCopies: 1,
         copiesMade: 1,
         stockType: "PAINTING_STOCK"
     });
@@ -61,10 +61,10 @@ function ProductStockForm({ productType, handleStockChange }: ProductStockFormPr
             >
                 Original disponible
             </CheckFormInput>
-            <FormInput name="availableCopies"
+            <FormInput name="stockCopies"
                 onChange={paintingStockHandleChange}
                 type="number"
-                value={paintingStockData.availableCopies.toString()}
+                value={paintingStockData.stockCopies.toString()}
             >
                 Copias disponibles
             </FormInput>
@@ -146,7 +146,7 @@ function ProductStockForm({ productType, handleStockChange }: ProductStockFormPr
             break;
     }
 
-    return <div>{stockForm}</div>;
+    return <div className="w-fit space-y-2">{stockForm}</div>;
 }
 
 export default ProductStockForm;

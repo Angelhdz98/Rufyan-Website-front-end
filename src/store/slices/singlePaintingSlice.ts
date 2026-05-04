@@ -39,7 +39,7 @@ const initialState: SinglePaintingsState = {
     }
     ],
     productDomainDetails: { alturaCm: 90, largoCm: 60, medium: "Óleo", creationDate: new Date(), supportMaterial: "Lienzo", productType: ProductTypeEnum.PAINTING },
-    productStock: { isOriginalAvailable: false, copiesMade: 8, availableCopies: 2, stockType: 'PAINTING_STOCK' },
+    productStock: { isOriginalAvailable: false, copiesMade: 8, stockCopies: 2, stockType: 'PAINTING_STOCK' },
     productTypeEnum: ProductTypeEnum.PAINTING.toString()
 
 
