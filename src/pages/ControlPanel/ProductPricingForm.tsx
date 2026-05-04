@@ -2,14 +2,16 @@ import React, { ReactNode, useState } from "react";
 import FormInput from "../../components/FormInput";
 import { PaintingPricing, PricingTypeEnum, ProductPricing, SinglePricing } from "../../types/typesIndex";
 
-type ProductPricingFormProps = {
+interface ProductPricingFormProps extends React.HTMLAttributes<HTMLDivElement> {
     pricingType: PricingTypeEnum;
     onChangePrice: (pricing: ProductPricing) => void;
 }
 
-function ProductPricingForm({ pricingType, onChangePrice }: ProductPricingFormProps) {
+function ProductPricingForm(props: ProductPricingFormProps) {
 
     const [singlePrice, setSinglePrice] = useState<SinglePricing>({ price: 500, pricingType: "SIMPLE" });
+
+
     const singlePriceForm = () => {
 
         return <FormInput name="price"
@@ -23,7 +25,7 @@ function ProductPricingForm({ pricingType, onChangePrice }: ProductPricingFormPr
                 }
 
                 setSinglePrice(updatedPricing);
-                onChangePrice(updatedPricing);
+                props.onChangePrice(updatedPricing);
             }}
             value={singlePrice.price.toString()}
         >Price</FormInput>
@@ -45,7 +47,7 @@ function ProductPricingForm({ pricingType, onChangePrice }: ProductPricingFormPr
 
             setOriginalPrice(updatePricing)
 
-            onChangePrice(updatePricing);
+            props.onChangePrice(updatePricing);
 
 
         }
@@ -66,7 +68,7 @@ function ProductPricingForm({ pricingType, onChangePrice }: ProductPricingFormPr
 
     }
     let stockForm: ReactNode;
-    switch (pricingType) {
+    switch (props.pricingType) {
         case PricingTypeEnum.ORIGINAL:
             stockForm = originalPriceForm();
             //onChangePrice(originalPrice);
@@ -78,7 +80,7 @@ function ProductPricingForm({ pricingType, onChangePrice }: ProductPricingFormPr
 
     }
 
-    return stockForm;
+    return <div className={`w-fit space-y-3 ${props.className}`}>{stockForm}</div>;
 
 }
 

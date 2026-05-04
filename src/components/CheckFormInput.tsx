@@ -1,32 +1,32 @@
-import { Fragment } from "react/jsx-runtime";
+//import { Fragment } from "react/jsx-runtime";
 import classNames from "classnames";
 
-export interface CheckFormInputProps  {
-    type: string;
-    name: string;
-    checked: boolean;
-    onClick?: (e: React.MouseEvent<HTMLInputElement>) => void;
-    onChange?: (e: React.ChangeEvent<HTMLInputElement>)=> void;
-    className?: string;
-    labelClassname?:string;
-    children:string;
-    value:string;
+export interface CheckFormInputProps {
+  type: string;
+  name: string;
+  checked: boolean;
+  onClick?: (e: React.MouseEvent<HTMLInputElement>) => void;
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  className?: string;
+  labelClassname?: string;
+  children: string;
+  value: string;
 
 
 }
-function CheckFormInput({type, name, checked, className, children, labelClassname, onChange}:CheckFormInputProps){
-    return <Fragment >
-    <label className={classNames("block text-gray-700", labelClassname,{})}>{children}</label>
+function CheckFormInput(props: CheckFormInputProps) {
+  return <div className={classNames("flex flex-col w-full h-fit", props.className)}>
+    <label className={classNames("block text-gray-700 text-sm font-medium mb-2", props.labelClassname)}>
+      {props.children}
+    </label>
     <input
-      type={type}
-      name={name} 
-      checked={checked}
-      onChange={onChange}
-    
-      //onChange={onChange}
-      className={classNames("w-full max p-2 border  border-gray-300 rounded mt-1 h-8", className,{})}
+      type={props.type}
+      name={props.name}
+      checked={props.checked}
+      onChange={props.onChange}
+      className={classNames("w-6 h-6 border border-gray-300 rounded cursor-pointer")}
     />
-  </Fragment> 
+  </div>
 }
 
 

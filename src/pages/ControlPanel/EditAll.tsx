@@ -1,70 +1,87 @@
-import { useSelector } from "react-redux";
 import NavProduct from "../../components/NavProduct";
-import { RootState } from "../../store";
-import { isPainting } from "../../hooks/isPainting";
-import { Painting, Product } from "../../types/typesIndex";
-import EditablePainting from "./EditablePainting";
-import EditableProduct from "./EditableProduct";
-import { Fragment, useState } from "react";
+import { useEffect, useState } from "react";
 import Modal from "../../components/Modal";
-import EditingPainting from "./EditingPainting";
 import PaintingLoader from "../../components/PaintingLoader";
+import EditProductForm from "./EditProductForm";
+import { Product } from "../../types/typesIndex";
+import { useProductForm } from "./useProducForm";
 
 
-function EditAll(){
+function EditAll() {
 
-
-    const {data, isLoading, error} = useSelector((state:RootState)=> state.products);
+    const  [isLoading, setIsLoading ] = useState(false);
+    const  [error, setError]  = useState<string | null>(null);
+    const  [data, setData]  = useState<Product[]>([]);
+   
+    const  [pageNumber/*, setPageNumber*/]  = useState(0);
+    const  [pageSize/*, setPageSize*/]  = useState(10);
     const [selectedProduct, setSelectedProduct] = useState<number>(-1);
+    const  {handleGetPagedProducts}  = useProductForm();
 
-        const [showModal, setShowModal] = useState(false);
-
-        let products = <div>Inicio</div>
-
-        if(isLoading){
-            products = <PaintingLoader/>
-        }else if (error){
-          products=   <div>ha ocurrido un error</div>
-        }
-
-
-         products = <Fragment>
-                     {data.map((product:Product)=>{
-            if (isPainting(product)) {
-                return <EditablePainting 
-                onClick={() =>{ 
-                    setSelectedProduct(product.id);
-                    setShowModal(true);}}
-                paint={product as Painting} 
-                key={product.id}/>
-            }    
-            // Mas typeguards
-            else{
-                return <EditableProduct  product={product} />
-            }
-                    
-            })}
-            
-         </Fragment>
-
-         
+    useEffect(() => {
+        setIsLoading(true);
+        handleGetPagedProducts(pageNumber, pageSize).then((products: Product[]) => {
+            setData(products);
+            setIsLoading(false);
+        }).
+            catch((error) => {
+                setIsLoading(false);
+                setError(error);
+                console.error(error) });
 
 
-
-        
-
-return <div>
-    <NavProduct/>
-    Edit All component
-    <div className="grid grid-cols-3 gap-4 p-2">
-    {products}
-    </div>
+    } ,[pageNumber,pageSize]);
     
-    <Modal  className="h-5/6 w-5/6"  isOpen={showModal} onClose={()=> setShowModal(false)  } > 
-        <div> <EditingPainting paintingId={selectedProduct} /></div>
-    </Modal>
+    
+    
+    
+    const [showModal, setShowModal] = useState(false);
+    
+    
+    let products:JSX.Element = <div>Inicio</div>
 
-</div>
+    if (isLoading) {
+        products = <PaintingLoader />
+    } else if (error) {
+        products = <div>ha ocurrido un error</div>
+    }
+
+        const handleProductSelectedForEditing= (id:number)=>{
+        setSelectedProduct(id);
+        
+    }
+
+
+  const renderedProducts = data.map((product )=>{
+    
+    return (<div key={product.name} onClick={() =>{handleProductSelectedForEditing(product.id)}}>
+            <img src={product.images[0].url} alt={product.name} />
+            <div >
+            <h3>{product.name} </h3> 
+            <hr />
+            <span> {product.description}</span>
+            {product.isFavorite?<span>Obra favorita</span>:""}
+            
+            </div>
+        </div>)
+   
+});
+products =<div>
+        <NavProduct />
+        Edit All component
+        <div className="grid grid-cols-3 gap-4 p-2">
+            {renderedProducts}
+        </div>
+
+        <Modal className="h-5/6 w-5/6" isOpen={showModal} onClose={() => setShowModal(false)} >
+            <div> {/*<EditingPainting paintingId={selectedProduct} />*/}
+                <EditProductForm productId={selectedProduct}  />
+            </div>
+        </Modal>
+
+    </div>
+
+    return products;
 
 }
 
