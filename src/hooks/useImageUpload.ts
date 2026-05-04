@@ -5,9 +5,8 @@ export const useImageUpload = () => {
     const [uploadedFiles, setUploadedFiles] = useState<File[]>([]);
 
     const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-        e.preventDefault();
         const files = e.target.files;
-        
+
         if (files && files.length > 0) {
             const selectedFiles = Array.from(files);
             selectedFiles.forEach((f) => console.log(f.name));
@@ -17,7 +16,7 @@ export const useImageUpload = () => {
                     alert("Por favor, selecciona un archivo de imagen válido");
                     return false;
                 }
-                if (file.size > 2 * 1024 * 1024) {
+                if (file.size > 5 * 1024 * 1024) {
                     alert("La imagen " + file.name + " no debe superar los 2 MB");
                     return false;
                 }
@@ -41,7 +40,7 @@ export const useImageUpload = () => {
             });
 
             Promise.all(readers).then((results) => {
- //               const previews:string[] = results;
+                //               const previews:string[] = results;
                 setImagePreview((prev) => [...prev, ...results]); // Ensure all previews are added
             });
 
