@@ -105,11 +105,13 @@ export type ProductPricing = SinglePricing | PaintingPricing;
 
 export type PaintingStock = {
   stockType: "PAINTING_STOCK";
-  availableCopies: number;
+  stockCopies: number;
   copiesMade: number;
   isOriginalAvailable: boolean;
 
 }
+
+
 
 export type SingleStock = {
   stockType: "SINGLE_STOCK";
@@ -233,6 +235,16 @@ export interface ProductCategory extends OptionSelect {
 
 }
 
+export interface Page<T> {
+    content: T[];
+    page: {
+      size: number;
+      number: number;
+      totalElements: number;
+      totalPages: number;
+    };
+
+}
 
 export interface EditPainting {
   id: string;
