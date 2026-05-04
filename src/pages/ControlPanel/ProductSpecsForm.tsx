@@ -6,9 +6,10 @@ import ProductDomainDetailsForm from "./ProductDomainDetailsForm";
 import ProductPricingForm from "./ProductPricingForm";
 import ProductStockForm from "./ProductStockForm";
 import TypeSelector from "./TypeSelector";
+import React from "react";
 
 
-export type ProductSpecsFormProps = {
+export interface ProductSpecsFormProps extends React.HTMLAttributes<HTMLDivElement> {
     productSpecs: ProductSpecs,
     productTypeEnum: ProductTypeEnum;
     handleProductTypeChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
@@ -17,47 +18,61 @@ export type ProductSpecsFormProps = {
     handleStockChanging: (stock: ProductStock) => void;
     handleDetailsChange: (productDetails: ProductDomainDetails) => void;
     handlePriceChanging: (pricing: ProductPricing) => void;
-   
+
 }
 
 function ProductSpecsForm(props: ProductSpecsFormProps) {
 
 
-    return <div>
-        <FormInput
-            type={"text"} name="name"
-            value={props.productSpecs.name} onChange={props.handleChange}
-            className=" w-min "  >
-            Name
-        </FormInput>
-        <FormInput
-            type={"text"} name="description"
-            value={props.productSpecs.description} onChange={props.handleChange}
-            className=" w-min "  >
-            Description
-        </FormInput>
+    return <div className={`w-full space-y-6 p-4 md:p-6 ${props.className}`}>
+        {/* Nombre y Descripción */}
+        <div className="flex flex-col md:flex-row gap-3">
+            <FormInput
+                type={"text"} name="name"
+                value={props.productSpecs.name} onChange={props.handleChange}
+                className="w-full md:w-1/2" >
+                Name
+            </FormInput>
+            <FormInput
+                type={"text"} name="description"
+                value={props.productSpecs.description} onChange={props.handleChange}
+                className="w-full md:w-1/2" >
+                Descripción
+            </FormInput>
+        </div>
 
-        <CheckFormInput
-            type={"checkbox"} name="isFavorite"
-            value={props.productSpecs.isFavorite ? "true" : "false"}
-            onChange={props.toggleIsFavorite}
-            className=" w-full " checked={props.productSpecs.isFavorite}   >
-            Obra favorita
-        </CheckFormInput>
-        <TypeSelector productTypeEnum={props.productTypeEnum} handleProductchange={props.handleProductTypeChange} />
+        {/* Tipo de Producto, Favorito, Pricing y Stock */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 w-full">
+            <div className="sm:col-span-1">
+                <TypeSelector productTypeEnum={props.productTypeEnum} handleProductchange={props.handleProductTypeChange} />
+            </div>
+            <div className="sm:col-span-1">
+                <CheckFormInput
+                    type={"checkbox"} name="isFavorite"
+                    value={props.productSpecs.isFavorite ? "true" : "false"}
+                    onChange={props.toggleIsFavorite}
+                    className="flex flex-col" checked={props.productSpecs.isFavorite} >
+                    Producto favorito
+                </CheckFormInput>
+            </div>
+            <div className="grid grid-cols-2  ">
+                <div className="sm:col-span-1 w-fit">
+                    <span className="block text-sm font-medium mb-2">Pricing</span>
+                    <ProductPricingForm pricingType={props.productTypeEnum === ProductTypeEnum.PAINTING ? PricingTypeEnum.ORIGINAL : PricingTypeEnum.SINGLE} onChangePrice={props.handlePriceChanging}
+                        className="" />
+                </div>
+                <div className="sm:col-span-1 w-fit">
+                    <h3 className="text-sm font-medium mb-2">Stock</h3>
+                    <ProductStockForm handleStockChange={props.handleStockChanging} productType={props.productTypeEnum} />
+                </div>
+            </div>
+        </div>
 
-
-        <h2> Stock</h2>
-        <ProductStockForm handleStockChange={props.handleStockChanging} productType={props.productTypeEnum} />
-
-        <span>Details</span>
-        <ProductDomainDetailsForm onDetailsChange={props.handleDetailsChange} productTypeEnum={props.productTypeEnum} />
-
-
-
-        <span>Pricing</span>
-        <ProductPricingForm pricingType={props.productTypeEnum === ProductTypeEnum.PAINTING ? PricingTypeEnum.ORIGINAL : PricingTypeEnum.SINGLE} onChangePrice={props.handlePriceChanging} />
-
+        {/* Detalles del Producto */}
+        <div className="space-y-1 ">
+            <h3 className="text-lg font-semibold">Detalles del Producto</h3>
+            <ProductDomainDetailsForm onDetailsChange={props.handleDetailsChange} productTypeEnum={props.productTypeEnum} />
+        </div>
     </div>
 
 }
