@@ -10,9 +10,9 @@ function PriceTag({ productPricing }: PriceTagProps) {
     switch (productPricing.pricingType) {
         case "ORIGINAL":
             pricing = productPricing as PaintingPricing;
-            pricingTags = <div className="flex flex-auto flex-row ">
-                <span>Obra original: ${pricing.pricePerOriginal}.00MXN</span>
-                <span>Copia seriada: ${pricing.pricePerCopy}.00MXN</span>
+            pricingTags = <div className="flex flex-auto flex-col gap-1 ">
+                <span>Original: ${pricing.pricePerOriginal}.00MXN</span>
+                <span>Copia: ${pricing.pricePerCopy}.00MXN</span>
             </div>
             break;
         case "SIMPLE":
