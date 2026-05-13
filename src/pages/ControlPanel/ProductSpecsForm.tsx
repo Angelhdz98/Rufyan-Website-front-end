@@ -18,6 +18,10 @@ export interface ProductSpecsFormProps extends React.HTMLAttributes<HTMLDivEleme
     handleStockChanging: (stock: ProductStock) => void;
     handleDetailsChange: (productDetails: ProductDomainDetails) => void;
     handlePriceChanging: (pricing: ProductPricing) => void;
+    firstBlockClassName?: string;
+    secondBlockClassName?: string;
+    thirdBlockClassName?: string;
+
 
 }
 
@@ -26,23 +30,23 @@ function ProductSpecsForm(props: ProductSpecsFormProps) {
 
     return <div className={`w-full space-y-6 p-4 md:p-6 ${props.className}`}>
         {/* Nombre y Descripción */}
-        <div className="flex flex-col md:flex-row gap-3">
+        <div className={"flex flex-col md:flex-row gap-3 p-3 " + props.firstBlockClassName}>
             <FormInput
                 type={"text"} name="name"
                 value={props.productSpecs.name} onChange={props.handleChange}
-                className="w-full md:w-1/2" >
+                className="w-full " >
                 Name
             </FormInput>
             <FormInput
                 type={"text"} name="description"
                 value={props.productSpecs.description} onChange={props.handleChange}
-                className="w-full md:w-1/2" >
+                className="w-full " >
                 Descripción
             </FormInput>
         </div>
 
         {/* Tipo de Producto, Favorito, Pricing y Stock */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 w-full">
+        <div className={"grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 w-full " + props.secondBlockClassName} >
             <div className="sm:col-span-1">
                 <TypeSelector productTypeEnum={props.productTypeEnum} handleProductchange={props.handleProductTypeChange} />
             </div>
@@ -69,7 +73,7 @@ function ProductSpecsForm(props: ProductSpecsFormProps) {
         </div>
 
         {/* Detalles del Producto */}
-        <div className="space-y-1 ">
+        <div className={"space-y-1 "  }>
             <h3 className="text-lg font-semibold">Detalles del Producto</h3>
             <ProductDomainDetailsForm onDetailsChange={props.handleDetailsChange} productTypeEnum={props.productTypeEnum} />
         </div>
