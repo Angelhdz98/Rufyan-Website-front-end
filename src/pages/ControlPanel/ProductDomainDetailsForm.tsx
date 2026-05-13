@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import FormInput from "../../components/FormInput";
 import { BodyClotheTypeEnum, BodyClothingDomainDetails, ClothingMaterial, MediumEnum, PaintingDomainDetails, PrintingTechniqueEnum, ProductDomainDetails, ProductTypeEnum, SupportMaterialEnum } from "../../types/typesIndex";
 
-type ProductDomainDetailsFormProps = {
+interface ProductDomainDetailsFormProps extends React.HTMLAttributes<HTMLDivElement> {
     productTypeEnum: ProductTypeEnum;
     onDetailsChange: (details: ProductDomainDetails) => void;
 
@@ -17,7 +17,7 @@ function ProductDomainDetailsForm({
         largoCm: 30,
         medium: "OIL_PAINT",
         supportMaterial: "COTTON_PAPER",
-        creationDate: new Date(), productType: ProductTypeEnum.PAINTING
+        creationDate: new Date(), productTypeEnum: ProductTypeEnum.PAINTING
     });
 
     const [clothingDetails, setClothingDetails] =
@@ -25,7 +25,7 @@ function ProductDomainDetailsForm({
             material: "COTTON",
             type: "T_SHIRT",
             printingTechnique: "SERIGRAPHY",
-            productType: ProductTypeEnum.CLOTHING
+            productTypeEnum: ProductTypeEnum.CLOTHING
 
         });
 
@@ -53,7 +53,14 @@ function ProductDomainDetailsForm({
             if (type === "number") {
                 parsedValue = parseInt(value);
             } else if (type === "date") {
-                parsedValue = new Date(value);
+                const possibleDate = new Date(value);
+                // Validar si la fecha es válida
+                if (!isNaN(possibleDate.getTime())) {
+                    parsedValue = possibleDate;
+                } else {
+                    // Si la fecha no es válida, mantener la fecha anterior
+                    parsedValue = paintingDetails.creationDate;
+                }
             } else if (type === "checkbox") {
                 parsedValue = (e.target as HTMLInputElement).checked;
             }
@@ -68,67 +75,68 @@ function ProductDomainDetailsForm({
 
         return <div className="flex flex-col gap-4 p-4 border border-gray-300 rounded-lg">
             <h3 className="font-semibold text-lg">Painting Details</h3>
-
-            <FormInput
-                type="number"
-                name="largoCm"
-                value={paintingDetails.largoCm.toString()}
-                onChange={handlePaintingChange}
-            >
-                Largo (cm)
-            </FormInput>
-
-            <FormInput
-                type="number"
-                name="alturaCm"
-                value={paintingDetails.alturaCm.toString()}
-                onChange={handlePaintingChange}
-            >
-                Altura (cm)
-            </FormInput>
-
-            <div className="flex flex-col gap-2">
-                <label className="font-medium">Medium</label>
-                <select
-                    name="medium"
-                    value={paintingDetails.medium}
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <FormInput
+                    type="number"
+                    name="largoCm"
+                    value={paintingDetails.largoCm.toString()}
                     onChange={handlePaintingChange}
-                    className="px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                 >
-                    {mediumOptions.map((key) => (
-                        <option key={key} value={key}>
-                            {key.replace(/_/g, " ")}
-                        </option>
-                    ))}
-                </select>
-            </div>
+                    Largo (cm)
+                </FormInput>
 
-            <div className="flex flex-col gap-2">
-                <label className="font-medium">Support Material</label>
-                <select
-                    name="supportMaterial"
-                    value={paintingDetails.supportMaterial}
+                <FormInput
+                    type="number"
+                    name="alturaCm"
+                    value={paintingDetails.alturaCm.toString()}
                     onChange={handlePaintingChange}
-                    className="px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                 >
-                    {supportMaterialOptions.map((key) => (
-                        <option key={key} value={key}>
-                            {key.replace(/_/g, " ")}
-                        </option>
-                    ))}
-                </select>
-            </div>
+                    Altura (cm)
+                </FormInput>
 
-            <FormInput
-                type="date"
-                name="creationDate"
-                value={paintingDetails.creationDate instanceof Date
-                    ? paintingDetails.creationDate.toISOString().split("T")[0]
-                    : ""}
-                onChange={handlePaintingChange}
-            >
-                Creation Date
-            </FormInput>
+                <div className="flex flex-col gap-2">
+                    <label className="font-medium">Medium</label>
+                    <select
+                        name="medium"
+                        value={paintingDetails.medium}
+                        onChange={handlePaintingChange}
+                        className="px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    >
+                        {mediumOptions.map((key) => (
+                            <option key={key} value={key}>
+                                {key.replace(/_/g, " ")}
+                            </option>
+                        ))}
+                    </select>
+                </div>
+
+                <div className="flex flex-col gap-2">
+                    <label className="font-medium">Support Material</label>
+                    <select
+                        name="supportMaterial"
+                        value={paintingDetails.supportMaterial}
+                        onChange={handlePaintingChange}
+                        className="px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    >
+                        {supportMaterialOptions.map((key) => (
+                            <option key={key} value={key}>
+                                {key.replace(/_/g, " ")}
+                            </option>
+                        ))}
+                    </select>
+                </div>
+
+                <FormInput
+                    type="date"
+                    name="creationDate"
+                    value={paintingDetails.creationDate instanceof Date
+                        ? paintingDetails.creationDate.toISOString().split("T")[0]
+                        : ""}
+                    onChange={handlePaintingChange}
+                >
+                    Creation Date
+                </FormInput>
+            </div>
         </div>
     };
 
@@ -227,8 +235,7 @@ function ProductDomainDetailsForm({
         }
     };
 
-    return <div className="w-full">{getRenderForm()}
-        <span>Texto </span></div>;
+    return <div className="w-full\">{getRenderForm()}</div>;
 }
 
 export default ProductDomainDetailsForm;

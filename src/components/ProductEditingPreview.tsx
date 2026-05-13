@@ -1,17 +1,18 @@
+
 import { Product } from "../types/typesIndex";
 import ImageSwiper from "./ImageSwiper";
 import ProductLabel from "./ProductLabel";
 
-type ProductEditingPreviewProps ={
+interface ProductEditingPreviewProps extends React.HTMLAttributes<HTMLDivElement> {
     product: Product;
-    onClick: ()=>void;
+    producLabelClassname?: string;
 }
 
-function ProductEditingPreview(productEditingProps:ProductEditingPreviewProps){
+function ProductEditingPreview(productEditingProps: ProductEditingPreviewProps) {
 
-    return <div>
-        <ImageSwiper product={productEditingProps.product} title={productEditingProps.product.name+ " editable"} />
-        <ProductLabel isVisible product={productEditingProps.product} className={""} onClick={productEditingProps.onClick}/>
+    return <div onClick={productEditingProps.onClick} className={"border-2 rounded-lg p-4 flex flex-col gap-2  " + productEditingProps.className}>
+        <ImageSwiper product={productEditingProps.product} title={productEditingProps.product.name + " editable"} />
+        <ProductLabel isVisible product={productEditingProps.product} className={productEditingProps.producLabelClassname} isButtonsHidden />
     </div>
 }
 

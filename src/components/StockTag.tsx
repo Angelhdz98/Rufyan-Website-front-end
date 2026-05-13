@@ -1,36 +1,40 @@
+import React, { Fragment } from "react";
 import { BodyClothingSizeEnum, ClothingStock, PaintingStock, ProductStock, SingleStock } from "../types/typesIndex";
 
-interface StockTagProps {
+interface StockTagProps extends React.HtmlHTMLAttributes<HTMLDivElement> {
     productStock: ProductStock
 }
 
-function StockTag({ productStock }: StockTagProps) {
+function StockTag(props: StockTagProps) {
     let stock: ProductStock;
     let stockTags;
 
-    switch (productStock.stockType) {
+    switch (props.productStock.stockType) {
         case "PAINTING_STOCK":
-            stock = productStock as PaintingStock;
-            stockTags = <div className="flex flex-auto flex-row ">
-                <span>
+            stock = props.productStock as PaintingStock;
+            stockTags = <Fragment >
+                <div><span>
                     {stock.isOriginalAvailable ? "Obra original disponible" : "Obra original no disponible"}
                 </span>
-                <span>
-                    Copias disponibles {stock.stockCopies} / {stock.copiesMade}
-                </span>
+                </div>
+                <div>
+                    <span>
+                        Copias disponibles {stock.stockCopies} / {stock.copiesMade}
+                    </span>
+                </div>
 
-            </div>
+            </Fragment>
             break;
         case "SINGLE_STOCK":
-            stock = productStock as SingleStock;
-            stockTags = <div>
+            stock = props.productStock as SingleStock;
+            stockTags = <Fragment>
                 <span className=" text-orange-600">
                     {stock.stock > 0 ? "Disponible" : "No disponible"}
                 </span>
-            </div>
+            </Fragment>
             break;
         case "CLOTHING_STOCK": {
-            stock = productStock as ClothingStock;
+            stock = props.productStock as ClothingStock;
             const stockDisponible: Record<BodyClothingSizeEnum, number> = stock.stockPerSize;
             stockTags = <>{Object.entries(stockDisponible).map(([nombre, cantidad]) => {
                 <span key={nombre}>
@@ -41,9 +45,9 @@ function StockTag({ productStock }: StockTagProps) {
         }
     }
 
-    return <div className="flex gap-2 text-sm  original-available-tag absolute items-center z-10 bg-white/70 rounded top-2 left-4 px-1 flex-1 flex-row">{stockTags}</div>
+    return <div className={props.className}>{stockTags}</div>
 
 
 }
 
-export default StockTag; 
+export default StockTag;      
