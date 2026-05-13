@@ -1,6 +1,6 @@
 import { HtmlHTMLAttributes } from "react";
-import { FaCloudUploadAlt, FaRegCheckCircle, FaTrashAlt } from "react-icons/fa";
 import Button from "./Button";
+import UploadedImagePreview from "./UploadedImagePreview";
 
 export interface ImageUploaderProps extends HtmlHTMLAttributes<HTMLDivElement> {
     handleImageUpload: (e: React.ChangeEvent<HTMLInputElement>) => void;
@@ -16,17 +16,7 @@ export function ImageUploader(props: ImageUploaderProps) {
 
     const renderedImages = props.imagePreview.map((img, index) => {
         return (
-            <div className="relative w-full pb-[100%]" key={index}>
-                <div className="absolute inset-0 flex flex-col">
-                    <div className="flex h-full w-full opacity-0 hover:opacity-85 absolute left-0 top-0 bg-slate-300 place-content-center items-center cursor-pointer transition-opacity">
-                        <FaTrashAlt className="text-3xl" onClick={() => props.deleteImageUpload(index)} />
-                    </div>
-                    <div className="flex justify-center items-center absolute top-0 left-0 w-full z-10 bg-green-600 opacity-75">
-                        <FaCloudUploadAlt className="text-xl" /><FaRegCheckCircle />
-                    </div>
-                    <img className="object-cover w-full h-full" src={img} alt="" />
-                </div>
-            </div>
+            <UploadedImagePreview className="relative w-full pb-[100%]" srcImage={img} key={index} />
         );
     });
 

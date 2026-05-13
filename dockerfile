@@ -1,23 +1,20 @@
+# Etapa 1: build
 FROM node:18-alpine AS build
 
 WORKDIR /app
 
-COPY package.json package-lock.json ./
+# Instalar dependencias
+COPY package*.json ./
+RUN npm install
 
-RUN npm ci
-
+# Copiar código
 COPY . .
 
+# Build de producción
 RUN npm run build
 
-# contenedor simple para servir archivos (opcional)
-
-FROM node:18-alpine
+# Etapa final (solo genera dist, no sirve nada)
+FROM alpine:latest
 
 WORKDIR /app
-
-RUN npm install -g serve
-
 COPY --from=build /app/dist ./dist
-
-CMD ["serve", "-s", "dist", "-l", "5173"]
