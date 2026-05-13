@@ -1,6 +1,7 @@
 import { useState } from "react";
-import { ProductTypeEnum, ProductStock, PaintingStock, ProductPricing, PaintingPricing, ProductSpecs, PaintingDomainDetails, MediumEnum, SupportMaterialEnum, BodyClothingDomainDetails, ClothingMaterial, PrintingTechniqueEnum, BodyClotheTypeEnum, ProductDomainDetails, CreateProductCommand, UpdateProductCommand, Product } from "../../types/typesIndex";
+import { ProductTypeEnum, ProductStock, PaintingStock, ProductPricing, PaintingPricing, ProductSpecs, PaintingDomainDetails, MediumEnum, SupportMaterialEnum, BodyClothingDomainDetails, ClothingMaterial, PrintingTechniqueEnum, BodyClotheTypeEnum, ProductDomainDetails, CreateProductCommand, UpdateProductCommand, Product, ImageProduct } from "../../types/typesIndex";
 import { useImageUpload } from "./AddPaintingForm";
+import mapBackendProductToFrontend from "./ProductBackendMapper";
 export const useProductForm = () => {
 
     const {
@@ -17,6 +18,7 @@ export const useProductForm = () => {
     */
 
 
+
     const initialPaintingStock: ProductStock = { copiesMade: 0, isOriginalAvailable: true, stockCopies: 0, stockType: "PAINTING_STOCK" } as PaintingStock;
 
     const initialProductPricing: ProductPricing = { pricePerCopy: 500, pricePerOriginal: 1000, pricingType: "ORIGINAL" } as PaintingPricing;
@@ -29,6 +31,8 @@ export const useProductForm = () => {
         productTypeEnum,
         isFavorite: false,
     });
+
+    const [selectedProductId, setSelectedProductId] = useState<number>(-1);
 
     const handleAddFormSubmit = async () => {
         try {
@@ -50,7 +54,7 @@ export const useProductForm = () => {
             //{...command,["creationDate"]:}
             // Añadir comando como JSON
 
-            if (command.productDetails.productType == ProductTypeEnum.PAINTING) {
+            if (command.productDetails.productTypeEnum == ProductTypeEnum.PAINTING) {
                 const adaptedDate = command.productDetails.creationDate.toISOString().split("T")[0];
 
                 const paintingDetailsCommand: PaintingDomainDetails = { ...command.productDetails, creationDate: new Date(adaptedDate) };
@@ -76,7 +80,7 @@ export const useProductForm = () => {
             // Añadir imágenes
             uploadedFiles.forEach((file: File) => {
                 formData.append("images", file);
-               // console.log("los archivos subidos son" + file.name);
+                // console.log("los archivos subidos son" + file.name);
             });
 
             formData.forEach((value, key) => {
@@ -106,27 +110,36 @@ export const useProductForm = () => {
         }
     };
 
+    const [currentImages, setCurrentImages] = useState<ImageProduct[]>([]);
 
     const handleUpdateFormSubmit = async () => {
         try {
             // Preparar los detalles del producto con la fecha adaptada si es necesario
-            let productDetailsToSend = productDomainDetails;
+            //  let productDetailsToSend = productDomainDetails;
 
-            if (productDomainDetails.productType === ProductTypeEnum.PAINTING) {
-                const paintingDetails = productDomainDetails as PaintingDomainDetails;
-                const adaptedDate = paintingDetails.creationDate.toISOString().split("T")[0];
-                productDetailsToSend = {
+            if (productDomainDetails.productTypeEnum === ProductTypeEnum.PAINTING) {
+                const paintingDetails = productDomainDetails;
+                //const adaptedDate = paintingDetails.creationDate.toISOString().split("T")[0];
+                /*productDetailsToSend = {
                     ...paintingDetails,
                     creationDate: new Date(adaptedDate),
-                };
+                };*/
+                console.log("Details: " + JSON.stringify(paintingDetails));
+
             }
 
             // Crear el comando de actualización
             const updateCommand: UpdateProductCommand = {
+                productId: selectedProductId,
                 productSpecs: { ...commonData, productTypeEnum: productTypeEnum },
-                productDetails: productDetailsToSend,
-                images: [],
+                productDomainDetails: productDomainDetails,
+                images: currentImages,
             };
+
+
+
+            console.log("updateCommand a enviar:" + JSON.stringify(updateCommand));
+
 
             // Crear FormData para enviar multipart
             const formData = new FormData();
@@ -136,8 +149,10 @@ export const useProductForm = () => {
                 "updateCommand",
                 new Blob([JSON.stringify(updateCommand)], { type: "application/json" })
             );
+            console.log("Archivos subidos: " + JSON.stringify(uploadedFiles))
 
             // Añadir las nuevas imágenes con el nombre "addedImages"
+
             uploadedFiles.forEach((file: File) => {
                 formData.append("addedImages", file);
             });
@@ -201,11 +216,8 @@ export const useProductForm = () => {
 
     const handleGetProductEntityForEditingById = async (productId: number) => {
         try {
-            const response = await fetch("/find-product-entity-by-id/" + productId, {
-                method: "GET",
-                headers: {
-                    "Accept": "application/json",
-                },
+            const response = await fetch("/api/admin/find-product-entity-by-id/" + productId, {
+                method: "GET"
             });
             if (!response.ok) {
                 throw new Error(`Error: ${response.statusText}`);
@@ -213,7 +225,7 @@ export const useProductForm = () => {
 
             const data = await response.json();
             console.log("Productos obtenidos exitosamente:", data);
-            return data;
+            return mapBackendProductToFrontend(data);
         } catch (error) {
             console.error("Error al obtener el producto por id:", error);
             throw error;
@@ -228,9 +240,9 @@ export const useProductForm = () => {
         creationDate: new Date(),
         medium: MediumEnum.ACRYLYC_PAINT.toString(),
         supportMaterial: SupportMaterialEnum.COTTON_PAPER.toString(),
-        productType: ProductTypeEnum.PAINTING
+        productTypeEnum: ProductTypeEnum.PAINTING
     };
-    const clothingDetails: BodyClothingDomainDetails = { material: ClothingMaterial.COTTON.toString(), printingTechnique: PrintingTechniqueEnum.AEROGRAPHY.toString(), productType: ProductTypeEnum.CLOTHING, type: BodyClotheTypeEnum.HOODIE.toString() };
+    const clothingDetails: BodyClothingDomainDetails = { material: ClothingMaterial.COTTON.toString(), printingTechnique: PrintingTechniqueEnum.AEROGRAPHY.toString(), productTypeEnum: ProductTypeEnum.CLOTHING, type: BodyClotheTypeEnum.HOODIE.toString() };
     const [productDomainDetails, setProductDomainDetails] = useState<ProductDomainDetails>(paintingDetails);
 
     const handlePriceChanging = (pricing: ProductPricing) => {
@@ -302,15 +314,25 @@ export const useProductForm = () => {
 
 
     return {
-        handleChange, toggleIsFavorite, handleProductTypeChange, handleDetailsChange, handleStockChanging, handlePriceChanging,
+        handleChange,
+        toggleIsFavorite,
+        handleProductTypeChange,
+        handleDetailsChange,
+        handleStockChanging,
+        handlePriceChanging,
         /*     handleUpdateProductChange,*/
         handleUpdateFormSubmit,
+        currentImages,
+        setCurrentImages,
         handleImageUpload,
         deleteImageUpload,
         imagePreview,
         uploadedFiles,
         setImagePreview,
-        setUploadedFiles, handleAddFormSubmit, productTypeEnum, commonData, productDomainDetails, handleGetPagedProducts, handleGetProductEntityForEditingById
+        setUploadedFiles,
+        handleAddFormSubmit, productTypeEnum, commonData, setCommonData, productDomainDetails, handleGetPagedProducts, handleGetProductEntityForEditingById,
+        selectedProductId,
+        setSelectedProductId
     };
 }
 
