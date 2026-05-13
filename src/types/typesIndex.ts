@@ -76,14 +76,14 @@ export type PaintingDomainDetails = {
   medium: string;
   supportMaterial: string;
   creationDate: Date;
-  productType: ProductTypeEnum.PAINTING;
+  productTypeEnum: "PAINTING";
 }
 
 export type BodyClothingDomainDetails = {
   material: string;
   type: string;
   printingTechnique: string;
-  productType: ProductTypeEnum.CLOTHING;
+  productTypeEnum: "CLOTHING";
 }
 
 export type ProductDomainDetails = BodyClothingDomainDetails | PaintingDomainDetails;
@@ -137,7 +137,7 @@ export interface Product {
   description: string;
   productStock: ProductStock;
   productPricing: ProductPricing;
-  productTypeEnum: string;
+  productTypeEnum: ProductTypeEnum;
   productDomainDetails: ProductDomainDetails;
   isFavorite: boolean;
 
@@ -149,6 +149,7 @@ export interface Painting extends Product {
   productStock: PaintingStock;
   productPricing: PaintingPricing;
   productDomainDetails: PaintingDomainDetails;
+  productTypeEnum: ProductTypeEnum.PAINTING;
 
 
 }
@@ -216,8 +217,9 @@ export type CreateProductCommand = {
   productDetails: ProductDomainDetails;
 };
 export type UpdateProductCommand = {
+  productId: number;
   productSpecs: ProductSpecs;
-  productDetails: ProductDomainDetails;
+  productDomainDetails: ProductDomainDetails;
   images: ImageProduct[];
 
 }
@@ -236,13 +238,13 @@ export interface ProductCategory extends OptionSelect {
 }
 
 export interface Page<T> {
-    content: T[];
-    page: {
-      size: number;
-      number: number;
-      totalElements: number;
-      totalPages: number;
-    };
+  content: T[];
+  page: {
+    size: number;
+    number: number;
+    totalElements: number;
+    totalPages: number;
+  };
 
 }
 

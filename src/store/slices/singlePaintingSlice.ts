@@ -38,9 +38,9 @@ const initialState: SinglePaintingsState = {
       url: obra3
     }
     ],
-    productDomainDetails: { alturaCm: 90, largoCm: 60, medium: "Óleo", creationDate: new Date(), supportMaterial: "Lienzo", productType: ProductTypeEnum.PAINTING },
+    productDomainDetails: { alturaCm: 90, largoCm: 60, medium: "Óleo", creationDate: new Date(), supportMaterial: "Lienzo", productTypeEnum: ProductTypeEnum.PAINTING },
     productStock: { isOriginalAvailable: false, copiesMade: 8, stockCopies: 2, stockType: 'PAINTING_STOCK' },
-    productTypeEnum: ProductTypeEnum.PAINTING.toString()
+    productTypeEnum: ProductTypeEnum.PAINTING
 
 
 

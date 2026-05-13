@@ -24,11 +24,11 @@ const examplePaint: Painting =
         productName: "una obra fea",
         url: obra2,
     }],
-    productDomainDetails: { largoCm: 30, alturaCm: 50, creationDate: new Date("10-12-2020"), medium: "Aceite", supportMaterial: "Algodon", productType: ProductTypeEnum.PAINTING, },
+    productDomainDetails: { largoCm: 30, alturaCm: 50, creationDate: new Date("10-12-2020"), medium: "Aceite", supportMaterial: "Algodon", productTypeEnum: ProductTypeEnum.PAINTING, },
     productStock: { stockType: "PAINTING_STOCK", stockCopies: 10, copiesMade: 15, isOriginalAvailable: true },
 
     isFavorite: true,
-    productTypeEnum: ProductTypeEnum.PAINTING.toString()
+    productTypeEnum: ProductTypeEnum.PAINTING
 }
 
 
