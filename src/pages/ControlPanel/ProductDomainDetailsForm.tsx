@@ -1,42 +1,27 @@
 import { useEffect, useState } from "react";
 import FormInput from "../../components/FormInput";
 import { BodyClotheTypeEnum, BodyClothingDomainDetails, ClothingMaterial, MediumEnum, PaintingDomainDetails, PrintingTechniqueEnum, ProductDomainDetails, ProductTypeEnum, SupportMaterialEnum } from "../../types/typesIndex";
+import { fromLocalDateString } from "./dateMapper";
 
 interface ProductDomainDetailsFormProps extends React.HTMLAttributes<HTMLDivElement> {
     productTypeEnum: ProductTypeEnum;
     onDetailsChange: (details: ProductDomainDetails) => void;
-
+    productDetails?: ProductDomainDetails
 };
 
-function ProductDomainDetailsForm({
-    productTypeEnum,
-    onDetailsChange,
-}: ProductDomainDetailsFormProps) {
-    const [paintingDetails, setPaintingDetails] = useState<PaintingDomainDetails>({
-        alturaCm: 20,
-        largoCm: 30,
-        medium: "OIL_PAINT",
-        supportMaterial: "COTTON_PAPER",
-        creationDate: new Date(), productTypeEnum: ProductTypeEnum.PAINTING
-    });
+function ProductDomainDetailsForm(props: ProductDomainDetailsFormProps) {
+    const [currentDetails, setCurrentDetails] = useState<ProductDomainDetails | undefined>(props.productDetails);
 
-    const [clothingDetails, setClothingDetails] =
-        useState<BodyClothingDomainDetails>({
-            material: "COTTON",
-            type: "T_SHIRT",
-            printingTechnique: "SERIGRAPHY",
-            productTypeEnum: ProductTypeEnum.CLOTHING
 
-        });
+
+
 
     // Sincronizar clothingDetails cuando cambia el productTypeEnum
     useEffect(() => {
-        if (productTypeEnum === ProductTypeEnum.CLOTHING) {
-            onDetailsChange(clothingDetails);
-        } else if (productTypeEnum === ProductTypeEnum.PAINTING) {
-            onDetailsChange(paintingDetails);
+        if (props.productDetails) {
+            setCurrentDetails(props.productDetails);
         }
-    }, [productTypeEnum, clothingDetails, paintingDetails, onDetailsChange]);
+    }, [props.productDetails,]);
 
 
     // Mapear enums a valores legibles
@@ -47,12 +32,21 @@ function ProductDomainDetailsForm({
     const printingTechniqueOptions = Object.keys(PrintingTechniqueEnum).filter(key => isNaN(Number(key)));
 
     const renderPaintingForm = () => {
+
+        const details = currentDetails as PaintingDomainDetails || {
+            alturaCm: 30,
+            largoCm: 20,
+            creationDate: new Date(),
+            medium: MediumEnum.ACRYLYC_PAINT
+        };
+
         const handlePaintingChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
             const { name, value, type } = e.target;
             let parsedValue: number | boolean | Date | string = value;
             if (type === "number") {
                 parsedValue = parseInt(value);
             } else if (type === "date") {
+                const paintingDetails = props.productDetails as PaintingDomainDetails;
                 const possibleDate = new Date(value);
                 // Validar si la fecha es válida
                 if (!isNaN(possibleDate.getTime())) {
@@ -65,12 +59,27 @@ function ProductDomainDetailsForm({
                 parsedValue = (e.target as HTMLInputElement).checked;
             }
 
-            const updatedDetails = { ...paintingDetails, [name]: parsedValue };
-            setPaintingDetails(updatedDetails);
-            onDetailsChange(updatedDetails);
+            const updatedDetails = { ...currentDetails, [name]: parsedValue } as PaintingDomainDetails;
+            setCurrentDetails(updatedDetails);
+            props.onDetailsChange(updatedDetails);
             console.log("cambio en details: " + JSON.stringify(updatedDetails));
         };
 
+        const processorDay = () => {
+            if (props !== undefined && props.productDetails?.productTypeEnum == ProductTypeEnum.PAINTING) {
+                return props.productDetails.creationDate instanceof Date
+                    ? props.productDetails.creationDate.toISOString().split("T")[0]
+                    : "";
+            }
+            else {
+                return "";
+            }
+
+        }
+
+
+
+        const processedDay: string = processorDay();
 
 
         return <div className="flex flex-col gap-4 p-4 border border-gray-300 rounded-lg">
@@ -79,7 +88,7 @@ function ProductDomainDetailsForm({
                 <FormInput
                     type="number"
                     name="largoCm"
-                    value={paintingDetails.largoCm.toString()}
+                    value={details.largoCm.toString()}
                     onChange={handlePaintingChange}
                 >
                     Largo (cm)
@@ -88,7 +97,7 @@ function ProductDomainDetailsForm({
                 <FormInput
                     type="number"
                     name="alturaCm"
-                    value={paintingDetails.alturaCm.toString()}
+                    value={details.alturaCm.toString()}
                     onChange={handlePaintingChange}
                 >
                     Altura (cm)
@@ -98,7 +107,7 @@ function ProductDomainDetailsForm({
                     <label className="font-medium">Medium</label>
                     <select
                         name="medium"
-                        value={paintingDetails.medium}
+                        value={details.medium}
                         onChange={handlePaintingChange}
                         className="px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                     >
@@ -114,7 +123,7 @@ function ProductDomainDetailsForm({
                     <label className="font-medium">Support Material</label>
                     <select
                         name="supportMaterial"
-                        value={paintingDetails.supportMaterial}
+                        value={details.supportMaterial}
                         onChange={handlePaintingChange}
                         className="px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                     >
@@ -129,9 +138,8 @@ function ProductDomainDetailsForm({
                 <FormInput
                     type="date"
                     name="creationDate"
-                    value={paintingDetails.creationDate instanceof Date
-                        ? paintingDetails.creationDate.toISOString().split("T")[0]
-                        : ""}
+                    value={processedDay
+                    }
                     onChange={handlePaintingChange}
                 >
                     Creation Date
@@ -141,6 +149,7 @@ function ProductDomainDetailsForm({
     };
 
     const renderClothingForm = () => {
+        const clothingDetails = currentDetails as BodyClothingDomainDetails || { material: ClothingMaterial.COTTON, printingTechnique: PrintingTechniqueEnum.SERIGRAPHY, productTypeEnum: ProductTypeEnum.CLOTHING, type: BodyClotheTypeEnum.T_SHIRT };
         const handleClothingChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
             const { name, value, type } = e.target;
             let parsedValue: number | boolean | Date | string = value;
@@ -153,8 +162,8 @@ function ProductDomainDetailsForm({
             }
 
             const updatedDetails = { ...clothingDetails, [name]: parsedValue };
-            setClothingDetails(updatedDetails);
-            onDetailsChange(updatedDetails);
+            setCurrentDetails(updatedDetails);
+            props.onDetailsChange(updatedDetails);
             console.log("cambio en details: " + JSON.stringify(updatedDetails));
         };
         return <div className="flex flex-col gap-4 p-4 border border-gray-300 rounded-lg">
@@ -221,7 +230,7 @@ function ProductDomainDetailsForm({
     };
 
     const getRenderForm = (): JSX.Element => {
-        switch (productTypeEnum) {
+        switch (props.productTypeEnum) {
             case ProductTypeEnum.PAINTING:
                 return renderPaintingForm();
             case ProductTypeEnum.CLOTHING:
