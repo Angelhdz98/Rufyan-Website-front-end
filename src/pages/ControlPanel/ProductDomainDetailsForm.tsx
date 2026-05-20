@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import FormInput from "../../components/FormInput";
 import { BodyClotheTypeEnum, BodyClothingDomainDetails, ClothingMaterial, MediumEnum, PaintingDomainDetails, PrintingTechniqueEnum, ProductDomainDetails, ProductTypeEnum, SupportMaterialEnum } from "../../types/typesIndex";
-import { fromLocalDateString } from "./dateMapper";
 
 interface ProductDomainDetailsFormProps extends React.HTMLAttributes<HTMLDivElement> {
     productTypeEnum: ProductTypeEnum;
