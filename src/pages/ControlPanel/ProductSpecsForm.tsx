@@ -10,10 +10,11 @@ import React from "react";
 
 
 export interface ProductSpecsFormProps extends React.HTMLAttributes<HTMLDivElement> {
-    productSpecs: ProductSpecs,
+    productDetails?: ProductDomainDetails;
+    productSpecs: ProductSpecs;
     productTypeEnum: ProductTypeEnum;
     handleProductTypeChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
-    handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void,
+    handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
     toggleIsFavorite: () => void;
     handleStockChanging: (stock: ProductStock) => void;
     handleDetailsChange: (productDetails: ProductDomainDetails) => void;
@@ -62,20 +63,24 @@ function ProductSpecsForm(props: ProductSpecsFormProps) {
             <div className="grid grid-cols-2  ">
                 <div className="sm:col-span-1 w-fit">
                     <span className="block text-sm font-medium mb-2">Pricing</span>
-                    <ProductPricingForm pricingType={props.productTypeEnum === ProductTypeEnum.PAINTING ? PricingTypeEnum.ORIGINAL : PricingTypeEnum.SINGLE} onChangePrice={props.handlePriceChanging}
-                        className="" />
+                    <ProductPricingForm pricingType={props.productTypeEnum === ProductTypeEnum.PAINTING ? PricingTypeEnum.ORIGINAL : PricingTypeEnum.SIMLE} onChangePrice={props.handlePriceChanging}
+
+                        className=""
+                        pricing={props.productSpecs.productPricing}
+                    />
                 </div>
                 <div className="sm:col-span-1 w-fit">
                     <h3 className="text-sm font-medium mb-2">Stock</h3>
-                    <ProductStockForm handleStockChange={props.handleStockChanging} productType={props.productTypeEnum} />
+                    <ProductStockForm handleStockChange={props.handleStockChanging} productType={props.productTypeEnum}
+                        stock={props.productSpecs.productStock} />
                 </div>
             </div>
         </div>
 
         {/* Detalles del Producto */}
-        <div className={"space-y-1 "  }>
+        <div className={"space-y-1 "}>
             <h3 className="text-lg font-semibold">Detalles del Producto</h3>
-            <ProductDomainDetailsForm onDetailsChange={props.handleDetailsChange} productTypeEnum={props.productTypeEnum} />
+            <ProductDomainDetailsForm onDetailsChange={props.handleDetailsChange} productTypeEnum={props.productTypeEnum} productDetails={props.productDetails} />
         </div>
     </div>
 
