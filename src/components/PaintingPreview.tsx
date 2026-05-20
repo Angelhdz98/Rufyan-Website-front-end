@@ -3,7 +3,7 @@ import { CiNoWaitingSign } from "react-icons/ci";
 import { IoIosCheckmarkCircle } from "react-icons/io";
 import { useNavigate } from "react-router-dom";
 import obra2 from "../../public/assets/Images/imgObras/obra2.jpg";
-import { Painting, PaintingPricing, PaintingStock, ProductTypeEnum } from "../types/typesIndex";
+import { Painting, PaintingPricing, PaintingStock, ProductTypeEnum, StockTypeEnum } from "../types/typesIndex";
 import { LikeButton } from "./LikeButton";
 import PaintingPreviewButtonPanel from "./PaintingPreviewButtonPanel";
 
@@ -25,7 +25,7 @@ const examplePaint: Painting =
         url: obra2,
     }],
     productDomainDetails: { largoCm: 30, alturaCm: 50, creationDate: new Date("10-12-2020"), medium: "Aceite", supportMaterial: "Algodon", productTypeEnum: ProductTypeEnum.PAINTING, },
-    productStock: { stockType: "PAINTING_STOCK", stockCopies: 10, copiesMade: 15, isOriginalAvailable: true },
+    productStock: { stockType: StockTypeEnum.PAINTING_STOCK, stockCopies: 10, copiesMade: 15, isOriginalAvailable: true },
 
     isFavorite: true,
     productTypeEnum: ProductTypeEnum.PAINTING

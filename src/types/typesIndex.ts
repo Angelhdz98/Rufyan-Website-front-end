@@ -65,9 +65,11 @@ export enum BodyClothingSizeEnum {
 
 export enum PricingTypeEnum {
   ORIGINAL = "ORIGINAL",
-  SINGLE = "SINGLE",
+  SIMLE = "SIMPLE",
 
 }
+
+
 
 
 export type PaintingDomainDetails = {
@@ -102,9 +104,14 @@ export type SinglePricing = {
 }
 export type ProductPricing = SinglePricing | PaintingPricing;
 
+export enum StockTypeEnum{
+  PAINTING_STOCK = "PAINTING_STOCK",
+  SINGLE_STOCK ="SINGLE_STOCK",
+  CLOTHING_STOCK= "CLOTHING_STOCK"
+}
 
 export type PaintingStock = {
-  stockType: "PAINTING_STOCK";
+  stockType: StockTypeEnum.PAINTING_STOCK;
   stockCopies: number;
   copiesMade: number;
   isOriginalAvailable: boolean;
@@ -114,11 +121,11 @@ export type PaintingStock = {
 
 
 export type SingleStock = {
-  stockType: "SINGLE_STOCK";
+  stockType: StockTypeEnum.SINGLE_STOCK;
   stock: number;
 }
 export type ClothingStock = {
-  stockType: "CLOTHING_STOCK";
+  stockType: StockTypeEnum.CLOTHING_STOCK;
   stockPerSize: Record<BodyClothingSizeEnum, number>;
 }
 

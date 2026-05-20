@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { Painting, ProductTypeEnum } from '../../types/typesIndex';
+import { Painting, ProductTypeEnum, StockTypeEnum } from '../../types/typesIndex';
 
 
 import obra2 from "../../../public/assets/Images/imgObras/obra2.jpg";
@@ -39,7 +39,7 @@ const initialState: SinglePaintingsState = {
     }
     ],
     productDomainDetails: { alturaCm: 90, largoCm: 60, medium: "Óleo", creationDate: new Date(), supportMaterial: "Lienzo", productTypeEnum: ProductTypeEnum.PAINTING },
-    productStock: { isOriginalAvailable: false, copiesMade: 8, stockCopies: 2, stockType: 'PAINTING_STOCK' },
+    productStock: { isOriginalAvailable: false, copiesMade: 8, stockCopies: 2, stockType: StockTypeEnum.PAINTING_STOCK },
     productTypeEnum: ProductTypeEnum.PAINTING
 
 
