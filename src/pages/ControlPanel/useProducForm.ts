@@ -1,7 +1,9 @@
 import { useState } from "react";
-import { ProductTypeEnum, ProductStock, PaintingStock, ProductPricing, PaintingPricing, ProductSpecs, PaintingDomainDetails, MediumEnum, SupportMaterialEnum, BodyClothingDomainDetails, ClothingMaterial, PrintingTechniqueEnum, BodyClotheTypeEnum, ProductDomainDetails, CreateProductCommand, UpdateProductCommand, Product, ImageProduct } from "../../types/typesIndex";
-import { useImageUpload } from "./AddPaintingForm";
+import { ProductTypeEnum, ProductStock, PaintingStock, ProductPricing, PaintingPricing, ProductSpecs, PaintingDomainDetails, MediumEnum, SupportMaterialEnum, BodyClothingDomainDetails, ClothingMaterial, PrintingTechniqueEnum, BodyClotheTypeEnum, ProductDomainDetails, CreateProductCommand, UpdateProductCommand, Product, ImageProduct, Page } from "../../types/typesIndex";
+import { useImageUpload } from "../../hooks/useImageUpload";
 import mapBackendProductToFrontend from "./ProductBackendMapper";
+import { api } from "./axios";
+
 export const useProductForm = () => {
 
     const {
@@ -91,19 +93,20 @@ export const useProductForm = () => {
                 }
             });
 
-            // Enviar petición POST
-            const response = await fetch("/api/products", {
-                method: "POST",
-                body: formData,
-            });
+            // Enviar petición POST con axios
+            const response = await api.post("/products", formData/*, {
+                headers: {
+                    "Content-Type": "multipart/form-data",
+                },
+            }*/
+            );
 
-            if (!response.ok) {
-                throw new Error(`Error: ${response.statusText}`);
+            if (response.status !== 200 && response.status !== 201) {
+                throw new Error(`Error: ${response.status} ${response.statusText}`);
             }
 
-            const data = await response.json();
-            console.log("Producto creado exitosamente:", data);
-            return data as Product;
+            console.log("Producto creado exitosamente:", response.data);
+            return response.data as Product;
         } catch (error) {
             console.error("Error al crear el producto:", error);
             throw error;
@@ -187,25 +190,23 @@ export const useProductForm = () => {
     const handleGetPagedProducts = async (pageNumber: number, pageSize: number) => {
         try {
             // Construir la URL con parámetros de paginación
-            const url = new URL("/api/admin/products-paged-custom", window.location.origin);
-            url.searchParams.append("pageNumber", pageNumber.toString());
-            url.searchParams.append("pageSize", pageSize.toString());
+            //const url = new URL("/admin/products-paged-custom", window.location.origin);
 
-            console.log("Obteniendo productos paginados desde:", url.toString());
+
 
             // Realizar petición GET
-            const response = await fetch(url.toString(), {
-                method: "GET",
-                headers: {
-                    "Accept": "application/json",
-                },
+            const response = await api.get("/admin/products-paged-custom", {
+                params: {
+                    pageNumber,
+                    pageSize
+                }
             });
 
-            if (!response.ok) {
+            if (response.status !== 200 && response.status !== 201) {
                 throw new Error(`Error: ${response.statusText}`);
             }
 
-            const data = await response.json();
+            const data = await response.data as Page<Product>;
             console.log("Productos obtenidos exitosamente:", data);
             return data; // Retorna Page<Product>
         } catch (error) {
@@ -230,6 +231,19 @@ export const useProductForm = () => {
             console.error("Error al obtener el producto por id:", error);
             throw error;
         }
+    }
+
+    const handleDeleteProductById = async (idToDelete: number) => {
+
+
+
+        const response = await fetch("/api/products/" + idToDelete, {
+            method: "DELETE"
+        });
+        if (!response.ok) {
+            throw new Error(`Error: ${response.statusText}`);
+        }
+
     }
 
 
@@ -332,7 +346,8 @@ export const useProductForm = () => {
         setUploadedFiles,
         handleAddFormSubmit, productTypeEnum, commonData, setCommonData, productDomainDetails, handleGetPagedProducts, handleGetProductEntityForEditingById,
         selectedProductId,
-        setSelectedProductId
+        setSelectedProductId,
+        handleDeleteProductById
     };
 }
 
