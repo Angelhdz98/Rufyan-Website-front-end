@@ -11,12 +11,14 @@
     "server": "json-server -p 3001 --watch dbRufyanWS.json"
   },
   "dependencies": {
+    "@js-temporal/polyfill": "^0.5.1",
     "@reduxjs/toolkit": "^2.2.5",
     "@tailwindcss/line-clamp": "^0.4.4",
     "@types/react-router-dom": "^5.3.3",
     "@types/react-slick": "^0.23.13",
     "axios": "^1.16.0",
     "classnames": "^2.5.1",
+    "date-fns": "^4.2.1",
     "json-server": "^1.0.0-beta.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
