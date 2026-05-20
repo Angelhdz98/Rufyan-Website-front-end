@@ -4,7 +4,7 @@ import { ImageUploader } from "../../components/ImageUploader";
 import ProductSpecsForm from "./ProductSpecsForm";
 import { useProductForm } from "./useProducForm";
 import CurrentImagesEditor from "./CurrentImagesEditor";
-import { ImageProduct, } from "../../types/typesIndex";
+import { ImageProduct, PaintingPricing, PricingTypeEnum, ProductPricing, SinglePricing, } from "../../types/typesIndex";
 import Modal from "../../components/Modal";
 
 
@@ -27,7 +27,7 @@ function EditProductForm(props: EditProductFormProps) {
 
     const { handleChange, toggleIsFavorite, handleProductTypeChange, handleDetailsChange, handleStockChanging, handlePriceChanging, productTypeEnum, commonData, handleUpdateFormSubmit, handleImageUpload, deleteImageUpload, imagePreview, uploadedFiles, setCommonData, handleGetProductEntityForEditingById,
         setSelectedProductId
-        , currentImages, setCurrentImages } = useProductForm();
+        , currentImages, setCurrentImages, handleDeleteProductById, productDomainDetails } = useProductForm();
 
 
     const voidJsxElement = <div></div>;
@@ -41,17 +41,32 @@ function EditProductForm(props: EditProductFormProps) {
 
         handleGetProductEntityForEditingById(props.productId).then((productData) => {
             // Aquí puedes manejar los datos del producto obtenidos
+            let pricing: ProductPricing = productData.productPricing as PaintingPricing;
+
+            if (productData.productPricing.pricingType == PricingTypeEnum.ORIGINAL) {
+
+                pricing = productData.productPricing as PaintingPricing;
+                console.log("Original pricing: " + JSON.stringify(pricing));
+            }
+            if (productData.productPricing.pricingType == PricingTypeEnum.SIMLE) {
+
+                pricing = productData.productPricing as SinglePricing;
+                console.log("Simple pricing: " + JSON.stringify(pricing));
+            }
+
+
+
             console.log("Datos del producto:", productData);
             setSelectedProductId(props.productId);
             setCommonData({
                 name: productData.name,
                 description: productData.description,
-                isFavorite: productData.isFavorite, productPricing: productData
-                    .productPricing,
+                isFavorite: productData.isFavorite,
+                productPricing: pricing,
                 productStock: productData.productStock,
                 productTypeEnum: productData.productTypeEnum
             })
-
+            handleDetailsChange(productData.productDomainDetails);
             setCurrentImages(productData.images);
             console.log("Imagenes actuales: ", productData.images);
             // Puedes actualizar el estado con estos datos si es necesario
@@ -59,6 +74,8 @@ function EditProductForm(props: EditProductFormProps) {
             // Manejo de errores
             console.error("Error al obtener el producto:", error);
             //setError(error.message); // Suponiendo que tienes un estado de error
+        }).finally(() => {
+            console.log("common Data: " + JSON.stringify(commonData));
         });
 
 
@@ -154,8 +171,9 @@ function EditProductForm(props: EditProductFormProps) {
                 className=" grid grid-cols-1 lg:grid-cols-3 xl:grid-cols-2 gap-4  p-4 border-4 border-red-600  "
 
                 firstBlockClassName={"  flex flex-col md:flex-col w-full border-4 boder-blue-600  "}
-                secondBlockClassName={"  grid lg:grid-cols-2 p-2 gap-4 border-4 border-orange-600  "} />
-            <CurrentImagesEditor images={currentImages} />
+                secondBlockClassName={"  grid lg:grid-cols-2 p-2 gap-4 border-4 border-orange-600  "}
+                productDetails={productDomainDetails} />
+            <CurrentImagesEditor currentImages={currentImages} setCurrentImages={setCurrentImages} />
 
             <ImageUploader
                 deleteImageUpload={deleteImageUpload}
@@ -165,9 +183,31 @@ function EditProductForm(props: EditProductFormProps) {
                 className={"flex-1 min-h-96"}
             />
             <div className="my-4">
-                <Button success rounded onClick={tryHandleUpdateFormSubmit}>
-                    Confirmar cambios
-                </Button>
+                <div className="flex flex-row justify-between p-4">
+                    <Button success rounded onClick={tryHandleUpdateFormSubmit}>
+                        Confirmar cambios
+                    </Button>
+                    <Button danger rounded onClick={() => {
+                        handleDeleteProductById(props.productId).then(() => {
+                            setModalContent(() => {
+                                return <div>
+                                    Producto eliminado correctamente actuliza la pagina
+                                </div>
+                            })
+                        }).catch(
+                            () => {
+                                setModalContent(() => {
+                                    return <div> Ha ocurrido un error eliminando el producto
+                                    </div>
+                                })
+                            }
+                        ).finally(() => {
+                            setIsModalOpen(true);
+                        })
+                    }}  >🗑️ Eliminar producto</Button>
+
+                </div>
+
             </div>
             <Modal onClose={() => {
                 setIsModalOpen(false)
