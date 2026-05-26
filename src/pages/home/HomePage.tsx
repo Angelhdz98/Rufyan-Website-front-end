@@ -1,5 +1,5 @@
 
-import FavoritePaints from "../../components/FavoritePaints";
+import FavoriteProducts from "../../components/FavoriteProducts";
 import SlideBanner from "../../components/SlideBanner";
 import ImgBanner from "../../components/ImgBanner";
 import losDelParaiso from "../../../public/assets/Images/los-del-paraiso.png"
@@ -8,30 +8,29 @@ import FavoriteProjects from "../../components/FavoriteProjects";
 import OtherProductsChart from "../../components/OtherProductsChart";
 //import ProjectCard from "../../components/ProjectCard";
 
-function HomePage(){
+function HomePage() {
 
-    
+
 
     return <div className=" h-fit flex-grow">
-        <SlideBanner/>
+        <SlideBanner />
         <Panel name={"Favorite Artworks"}>
-        <FavoritePaints/>
+            <FavoriteProducts />
         </Panel>
-        
-        
-        <ImgBanner linkRef="https://www.instagram.com/losdelparaiso.music?igsh=a3VtdWw5cWtudjNo" src={losDelParaiso}/>
+
+
+        <ImgBanner linkRef="https://www.instagram.com/losdelparaiso.music?igsh=a3VtdWw5cWtudjNo" src={losDelParaiso} />
         <Panel name={"Projects"} >
-            <FavoriteProjects/> 
+            <FavoriteProjects />
         </Panel>
         <Panel name="Other Products">
-            <OtherProductsChart/>
+            <OtherProductsChart />
         </Panel>
-        
-        
-        
-        
+
+
+
+
     </div>
-    }
-    
-    export default HomePage;
-    
+}
+
+export default HomePage;
