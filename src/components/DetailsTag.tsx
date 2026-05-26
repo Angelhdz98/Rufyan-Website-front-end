@@ -20,7 +20,7 @@ function DetailsTag(props: DetailsTagProps) {
                 <span> Largo: {props.productDetails.largoCm} cm</span>
                 <span> Medio: {props.productDetails.medium}</span>
                 <span> Material de soporte {props.productDetails.supportMaterial}</span>
-                <span> Fecha de creación {props.productDetails.creationDate.toDateString()} </span>
+                <span> Fecha de creación {props.productDetails.creationDate.toString()} </span>
 
             </Fragment>)
 
