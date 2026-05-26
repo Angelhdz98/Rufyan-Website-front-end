@@ -4,8 +4,6 @@ import Button from "./Button";
 import PriceTag from "./PriceTag";
 import StockTag from "./StockTag";
 import DetailsTag from "./DetailsTag";
-//import { BiDownArrow } from "react-icons/bi";
-//import { Fragment } from "react/jsx-runtime";
 export interface ProductLabelProps extends React.HTMLAttributes<HTMLDivElement> {
     product: Product;
     className?: string;
