@@ -4,25 +4,42 @@
 //  import { Product } from "../types/typesIndex";
 //  import { useDispatch } from "react-redux";
 //  import { AppDispatch, fetchFavPaintings } from "../store";
-import { useSelector } from "react-redux";
-import { AppDispatch, fetchFavPaintings, RootState } from "../store";
 import Button from "./Button";
 import { useEffect, useState } from "react";
-import FavoritePaint from "./FavoritePaint";
+import FavoriteProduct from "./FavoriteProduct";
 import Masonry from "react-masonry-css";
 //import { LoadingPaint } from "./LoadingPaint";
-import { useDispatch } from "react-redux";
+import { Product } from "../types/typesIndex";
+import { requestFavoriteProducts } from "./useProductRequest";
+import { mapProductDTOToProduct } from "../pages/ControlPanel/ProductBackendMapper";
+import PaintingLoader from "./PaintingLoader";
 
-function FavoritePaints() {
-  const dispatch = useDispatch<AppDispatch>();
-  const {data, isLoading /*,error*/} = useSelector((state: RootState)=> state.paintings);
-
+function FavoriteProducts() {
+  //const dispatch = useDispatch<AppDispatch>();
+  //const {data, isLoading /*,error*/} = useSelector((state: RootState)=> state.paintings);
+  const [favoriteProducts, setFavoriteProducts] = useState<Product[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
   const [visibleLabels, setVisibleLabels] = useState<Record<number, boolean>>({})
   const [clickedPaints, setClickedPaints] = useState<Record<number, boolean>>({});
- useEffect(( ) => {
-  dispatch(fetchFavPaintings());
- }, [dispatch])
- 
+  useEffect(() => {
+    setIsLoading(true);
+    requestFavoriteProducts().then((products) => {
+      console.log("Backend response:", JSON.stringify(products, null, 2));
+      const mapedProducts = products.content.map((p) => {
+        console.log("ProductDTO before mapping:", JSON.stringify(p, null, 2));
+        const out = mapProductDTOToProduct(p);
+        console.log("Product after mapping:", JSON.stringify(out, null, 2));
+        return out;
+      })
+      setFavoriteProducts(mapedProducts);
+      setIsLoading(false);
+    }).catch((error) => {
+      console.error("Error loading favorite products:", error);
+      setIsLoading(false);
+    });
+
+  }, [])
+
   const handleMouseEnter = (id: number) => {
     setVisibleLabels((prev) => ({ ...prev, [id]: true }))
   };
@@ -35,17 +52,21 @@ function FavoritePaints() {
     setClickedPaints((prev) => ({ ...prev, [id]: !prev[id] }));
   };
 
-  const renderedFavPaints =  data.map((fp) => {
+  const loadingView = <div>
+    <PaintingLoader /><PaintingLoader /><PaintingLoader /><PaintingLoader /><PaintingLoader /><PaintingLoader /><PaintingLoader /><PaintingLoader />
+  </div>
+
+  const renderedFavPaints = favoriteProducts.map((fp) => {
     const isVisible = (visibleLabels[fp.id] || clickedPaints[fp.id]);
-    return <FavoritePaint
-      
+    return <FavoriteProduct
+
       key={fp.id}
-      paint={fp}
+      product={fp}
       clicked={clickedPaints[fp.id]}
       isVisible={isVisible}
       onMouseEnter={() => handleMouseEnter(fp.id)}
       onMouseLeave={() => handleMouseLeave(fp.id)}
-      onClick={() => handleClick(fp.id)} 
+      onClick={() => handleClick(fp.id)}
       isLoading={isLoading} />
 
   })
@@ -58,14 +79,14 @@ function FavoritePaints() {
   }
 
   return <div className="flex flex-col ">
-    
-      <Masonry breakpointCols={breakpoints}
-        className="flex w-full "
-        columnClassName=" p-4 my-2 "
-      >
-        {renderedFavPaints}
-      </Masonry>
-    
+
+    <Masonry breakpointCols={breakpoints}
+      className="flex w-full "
+      columnClassName=" p-4 my-2 "
+    >
+      {isLoading ? loadingView : renderedFavPaints}
+    </Masonry>
+
     {/**
       <div className="flex flex-col flex-wrap   justify-center   gap-x-auto gap-y-2     min-[490px]:max-h-[1250px] min-[490px]:max-w-[93.5%] min-[490px]:gap-x-4   md:gap-x-6  md:max-w-[90.5%] sm:max-h-[950px] min-[880px]:max-h-[800px] min-[880px]:max-w-[88%] min-[952px]:max-w-[89%] lg:max-w-[90%] min-[1152px]:max-w-[91%] xl:max-w-[92%] min-[1320px]:max-h-[880px] min-[1320px]:gap-x-16 2xl:gap-x-auto 2xl:max-w-[82%]  2xl:max-h-[920px] min-[1620px]:max-h-[880px]  " >
         
@@ -83,7 +104,7 @@ function FavoritePaints() {
 }
 
 
-export default FavoritePaints
+export default FavoriteProducts
 
 //min-lg:max-h-[900px] md:max-h[900px] lg:max-h-[2100px] md:max-w-[95%]
 //min-xl:max-h-[900px] 2xl:max-h-[900px]  p-8  drop-shadow-lg
