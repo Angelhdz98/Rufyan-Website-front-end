@@ -104,10 +104,10 @@ export type SinglePricing = {
 }
 export type ProductPricing = SinglePricing | PaintingPricing;
 
-export enum StockTypeEnum{
+export enum StockTypeEnum {
   PAINTING_STOCK = "PAINTING_STOCK",
-  SINGLE_STOCK ="SINGLE_STOCK",
-  CLOTHING_STOCK= "CLOTHING_STOCK"
+  SINGLE_STOCK = "SINGLE_STOCK",
+  CLOTHING_STOCK = "CLOTHING_STOCK"
 }
 
 export type PaintingStock = {
@@ -149,6 +149,18 @@ export interface Product {
   isFavorite: boolean;
 
 }
+
+export type ProductDTO = {
+  id: number;
+  name: string;
+  images: ImageProduct[];
+  description: string;
+  productStockDTO: ProductStock;
+  productPricingDTO: ProductPricing;
+  productTypeEnum: ProductTypeEnum;
+  productDetails: ProductDomainDetails;
+}
+
 // muy probablemente no vaya a ser necesario (es solo json)
 export interface Painting extends Product {
 
@@ -243,6 +255,11 @@ export interface OptionSelect extends OptionSelectRequest {
 export interface ProductCategory extends OptionSelect {
 
 }
+export type TokenPayload = {
+  sub: string;
+  role: string;
+  exp: number;
+};
 
 export interface Page<T> {
   content: T[];
