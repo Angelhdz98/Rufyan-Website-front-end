@@ -18,6 +18,7 @@ import UserPanel from "./pages/UserPanelPage/UserPanel";
 //import PrivateRoute from "./components/PrivateRoute";
 import LogInForm from "./components/LogInForm";
 import AddProductForm from "./pages/ControlPanel/AddProductForm";
+import PrivateRoute from "./components/PrivateRoute";
 //import { homeLoader } from "./pages/home/homeLoader";
 //import store from "./store";
 
@@ -40,11 +41,11 @@ const router = createBrowserRouter([
     element: <Root />,
     children: [
       {
-        /* //delete this comments to filter
+        //delete this comments to filter
         element: <PrivateRoute />,
         children: [
           {
-        */
+
             index: true,
             element: <HomePage />
 
@@ -104,8 +105,9 @@ const router = createBrowserRouter([
             path: '/user-panel',
             element: <UserPanel />
           }
-          ,{path:'/add-product-form',
-            element : <AddProductForm/>
+          , {
+            path: '/add-product-form',
+            element: <AddProductForm />
           }
         ]
       }
@@ -113,8 +115,8 @@ const router = createBrowserRouter([
 
 
     ]
- /* }
-]*/
+  }
+]
 )
 
 

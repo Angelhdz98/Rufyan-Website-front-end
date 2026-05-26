@@ -51,7 +51,7 @@ const PrivateRoute = () => {
         };
     }, []);
 
-    // Mientras se verifica, mostrar nada (o un loader si prefieres)
+    // Mientras se verifica, mostrar nada (o un loader )
     if (isAdminAuth === null) {
         return <div>Verificando autenticación...</div>;
     }
