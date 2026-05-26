@@ -1,5 +1,18 @@
-let accessToken: string | null = null;
-export const setAccessToken = (token: string) => {
-    accessToken = token;
+const TOKEN_KEY = 'rufyanWebSiteAccessToken';
+
+
+export const getTokenKey=()=>{
+    return TOKEN_KEY;
 };
-export const getAccessToken = () => accessToken;
+
+export const setAccessToken = (token: string) => {
+    localStorage.setItem(TOKEN_KEY, token);
+};
+export const getAccessToken = (): string | null => {
+    return localStorage.getItem(TOKEN_KEY);
+};
+
+
+export const clearAccessToken = () => {
+    localStorage.removeItem(TOKEN_KEY);
+};
