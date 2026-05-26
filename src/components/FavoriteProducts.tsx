@@ -1,22 +1,15 @@
-
-//  import type { fetchPaintingsResult } from "../pages/home/homeLoader";
-//  import { ReactNode, useEffect } from "react";
-//  import { Product } from "../types/typesIndex";
-//  import { useDispatch } from "react-redux";
-//  import { AppDispatch, fetchFavPaintings } from "../store";
 import Button from "./Button";
-import { useEffect, useState } from "react";
+import {  useEffect, useState } from "react";
 import FavoriteProduct from "./FavoriteProduct";
 import Masonry from "react-masonry-css";
-//import { LoadingPaint } from "./LoadingPaint";
 import { Product } from "../types/typesIndex";
 import { requestFavoriteProducts } from "./useProductRequest";
 import { mapProductDTOToProduct } from "../pages/ControlPanel/ProductBackendMapper";
 import PaintingLoader from "./PaintingLoader";
 
+
 function FavoriteProducts() {
-  //const dispatch = useDispatch<AppDispatch>();
-  //const {data, isLoading /*,error*/} = useSelector((state: RootState)=> state.paintings);
+
   const [favoriteProducts, setFavoriteProducts] = useState<Product[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [visibleLabels, setVisibleLabels] = useState<Record<number, boolean>>({})
@@ -52,9 +45,11 @@ function FavoriteProducts() {
     setClickedPaints((prev) => ({ ...prev, [id]: !prev[id] }));
   };
 
-  const loadingView = <div>
-    <PaintingLoader /><PaintingLoader /><PaintingLoader /><PaintingLoader /><PaintingLoader /><PaintingLoader /><PaintingLoader /><PaintingLoader />
-  </div>
+
+  const voidArray = ["", "", "", "", "", "", "", "", "", ""]
+  const loadingView = voidArray.map(() => {
+    return <PaintingLoader />
+  });
 
   const renderedFavPaints = favoriteProducts.map((fp) => {
     const isVisible = (visibleLabels[fp.id] || clickedPaints[fp.id]);
