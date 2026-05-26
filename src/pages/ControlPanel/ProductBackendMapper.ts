@@ -1,4 +1,31 @@
-import { Product, ProductTypeEnum } from "../../types/typesIndex";
+import { Product, ProductTypeEnum, ProductDTO } from "../../types/typesIndex";
+
+function mapProductToProductDTO(product: Product): ProductDTO {
+    return {
+        id: product.id,
+        name: product.name,
+        images: product.images,
+        description: product.description,
+        productStockDTO: product.productStock,
+        productPricingDTO: product.productPricing,
+        productTypeEnum: product.productTypeEnum,
+        productDetails: product.productDomainDetails,
+    };
+}
+
+function mapProductDTOToProduct(productDTO: ProductDTO, isFavorite: boolean = false): Product {
+    return {
+        id: productDTO.id,
+        name: productDTO.name,
+        images: productDTO.images,
+        description: productDTO.description,
+        productStock: productDTO.productStockDTO,
+        productPricing: productDTO.productPricingDTO,
+        productTypeEnum: productDTO.productTypeEnum,
+        productDomainDetails: productDTO.productDetails,
+        isFavorite,
+    };
+}
 
 function mapBackendProductToFrontend(backendProduct: any): Product {
     const { alturaCm, largoCm, medium, supportMaterial, creationDate, productTypeEnum, pricingTypeEnum, ...rest } = backendProduct;
@@ -35,4 +62,6 @@ function mapBackendProductToFrontend(backendProduct: any): Product {
         productPricing,
     } as Product;
 }
+
+export { mapProductToProductDTO, mapProductDTOToProduct };
 export default mapBackendProductToFrontend;
