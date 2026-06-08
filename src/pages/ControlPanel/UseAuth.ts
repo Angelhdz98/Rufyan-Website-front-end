@@ -1,3 +1,4 @@
+import { TokenResponse } from "../../types/typesIndex";
 import { setAccessToken } from "./authStore";
 import { api } from "./axios";
 
@@ -6,10 +7,7 @@ interface LoginCommand {
     password: string; // contraseña del usuario
 }
 
-export interface TokenResponse {
-    access_token: string;  // Coincide con lo que retorna el backend
-    refresh_token: string;
-}
+
 
 /**
  * Realiza una petición POST de login
