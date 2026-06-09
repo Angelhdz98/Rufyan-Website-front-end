@@ -16,11 +16,31 @@ function ProductDomainDetailsForm(props: ProductDomainDetailsFormProps) {
 
 
     // Sincronizar clothingDetails cuando cambia el productTypeEnum
+    // Sincronizar detalles cuando cambia el tipo de producto o los detalles
     useEffect(() => {
         if (props.productDetails) {
             setCurrentDetails(props.productDetails);
+        } else {
+            // Inicializar con valores por defecto según el tipo de producto
+            if (props.productTypeEnum === ProductTypeEnum.PAINTING) {
+                setCurrentDetails({
+                    alturaCm: 30,
+                    largoCm: 20,
+                    creationDate: new Date(),
+                    medium: MediumEnum.ACRYLYC_PAINT.toString(),
+                    productTypeEnum: "PAINTING",
+                    supportMaterial: SupportMaterialEnum.COTTON_PAPER.toString()
+                } as PaintingDomainDetails);
+            } else if (props.productTypeEnum === ProductTypeEnum.CLOTHING) {
+                setCurrentDetails({
+                    material: ClothingMaterial.COTTON,
+                    printingTechnique: PrintingTechniqueEnum.SERIGRAPHY.toString(),
+                    productTypeEnum: "CLOTHING",
+                    type: BodyClotheTypeEnum.T_SHIRT
+                } as BodyClothingDomainDetails);
+            }
         }
-    }, [props.productDetails,]);
+    }, [props.productDetails, props.productTypeEnum]);
 
 
     // Mapear enums a valores legibles
@@ -32,12 +52,15 @@ function ProductDomainDetailsForm(props: ProductDomainDetailsFormProps) {
 
     const renderPaintingForm = () => {
 
-        const details = currentDetails as PaintingDomainDetails || {
-            alturaCm: 30,
-            largoCm: 20,
-            creationDate: new Date(),
-            medium: MediumEnum.ACRYLYC_PAINT
-        };
+        const details: PaintingDomainDetails = (currentDetails && 'alturaCm' in currentDetails) ?
+            currentDetails as PaintingDomainDetails : {
+                alturaCm: 30,
+                largoCm: 20,
+                creationDate: new Date(),
+                medium: MediumEnum.ACRYLYC_PAINT.toString(),
+                productTypeEnum: "PAINTING",
+                supportMaterial: SupportMaterialEnum.COTTON_PAPER.toString()
+            };
 
         const handlePaintingChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
             const { name, value, type } = e.target;
