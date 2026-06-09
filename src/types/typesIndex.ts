@@ -65,10 +65,40 @@ export enum BodyClothingSizeEnum {
 
 export enum PricingTypeEnum {
   ORIGINAL = "ORIGINAL",
-  SIMLE = "SIMPLE",
+  SIMPLE = "SIMPLE",
 
 }
+export interface FullName {
+  firstName: string;
+  secondName?: string;
+  firstLastName: string;
+  secondLastName: string;
+}
 
+export interface registerUserData extends RegisterUserCommand {
+  confirmPassword: string
+}
+
+export interface RegisterUserCommand {
+  email: string;
+  password: string;
+  username: string;
+  fullName: FullName;
+  birthDate: string;
+  confirmPassword:string;
+  address: string;
+}
+export interface UserEntityDTO2 {
+  id: number,
+  fullname: string,
+  birthDate: string,
+  email: string,
+  username: string
+}
+export interface RegisterUserDTO {
+  tokenResponse: TokenResponse,
+  userEntityDTO2: UserEntityDTO2
+}
 
 
 
@@ -99,7 +129,7 @@ export type PaintingPricing = {
 }
 
 export type SinglePricing = {
-  pricingType: "SIMPLE";
+  pricingType: PricingTypeEnum.SIMPLE;
   price: number;
 }
 export type ProductPricing = SinglePricing | PaintingPricing;
@@ -255,6 +285,11 @@ export interface OptionSelect extends OptionSelectRequest {
 export interface ProductCategory extends OptionSelect {
 
 }
+export interface TokenResponse {
+  access_token: string;  // Coincide con lo que retorna el backend
+  refresh_token: string;
+}
+
 export type TokenPayload = {
   sub: string;
   role: string;
