@@ -2,7 +2,8 @@
 // instancia de axios 
 import axios from "axios";
 import { getAccessToken, setAccessToken, clearAccessToken } from "./authStore";
-import { TokenResponse } from "./UseAuth";
+import { TokenResponse } from "../../types/typesIndex";
+
 
 
 export const api = axios.create({
