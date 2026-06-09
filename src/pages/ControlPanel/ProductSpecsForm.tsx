@@ -63,7 +63,7 @@ function ProductSpecsForm(props: ProductSpecsFormProps) {
             <div className="grid grid-cols-2  ">
                 <div className="sm:col-span-1 w-fit">
                     <span className="block text-sm font-medium mb-2">Pricing</span>
-                    <ProductPricingForm pricingType={props.productTypeEnum === ProductTypeEnum.PAINTING ? PricingTypeEnum.ORIGINAL : PricingTypeEnum.SIMLE} onChangePrice={props.handlePriceChanging}
+                    <ProductPricingForm pricingType={props.productTypeEnum === ProductTypeEnum.PAINTING ? PricingTypeEnum.ORIGINAL : PricingTypeEnum.SIMPLE} onChangePrice={props.handlePriceChanging}
 
                         className=""
                         pricing={props.productSpecs.productPricing}
