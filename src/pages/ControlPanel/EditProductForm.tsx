@@ -48,7 +48,7 @@ function EditProductForm(props: EditProductFormProps) {
                 pricing = productData.productPricing as PaintingPricing;
                 console.log("Original pricing: " + JSON.stringify(pricing));
             }
-            if (productData.productPricing.pricingType == PricingTypeEnum.SIMLE) {
+            if (productData.productPricing.pricingType == PricingTypeEnum.SIMPLE) {
 
                 pricing = productData.productPricing as SinglePricing;
                 console.log("Simple pricing: " + JSON.stringify(pricing));
