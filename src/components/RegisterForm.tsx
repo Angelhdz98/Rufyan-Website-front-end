@@ -3,6 +3,9 @@ import { FaCheck, FaExclamationTriangle, FaTimes } from "react-icons/fa";
 //import imgLogo from "../assets/Images/logos/logoprovisionalRufyan.png" // este logo tiene que ser el circular 
 import FormInput from "./FormInput";
 import Logo from "./Logo";
+import Button from "./Button";
+import { useUserRegister } from "./useUserRegister";
+import { RegisterUserCommand } from "../types/typesIndex";
 export interface LogInRegisterProps {
   onClick: () => void;
 }
@@ -21,14 +24,12 @@ export interface FormInputProps extends HtmlHTMLAttributes<HTMLInputElement> {
 function RegisterForm({ onClick }: LogInRegisterProps) {
   const [formData, setFormData] = useState({
     data: {
-      lastName: '',
-      firstName: '',
-      username: '',
-      email: '',
-      address: '',
-      password: '',
-      confirmPassword: '',
-    }
+      birthDate: "",
+      email: "",
+      fullName: { firstName: "", secondName: "", firstLastName: "", secondLastName: "" },
+      password: "",
+      username: ""
+    } as RegisterUserCommand
   });
 
   const [usernameAvailable, setUsernameAvailable] = useState<boolean | null>(null);
@@ -70,20 +71,37 @@ function RegisterForm({ onClick }: LogInRegisterProps) {
     setPasswordMatch(formData.data.password === formData.data.confirmPassword);
   }, [formData]);
 
+  const handleSubmit = () => {
+    const registerUserCommand: RegisterUserCommand = {
+      fullName: {
+        firstName: formData.data.fullName.firstName, secondName: formData.data.fullName.secondName,
+        firstLastName: formData.data.fullName.firstLastName,
+        secondLastName: formData.data.fullName.secondLastName,
+      },
+      birthDate: formData.data.birthDate,
+      email: formData.data.email,
+      password: formData.data.password,
+      username: formData.data.username,
+      confirmPassword: formData.data.confirmPassword,
+      address: formData.data.address,
+    };
+    useUserRegister(registerUserCommand);
+  }
 
   return (<div className="flex flex-col gap-4 items-center">
     <Logo to="/" className="w-2/4 " />
-    <form className=" p-4 bg-white shadow-md rounded-lg w-full">
+    <span>Actualmente el acceso esta registrido a los administradores, disculpe las molestias</span>
+    <form className=" p-4 bg-white shadow-md rounded-lg w-full" onSubmit={handleSubmit}>
       <div className="grid grid-cols-2 gap-2 mb-4">
 
-        <div className="max-md:col-span-2">
-          <FormInput type="text" value={formData.data.lastName} name="lastName" onChange={handleChange}    >
-            Last Name
-          </FormInput>
-        </div>
 
         <div className="max-md:col-span-2">
-          <FormInput type="text" value={formData.data.firstName} name="firstName" onChange={handleChange} >First Name</FormInput>
+          <FormInput type="text" value={formData.data.fullName.firstName} name="firstName" onChange={handleChange} >Nombre(s)</FormInput>
+        </div>
+        <div className="max-md:col-span-2">
+          <FormInput type="text" value={formData.data.fullName.firstLastName} name="lastName" onChange={handleChange}    >
+            Apeído(s)
+          </FormInput>
         </div>
         <div className="relative max-md:col-span-2 ">
           <label className="block text-gray-700">Username</label>
@@ -109,13 +127,15 @@ function RegisterForm({ onClick }: LogInRegisterProps) {
         </div>
 
         <div className="col-span-2">
-          <FormInput type="text" name={"address"} value={formData.data.address} onChange={handleChange}>Addrees* optional just for shipment</FormInput>
+          <FormInput type="text" name={"address"} value={formData.data.address} onChange={handleChange}>Dirección* (*Opcional)</FormInput>
         </div>
       </div>
 
       <div className="mb-4">
-        <p className="text-gray-700">A valid password must have at least 6 characters.</p>
-        <p className="text-gray-700">A strong password must have at least:</p>
+        <p className="text-gray-700">Una contraseña valida debe de tener al menos de caracteres </p>
+        <p className="text-gray-700">
+          Una contraseña segura debe de tener mínimo:
+        </p>
         <ul className="ml-4 list-disc">
           <li className="flex items-center">
             {passwordStrength.specialChar ? (
@@ -123,7 +143,7 @@ function RegisterForm({ onClick }: LogInRegisterProps) {
             ) : (
               <FaTimes className="text-red-500 mr-2" />
             )}
-            One special character
+            Un caracter especial
           </li>
           <li className="flex items-center">
             {passwordStrength.uppercase ? (
@@ -131,7 +151,7 @@ function RegisterForm({ onClick }: LogInRegisterProps) {
             ) : (
               <FaTimes className="text-red-500 mr-2" />
             )}
-            One uppercase letter
+            Una letra mayuscula
           </li>
           <li className="flex items-center">
             {passwordStrength.number ? (
@@ -139,14 +159,16 @@ function RegisterForm({ onClick }: LogInRegisterProps) {
             ) : (
               <FaTimes className="text-red-500 mr-2" />
             )}
-            One number
+            Un numero
           </li>
         </ul>
       </div>
 
       <div className="grid grid-cols-1 gap-4 mb-4">
         <div className="relative">
-          <label className="block text-gray-700">Password</label>
+          <label className="block text-gray-700">
+            Contraseña:
+          </label>
           <input
             type="password"
             name="password"
@@ -170,7 +192,7 @@ function RegisterForm({ onClick }: LogInRegisterProps) {
           </span>
         </div>
         <div className="relative">
-          <label className="block text-gray-700">Confirm Password</label>
+          <label className="block text-gray-700">Confirma la contraseña</label>
           <input
             type="password"
             name="confirmPassword"
@@ -189,9 +211,10 @@ function RegisterForm({ onClick }: LogInRegisterProps) {
       </div>
 
       <div className="text-center flex wrap">
-        <p>Do you already have an account? <span onClick={onClick}
-          className="text-blue-500 hover:underline hover:cursor-pointer">Log in</span></p>
+        <p>¿Ya tienes cuenta? <span onClick={onClick}
+          className="text-blue-500 hover:underline hover:cursor-pointer">Ingresar</span></p>
       </div>
+      <Button success rounded type="submit"> Register</Button>
     </form></div>
 
   );
