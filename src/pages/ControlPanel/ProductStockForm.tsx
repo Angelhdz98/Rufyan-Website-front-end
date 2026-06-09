@@ -23,8 +23,37 @@ function ProductStockForm(props: ProductStockFormProps) {
     useEffect(() => {
         if (props.stock) {
             setCurrentStock(props.stock);
+        } else {
+            // Inicializar con valores por defecto según el tipo de producto
+            let defaultStock: ProductStock;
+
+            if (props.productType === ProductTypeEnum.PAINTING) {
+                defaultStock = {
+                    isOriginalAvailable: true,
+                    stockCopies: 0,
+                    copiesMade: 0,
+                    stockType: StockTypeEnum.PAINTING_STOCK
+                } as PaintingStock;
+            } else if (props.productType === ProductTypeEnum.CLOTHING) {
+                defaultStock = {
+                    stockPerSize: initialStockPerSize,
+                    stockType: StockTypeEnum.CLOTHING_STOCK
+                } as ClothingStock;
+            } else if (props.productType === ProductTypeEnum.SINGLE) {
+                defaultStock = {
+                    stock: 1,
+                    stockType: StockTypeEnum.SINGLE_STOCK
+                } as SingleStock;
+            } else {
+                defaultStock = {
+                    stock: 1,
+                    stockType: StockTypeEnum.SINGLE_STOCK
+                } as SingleStock;
+            }
+
+            setCurrentStock(defaultStock);
         }
-    }, [props.stock])
+    }, [props.stock, props.productType]);
 
     /* const [paintingStockData, setPaintingStockData] = useState<PaintingStock>({
          isOriginalAvailable: true,
@@ -62,7 +91,9 @@ function ProductStockForm(props: ProductStockFormProps) {
      }
   */
     const paintingStockForm = () => {
-        const stock = props.stock as PaintingStock || { stockCopies: 0, copiesMade: 0 };
+        const stock: PaintingStock = (currentStock && 'stockCopies' in currentStock)
+            ? currentStock as PaintingStock
+            : { isOriginalAvailable: true, stockCopies: 0, copiesMade: 0, stockType: StockTypeEnum.PAINTING_STOCK };
         const paintingStockHandleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
             const { name, value } = e.target;
             const parsedValue = value === "" ? 0 : parseInt(value);
@@ -117,7 +148,9 @@ function ProductStockForm(props: ProductStockFormProps) {
 
     const bodyClothingStockForm = () => {
 
-        const stock: ClothingStock = currentStock as ClothingStock || { stockPerSize: initialStockPerSize, stockType: StockTypeEnum.CLOTHING_STOCK }
+        const stock: ClothingStock = (currentStock && 'stockPerSize' in currentStock)
+            ? currentStock as ClothingStock
+            : { stockPerSize: initialStockPerSize, stockType: StockTypeEnum.CLOTHING_STOCK };
 
         const renderedStock = Object.entries(stock.stockPerSize).map(([size, quantity]) => (
             <FormInput
@@ -154,7 +187,9 @@ function ProductStockForm(props: ProductStockFormProps) {
 
     const singleStockForm = () => {
 
-        const stock: SingleStock = currentStock as SingleStock || { stock: 1, stockType: StockTypeEnum.SINGLE_STOCK }
+        const stock: SingleStock = (currentStock && 'stock' in currentStock && !('stockPerSize' in currentStock))
+            ? currentStock as SingleStock
+            : { stock: 1, stockType: StockTypeEnum.SINGLE_STOCK };
 
         return <FormInput type="number" name="stock" value={stock.stock.toString()} onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
             const value = e.target.value;
