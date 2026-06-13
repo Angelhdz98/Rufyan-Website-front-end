@@ -1,10 +1,13 @@
 name: Deploy Frontend
+
 on:
   push:
     branches: [ "main" ]
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
+
     steps:
       - name: Deploy via SSH
         uses: appleboy/ssh-action@v0.1.10
@@ -14,9 +17,12 @@ jobs:
           key: ${{ secrets.VPS_SSH_KEY }}
           script: |
             cd /ruta/de/proyecto-en-vps
+
             echo "Pull cambios del repo principal"
             git pull origin main
+            
             echo "Build nginx"
             docker compose build nginx
+            
             echo "Restart nginx"
             docker compose up -d nginx
