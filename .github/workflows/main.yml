@@ -24,7 +24,7 @@ jobs:
             cd /root/RufyanWebSite/Rufyan-Website-front-end
 
             echo "Pull cambios del repo principal"
-            git pull origin main
+            git pull origin master
             
             cd ../
 
