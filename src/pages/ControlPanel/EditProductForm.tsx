@@ -168,7 +168,7 @@ function EditProductForm(props: EditProductFormProps) {
                 handleStockChanging={handleStockChanging}
                 handleDetailsChange={handleDetailsChange}
                 handlePriceChanging={handlePriceChanging}
-                className=" grid grid-cols-1 lg:grid-cols-3 xl:grid-cols-2 gap-4  p-4 border-4 border-red-600  "
+                className=" grid grid-cols-1 lg:grid-cols-3 xl:grid-cols-2 gap-4  p-4   "
 
                 firstBlockClassName={"  flex flex-col md:flex-col w-full border-4 boder-blue-600  "}
                 secondBlockClassName={"  grid lg:grid-cols-2 p-2 gap-4 border-4 border-orange-600  "}
