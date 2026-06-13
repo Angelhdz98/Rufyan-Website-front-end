@@ -217,14 +217,15 @@ export const useProductForm = () => {
 
     const handleGetProductEntityForEditingById = async (productId: number) => {
         try {
-            const response = await fetch("/api/admin/find-product-entity-by-id/" + productId, {
+
+            const response = await api.get("/admin/find-product-entity-by-id/" + productId, {
                 method: "GET"
             });
-            if (!response.ok) {
+            if (response.status !== 200 && response.status !== 201) {
                 throw new Error(`Error: ${response.statusText}`);
             }
 
-            const data = await response.json();
+            const data = response.data;
             console.log("Productos obtenidos exitosamente:", data);
             return mapBackendProductToFrontend(data);
         } catch (error) {
@@ -237,12 +238,15 @@ export const useProductForm = () => {
 
 
 
-        const response = await fetch("/api/products/" + idToDelete, {
+        const response = await api.delete("/products/" + idToDelete, {
             method: "DELETE"
         });
-        if (!response.ok) {
+        if (response.status !==200 && response.status !==201) {
             throw new Error(`Error: ${response.statusText}`);
         }
+
+        
+
 
     }
 
