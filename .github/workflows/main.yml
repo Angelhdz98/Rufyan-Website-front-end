@@ -1,27 +1,22 @@
-name: Deploy Frontend (Nginx)
+name: Deploy Frontend
 on:
   push:
     branches: [ "main" ]
-    paths:
-      - 'nginx/**'
-      - 'frontend/**'
-      - 'docker-compose.yml'
 jobs:
-  deploy-frontend:
+  deploy:
     runs-on: ubuntu-latest
     steps:
-      - name: Deploy frontend via SSH
+      - name: Deploy via SSH
         uses: appleboy/ssh-action@v0.1.10
         with:
           host: ${{ secrets.VPS_HOST }}
           username: ${{ secrets.VPS_USER }}
           key: ${{ secrets.VPS_SSH_KEY }}
           script: |
-            cd /ruta/de/tu/proyecto
-            echo "Pull latest changes"
+            cd /ruta/de/proyecto-en-vps
+            echo "Pull cambios del repo principal"
             git pull origin main
-            echo "Build nginx/frontend"
+            echo "Build nginx"
             docker compose build nginx
             echo "Restart nginx"
             docker compose up -d nginx
-            echo "Frontend deployed"
