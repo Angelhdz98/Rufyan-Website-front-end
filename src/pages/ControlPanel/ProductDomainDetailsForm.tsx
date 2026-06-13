@@ -12,8 +12,7 @@ function ProductDomainDetailsForm(props: ProductDomainDetailsFormProps) {
     const [currentDetails, setCurrentDetails] = useState<ProductDomainDetails | undefined>(props.productDetails);
 
 
-
-
+    let updatedDetails: PaintingDomainDetails;
 
     // Sincronizar clothingDetails cuando cambia el productTypeEnum
     // Sincronizar detalles cuando cambia el tipo de producto o los detalles
@@ -68,26 +67,30 @@ function ProductDomainDetailsForm(props: ProductDomainDetailsFormProps) {
             if (type === "number") {
                 parsedValue = parseInt(value);
             } else if (type === "date") {
-                const paintingDetails = props.productDetails as PaintingDomainDetails;
+                //const paintingDetails = props.productDetails as PaintingDomainDetails;
                 const possibleDate = new Date(value);
                 // Validar si la fecha es válida
                 if (!isNaN(possibleDate.getTime())) {
                     parsedValue = possibleDate;
                 } else {
                     // Si la fecha no es válida, mantener la fecha anterior
-                    parsedValue = paintingDetails.creationDate;
+                    parsedValue = details.creationDate;
                 }
             } else if (type === "checkbox") {
                 parsedValue = (e.target as HTMLInputElement).checked;
             }
 
-            const updatedDetails = { ...currentDetails, [name]: parsedValue } as PaintingDomainDetails;
+            updatedDetails = { ...details, [name]: parsedValue } as PaintingDomainDetails;
             setCurrentDetails(updatedDetails);
             props.onDetailsChange(updatedDetails);
+
             console.log("cambio en details: " + JSON.stringify(updatedDetails));
         };
+        const formattedDate = details.creationDate instanceof Date
+            ? details.creationDate.toISOString().split("T")[0]
+            : "";
 
-        const processorDay = () => {
+        /*const processorDay = () => {
             if (props !== undefined && props.productDetails?.productTypeEnum == ProductTypeEnum.PAINTING) {
                 return props.productDetails.creationDate instanceof Date
                     ? props.productDetails.creationDate.toISOString().split("T")[0]
@@ -97,12 +100,11 @@ function ProductDomainDetailsForm(props: ProductDomainDetailsFormProps) {
                 return "";
             }
 
-        }
+        }*/
 
 
 
-        const processedDay: string = processorDay();
-
+        
 
         return <div className="flex flex-col gap-4 p-4 border border-gray-300 rounded-lg">
             <h3 className="font-semibold text-lg">Painting Details</h3>
@@ -160,7 +162,7 @@ function ProductDomainDetailsForm(props: ProductDomainDetailsFormProps) {
                 <FormInput
                     type="date"
                     name="creationDate"
-                    value={processedDay
+                    value={formattedDate
                     }
                     onChange={handlePaintingChange}
                 >
