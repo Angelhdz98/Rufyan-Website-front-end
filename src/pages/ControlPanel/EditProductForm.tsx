@@ -68,7 +68,7 @@ function EditProductForm(props: EditProductFormProps) {
             })
             handleDetailsChange(productData.productDomainDetails);
             setCurrentImages(productData.images);
-            console.log("Imagenes actuales: ", productData.images);
+            //console.log("Imagenes actuales: ", productData.images);
             // Puedes actualizar el estado con estos datos si es necesario
         }).catch((error) => {
             // Manejo de errores
