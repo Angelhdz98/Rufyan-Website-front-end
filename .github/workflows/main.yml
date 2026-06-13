@@ -21,7 +21,7 @@ jobs:
           username: ${{ secrets.VPS_USER }}
           key: ${{ secrets.VPS_SSH_KEY }}
           script: |
-            cd /RufyanWebSite/Rufyan-Website-front-end
+            cd /root/RufyanWebSite/Rufyan-Website-front-end
 
             echo "Pull cambios del repo principal"
             git pull origin main
