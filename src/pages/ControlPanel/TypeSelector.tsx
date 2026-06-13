@@ -9,7 +9,7 @@ function TypeSelector(props: TypeSelectorProps) {
     return (
         <div className={`flex flex-col w-full ${props.className}`}>
             <label htmlFor="productType" className="mb-2 font-medium text-sm">
-                Product Type
+                Tipo de producto
             </label>
             <select
                 id="productType"
