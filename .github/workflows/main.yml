@@ -21,11 +21,13 @@ jobs:
           username: ${{ secrets.VPS_USER }}
           key: ${{ secrets.VPS_SSH_KEY }}
           script: |
-            cd /ruta/de/proyecto-en-vps
+            cd /RufyanWebSite/Rufyan-Website-front-end
 
             echo "Pull cambios del repo principal"
             git pull origin main
             
+            cd ../
+
             echo "Build nginx"
             docker compose build nginx
             
