@@ -5,7 +5,7 @@ import { RegisterUserCommand, RegisterUserDTO } from "../types/typesIndex";
 
 export const useUserRegister = async (registerUserCommand: RegisterUserCommand) => {
     try {
-        const response = await api.post("/api/auth/user-register",registerUserCommand);
+        const response = await api.post("/auth/user-register", registerUserCommand);
 
         if (response.status !== 200 && response.status !== 201) {
             throw new Error(`Error: ${response.statusText}`);
