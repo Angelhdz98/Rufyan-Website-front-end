@@ -21,15 +21,32 @@ export interface FormInputProps extends HtmlHTMLAttributes<HTMLInputElement> {
 
 }
 
+export interface RegisterUserState {
+  email: string;
+  password: string;
+  username: string;
+  firstName: string;
+  secondName?: string;
+  firstLastName: string;
+  secondLastName: string;
+  birthDate: string;
+  confirmPassword: string;
+  address: string;
+
+}
+
 function RegisterForm({ onClick }: LogInRegisterProps) {
   const [formData, setFormData] = useState({
     data: {
       birthDate: "",
       email: "",
-      fullName: { firstName: "", secondName: "", firstLastName: "", secondLastName: "" },
+      firstName: "",
+      secondName: "",
+      firstLastName: "",
+      secondLastName: "",
       password: "",
       username: ""
-    } as RegisterUserCommand
+    } as RegisterUserState
   });
 
   const [usernameAvailable, setUsernameAvailable] = useState<boolean | null>(null);
@@ -71,12 +88,13 @@ function RegisterForm({ onClick }: LogInRegisterProps) {
     setPasswordMatch(formData.data.password === formData.data.confirmPassword);
   }, [formData]);
 
-  const handleSubmit = () => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
     const registerUserCommand: RegisterUserCommand = {
       fullName: {
-        firstName: formData.data.fullName.firstName, secondName: formData.data.fullName.secondName,
-        firstLastName: formData.data.fullName.firstLastName,
-        secondLastName: formData.data.fullName.secondLastName,
+        firstName: formData.data.firstName, secondName: formData.data.secondName,
+        firstLastName: formData.data.firstLastName,
+        secondLastName: formData.data.secondLastName,
       },
       birthDate: formData.data.birthDate,
       email: formData.data.email,
@@ -96,12 +114,18 @@ function RegisterForm({ onClick }: LogInRegisterProps) {
 
 
         <div className="max-md:col-span-2">
-          <FormInput type="text" value={formData.data.fullName.firstName} name="firstName" onChange={handleChange} >Nombre(s)</FormInput>
+          <FormInput type="text" value={formData.data.firstName} name="firstName" onChange={handleChange} >1er Nombre</FormInput>
         </div>
         <div className="max-md:col-span-2">
-          <FormInput type="text" value={formData.data.fullName.firstLastName} name="lastName" onChange={handleChange}    >
-            Apeído(s)
+          <FormInput type="text" value={formData.data.secondName || ""} name="secondName" onChange={handleChange} >2do Nombre (opcional)</FormInput>
+        </div>
+        <div className="max-md:col-span-2">
+          <FormInput type="text" value={formData.data.firstLastName} name="firstLastName" onChange={handleChange}    >
+            Apeido paterno
           </FormInput>
+        </div>
+        <div className="max-md:col-span-2">
+          <FormInput type="text" value={formData.data.secondLastName} name="secondLastName" onChange={handleChange} >Apeido materno (opcional)</FormInput>
         </div>
         <div className="relative max-md:col-span-2 ">
           <label className="block text-gray-700">Username</label>
@@ -128,6 +152,9 @@ function RegisterForm({ onClick }: LogInRegisterProps) {
 
         <div className="col-span-2">
           <FormInput type="text" name={"address"} value={formData.data.address} onChange={handleChange}>Dirección* (*Opcional)</FormInput>
+        </div>
+        <div>
+          <FormInput type="date" name="birthDate" value={formData.data.birthDate} onChange={handleChange} >Fecha de nacimiento </FormInput>
         </div>
       </div>
 
