@@ -4,24 +4,34 @@ import Modal from "../../components/Modal";
 import PaintingLoader from "../../components/PaintingLoader";
 import EditProductForm from "./EditProductForm";
 import { Page, Product } from "../../types/typesIndex";
-import { useProductForm } from "./useProducForm";
 import ProductEditingPreview from "../../components/ProductEditingPreview";
 import mapBackendProductToFrontend from "./ProductBackendMapper";
-//import StockTag from "../../components/StockTag";
+//import { SorterTypeEnum, SortOrderEnum } from "../../components/Sorter";
 
+//import StockTag from "../../components/StockTag";
+import { ProductEditingContextProp, ProductsEditingContext } from "./useEditProductsContext";
+import { SortOrderEnum, SorterTypeEnum } from "../../components/Sorter";
+import { handleGetPagedProducts } from "../../components/ProductRequests";
 // Función para mapear la respuesta del backend a la estructura esperada
 
 
 function EditAll() {
 
     const [isLoading, setIsLoading] = useState(false);
-    const [error, setError] = useState<string | null>(null);
-    const [data, setData] = useState<Product[]>([]);
+    const [error, setError] = useState<string | undefined>("");
+    const [receivedProduct, setReceivedProducts] = useState<Product[]>([]);
 
-    const [pageNumber/*, setPageNumber*/] = useState(0);
-    const [pageSize/*, setPageSize*/] = useState(10);
-    const [selectedProduct, setSelectedProduct] = useState<number>(-1);
-    const { handleGetPagedProducts } = useProductForm();
+    const [sortOrder, setSortOrder] = useState(SortOrderEnum.ASCENDING);
+    const [sortBy, setSortBy] = useState(SorterTypeEnum.CREATION_DATE);
+    const [pageNumber, setPageNumber] = useState(0);
+    const [pageSize, setPageSize] = useState(10);
+
+    const [selectedProduct, setSelectedProduct] = useState<number | undefined>(-1);
+    const [searchTerm, setSearchTerm] = useState<string | undefined>();
+
+
+
+
     // For testing 
     /* const initialTestState: Product[] = [
          {
@@ -181,14 +191,14 @@ function EditAll() {
 
     useEffect(() => {
         setIsLoading(true);
-        handleGetPagedProducts(pageNumber, pageSize).then((products: Page<any>) => {
+        handleGetPagedProducts(sortBy, pageNumber, pageSize, sortOrder).then((products: Page<any>) => {
             console.log(JSON.stringify(products));
             const content = products.content;
             console.log("contenido del pageeeee" + JSON.stringify(content));
 
             // Mapear cada producto del backend al formato esperado
             const mappedProducts = content.map(mapBackendProductToFrontend);
-            setData(mappedProducts);
+            setReceivedProducts(mappedProducts);
 
 
             console.log("State piece data: " + JSON.stringify(mappedProducts))
@@ -200,7 +210,7 @@ function EditAll() {
                 console.error(error)
             });
 
-    }, [pageNumber, pageSize]);
+    }, [pageNumber, pageSize, sortBy, sortOrder]);
 
 
 
@@ -219,7 +229,7 @@ function EditAll() {
 
 
 
-    const renderedProducts = data.map((product) => {
+    const renderedProducts = receivedProduct.map((product) => {
         return <ProductEditingPreview className={" hover:cursor-pointer"} key={product.id}
             onClick={() => {
                 setSelectedProduct(product.id);
@@ -246,9 +256,32 @@ function EditAll() {
     </div>)
 
 }*/
+    const producEditingState: ProductEditingContextProp = {
+        products: receivedProduct,
+        setProducts: setReceivedProducts,
+        pageNumber: pageNumber,
+        setPageNumber,
+        pageSize: pageSize,
+        setPageSize: setPageSize,
+        sortOrder: sortOrder,
+        setSortOrder: setSortOrder,
+        sortType: sortBy,
+        setSortType: setSortBy,
+        searchTerm,
+        setSearchTerm,
+        isLoading: isLoading,
+        setIsLoading: setIsLoading,
+        error: error,
+        setError: setError,
+    };
 
     products = <div className={"w-full flex flex-col relative "}>
-        <NavProduct />
+
+        <ProductsEditingContext.Provider value={producEditingState}>
+            <NavProduct />
+        </ProductsEditingContext.Provider>
+
+
         Edit All component
         <div className=" grid grid-cols-1  md:grid-cols-2 lg:grid-cols-3 gap-4 p-2">
             {renderedProducts}
@@ -256,7 +289,7 @@ function EditAll() {
 
         <Modal className="h-5/6 w-11/12 " isOpen={showModal} onClose={() => setShowModal(false)} >
             <div>
-                <EditProductForm productId={selectedProduct} />
+                <EditProductForm productId={selectedProduct ? selectedProduct : -1} />
             </div>
         </Modal>
 
