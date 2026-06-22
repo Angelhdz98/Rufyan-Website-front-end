@@ -2,7 +2,7 @@ import classNames from "classnames";
 import SorterButton from "./SorterButton";
 import { useContext } from "react";
 import { ProductsEditingContext } from "../pages/ControlPanel/useEditProductsContext";
-//import { useState } from "react";
+
 
 
 interface SorterProps {
@@ -91,7 +91,6 @@ function Sorter(props: SorterProps) {
         console.log("sorted by in sortByValue:", sortByValue, " sorted by in sortBy: ", productsEditingContext.sortType)
         const isSorted = sortByValue == productsEditingContext.sortType;
         return <SorterButton key={valuesToSort.value} isSorted={isSorted}
-            sortBy={valuesToSort.value}
             onClick={() => changeSortingHandle(sortByValue)}
             sortOrder={productsEditingContext.sortOrder ? productsEditingContext.sortOrder : SortOrderEnum.DESCENDING}>
             {valuesToSort.label}
