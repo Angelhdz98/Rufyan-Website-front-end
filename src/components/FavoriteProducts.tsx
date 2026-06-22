@@ -1,14 +1,16 @@
 import Button from "./Button";
-import {  useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import FavoriteProduct from "./FavoriteProduct";
 import Masonry from "react-masonry-css";
 import { Product } from "../types/typesIndex";
-import { requestFavoriteProducts } from "./useProductRequest";
 import { mapProductDTOToProduct } from "../pages/ControlPanel/ProductBackendMapper";
 import PaintingLoader from "./PaintingLoader";
+import { requestFavoriteProducts } from "./ProductRequests";
+
 
 
 function FavoriteProducts() {
+
 
   const [favoriteProducts, setFavoriteProducts] = useState<Product[]>([]);
   const [isLoading, setIsLoading] = useState(true);

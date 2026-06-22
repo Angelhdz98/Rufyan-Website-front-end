@@ -6,6 +6,7 @@ import { useProductForm } from "./useProducForm";
 import CurrentImagesEditor from "./CurrentImagesEditor";
 import { ImageProduct, PaintingPricing, PricingTypeEnum, ProductPricing, SinglePricing, } from "../../types/typesIndex";
 import Modal from "../../components/Modal";
+import { handleDeleteProductById, handleGetProductEntityForEditingById } from "../../components/ProductRequests";
 
 
 type EditProductFormProps = {
@@ -25,9 +26,9 @@ function EditProductForm(props: EditProductFormProps) {
 
     // const [_, setError] = useState<""|undefined>();
 
-    const { handleChange, toggleIsFavorite, handleProductTypeChange, handleDetailsChange, handleStockChanging, handlePriceChanging, productTypeEnum, commonData, handleUpdateFormSubmit, handleImageUpload, deleteImageUpload, imagePreview, uploadedFiles, setCommonData, handleGetProductEntityForEditingById,
+    const { handleChange, toggleIsFavorite, handleProductTypeChange, handleDetailsChange, handleStockChanging, handlePriceChanging, productTypeEnum, commonData, handleUpdateFormSubmit, handleImageUpload, deleteImageUpload, imagePreview, uploadedFiles, setCommonData,
         setSelectedProductId
-        , currentImages, setCurrentImages, handleDeleteProductById, productDomainDetails } = useProductForm();
+        , currentImages, setCurrentImages,  productDomainDetails } = useProductForm();
 
 
     const voidJsxElement = <div></div>;

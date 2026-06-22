@@ -1,8 +1,9 @@
 import { useState } from "react";
-import { ProductTypeEnum, ProductStock, PaintingStock, ProductPricing, PaintingPricing, ProductSpecs, PaintingDomainDetails, MediumEnum, SupportMaterialEnum, BodyClothingDomainDetails, ClothingMaterial, PrintingTechniqueEnum, BodyClotheTypeEnum, ProductDomainDetails, CreateProductCommand, UpdateProductCommand, Product, ImageProduct, Page } from "../../types/typesIndex";
+import { ProductTypeEnum, ProductStock, PaintingStock, ProductPricing, PaintingPricing, ProductSpecs, PaintingDomainDetails, MediumEnum, SupportMaterialEnum, BodyClothingDomainDetails, ClothingMaterial, PrintingTechniqueEnum, BodyClotheTypeEnum, ProductDomainDetails, CreateProductCommand, UpdateProductCommand, Product, ImageProduct} from "../../types/typesIndex";
 import { useImageUpload } from "../../hooks/useImageUpload";
-import mapBackendProductToFrontend from "./ProductBackendMapper";
+
 import { api } from "./axios";
+
 
 export const useProductForm = () => {
 
@@ -115,7 +116,7 @@ export const useProductForm = () => {
 
     const [currentImages, setCurrentImages] = useState<ImageProduct[]>([]);
 
-    const handleUpdateFormSubmit = async () => {
+    const handleUpdateProduct = async () => {
         try {
             // Preparar los detalles del producto con la fecha adaptada si es necesario
             //  let productDetailsToSend = productDomainDetails;
@@ -187,68 +188,10 @@ export const useProductForm = () => {
 
         }
     };
-    const handleGetPagedProducts = async (pageNumber: number, pageSize: number) => {
-        try {
-            // Construir la URL con parámetros de paginación
-            //const url = new URL("/admin/products-paged-custom", window.location.origin);
 
 
 
-            // Realizar petición GET
-            const response = await api.get("/admin/products-paged-custom", {
-                params: {
-                    pageNumber,
-                    pageSize
-                }
-            });
 
-            if (response.status !== 200 && response.status !== 201) {
-                throw new Error(`Error: ${response.statusText}`);
-            }
-
-            const data = await response.data as Page<Product>;
-            console.log("Productos obtenidos exitosamente:", data);
-            return data; // Retorna Page<Product>
-        } catch (error) {
-            console.error("Error al obtener los productos paginados:", error);
-            throw error;
-        }
-    };
-
-    const handleGetProductEntityForEditingById = async (productId: number) => {
-        try {
-
-            const response = await api.get("/admin/find-product-entity-by-id/" + productId, {
-                method: "GET"
-            });
-            if (response.status !== 200 && response.status !== 201) {
-                throw new Error(`Error: ${response.statusText}`);
-            }
-
-            const data = response.data;
-            console.log("Productos obtenidos exitosamente:", data);
-            return mapBackendProductToFrontend(data);
-        } catch (error) {
-            console.error("Error al obtener el producto por id:", error);
-            throw error;
-        }
-    }
-
-    const handleDeleteProductById = async (idToDelete: number) => {
-
-
-
-        const response = await api.delete("/products/" + idToDelete, {
-            method: "DELETE"
-        });
-        if (response.status !==200 && response.status !==201) {
-            throw new Error(`Error: ${response.statusText}`);
-        }
-
-        
-
-
-    }
 
 
 
@@ -339,7 +282,7 @@ export const useProductForm = () => {
         handleStockChanging,
         handlePriceChanging,
         /*     handleUpdateProductChange,*/
-        handleUpdateFormSubmit,
+        handleUpdateFormSubmit: handleUpdateProduct,
         currentImages,
         setCurrentImages,
         handleImageUpload,
@@ -348,10 +291,10 @@ export const useProductForm = () => {
         uploadedFiles,
         setImagePreview,
         setUploadedFiles,
-        handleAddFormSubmit, productTypeEnum, commonData, setCommonData, productDomainDetails, handleGetPagedProducts, handleGetProductEntityForEditingById,
+        handleAddFormSubmit, productTypeEnum, commonData, setCommonData, productDomainDetails,
         selectedProductId,
         setSelectedProductId,
-        handleDeleteProductById
+
     };
 }
 
