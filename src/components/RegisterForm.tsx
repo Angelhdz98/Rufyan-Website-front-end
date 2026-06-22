@@ -16,7 +16,7 @@ export interface FormInputProps extends HtmlHTMLAttributes<HTMLInputElement> {
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void
   className?: string;
   labelClassname?: string;
-  children: string;
+  children?: string;
 
 
 }
