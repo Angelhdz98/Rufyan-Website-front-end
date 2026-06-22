@@ -1,7 +1,7 @@
 import { FormInputProps } from "./RegisterForm";
 import classNames from "classnames";
 function FormInput(props: FormInputProps) {
-  return <div className={classNames("w-full flex flex-col", props.className)}>
+  return <div className={classNames(" flex flex-col", props.className)}>
     <label className={classNames("block text-sm font-medium text-gray-700 mb-2", props.labelClassname)}>
       {props.children}
     </label>
@@ -11,7 +11,7 @@ function FormInput(props: FormInputProps) {
       name={props.name}
       value={props.value}
       onChange={props.onChange}
-      className={classNames("w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm")}
+      className={classNames(" px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm")}
     />
   </div>
 }
