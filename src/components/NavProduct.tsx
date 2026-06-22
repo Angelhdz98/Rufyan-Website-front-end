@@ -6,6 +6,7 @@ import Sorter, { SorterTypeEnum, SortOrderEnum } from "./Sorter";
 import { handleGetPagedProducts } from "./ProductRequests";
 import { Page } from "../types/typesIndex";
 import mapBackendProductToFrontend from "../pages/ControlPanel/ProductBackendMapper";
+import PageSelector from "./PageSelector";
 
 
 function NavProduct() {
@@ -37,8 +38,10 @@ function NavProduct() {
 
 
         <div className="flex flex-col gap-1 w-full px-12 ">
+            <div className="flex flex-row gap-8">
+                <PageSelector /> <Sorter onChange={sortChange} />
+            </div>
 
-            <Sorter onChange={sortChange} />
         </div>
     </div>
 }
