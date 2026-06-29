@@ -93,8 +93,8 @@ function RegisterForm({ onClick }: LogInRegisterProps) {
     const registerUserCommand: RegisterUserCommand = {
       fullName: {
         firstName: formData.data.firstName, secondName: formData.data.secondName,
-        firstLastName: formData.data.firstLastName,
-        secondLastName: formData.data.secondLastName,
+        firstLastname: formData.data.firstLastName,
+        secondLastname: formData.data.secondLastName,
       },
       birthDate: formData.data.birthDate,
       email: formData.data.email,
