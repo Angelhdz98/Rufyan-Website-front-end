@@ -13,9 +13,9 @@ function NavProduct() {
 
     const productsContext = useContext(ProductsEditingContext);
 
-    const sortChange = (sortBy: SorterTypeEnum, pageNumber: number, order: SortOrderEnum) => {
+    const sortChange = () => {
 
-        const response = handleGetPagedProducts(
+        handleGetPagedProducts(
             productsContext?.sortType ? productsContext?.sortType : SorterTypeEnum.CREATION_DATE,
             productsContext?.pageNumber ? productsContext?.pageNumber : 0,
             productsContext?.pageSize ? productsContext?.pageSize : 12,

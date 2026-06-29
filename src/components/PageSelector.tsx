@@ -9,7 +9,7 @@ function PageSelector() {
 
     const onChangePage = (e: React.ChangeEvent<HTMLInputElement>) => {
 
-        const { value, name, type } = e.target;
+        const { value, type } = e.target;
         if (type === "number") {
             const parsedNumber = parseInt(value);
             console.log("Es number");
