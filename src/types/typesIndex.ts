@@ -13,7 +13,23 @@ export interface User {
   addresses?: UserAddress[]
 }
 // we can change the normal user For a DTO user so it will just have the needed values
+export interface BirthDate {
+  birthDate: Date
+}
 
+export interface userDTO {
+  fullName: FullName;
+  birthDate: BirthDate;
+  username: string;
+  email: string;
+  cartProducts: CartItemDTO[];
+}
+
+export interface UpdateUserDTO {
+  id: number;
+  fullName: FullName;
+  birthDate: Date;
+}
 
 export interface ImageProduct {
   id: number;
@@ -71,8 +87,8 @@ export enum PricingTypeEnum {
 export interface FullName {
   firstName: string;
   secondName?: string;
-  firstLastName: string;
-  secondLastName: string;
+  firstLastname: string;
+  secondLastname: string;
 }
 
 export interface registerUserData extends RegisterUserCommand {
@@ -85,16 +101,33 @@ export interface RegisterUserCommand {
   username: string;
   fullName: FullName;
   birthDate: string;
-  confirmPassword:string;
+  confirmPassword: string;
   address: string;
 }
+
+
+
 export interface UserEntityDTO2 {
   id: number,
-  fullname: string,
-  birthDate: string,
+  fullname: FullName,
+  birthDate: Date,
   email: string,
   username: string
 }
+
+export interface UserEntityDTO2State {
+  id: number,
+  birthDate: Date,
+  email: string,
+  username: string,
+  firstName: string,
+  secondName: string,
+  firstLastname: string,
+  secondLastname: string,
+
+
+}
+
 export interface RegisterUserDTO {
   tokenResponse: TokenResponse,
   userEntityDTO2: UserEntityDTO2
@@ -347,12 +380,21 @@ export interface ArtEvent extends Project {
 
 }
 
+
 export interface CartItemInterface<T extends Product = Product> {
   id: number;
   product: T;
   isCopy: boolean;
   quantity: number;
 
+}
+
+export interface CartItemDTO {
+  productName: string;
+  imageUrl: string;
+  quantity: number;
+  details: string;
+  pricePerUnit: number;
 }
 
 export interface Cup extends Product {
