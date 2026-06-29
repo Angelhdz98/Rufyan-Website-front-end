@@ -30,7 +30,7 @@ function PasswordHandler(){
         <span className="text-blue-400 text-sm"> Password</span>
         <span> ************</span>
     </div>
-    <Button rounded success 
+    <Button rounded primary 
 className="flex items-center justify-center border my-2 pl-2 pr-2 translate-x-  "
 onClick={()=>setIsEditing(true)}
 >
