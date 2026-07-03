@@ -1,6 +1,6 @@
 import { setAccessToken } from "../pages/ControlPanel/authStore";
 import { api } from "../pages/ControlPanel/axios";
-import { RegisterUserCommand, RegisterUserDTO } from "../types/typesIndex";
+import { RegisterUserCommand, RegisterUserDTO, UpdateUserDTO, UserEntityDTO2 } from "../types/typesIndex";
 
 
 export const useUserRegister = async (registerUserCommand: RegisterUserCommand) => {
@@ -19,5 +19,20 @@ export const useUserRegister = async (registerUserCommand: RegisterUserCommand) 
         throw error;
 
     }
+
+}
+
+export const useUserUpdate = async (info: UpdateUserDTO) => {
+
+    console.log("Valores a enviar: " + JSON.stringify(info));
+    const response = await api.put("/users", info);
+    if (response.status !== 200 && response.status !== 201) {
+        throw new Error(`Error: ${response.statusText}`);
+    }
+
+    const user = response.data as UserEntityDTO2;
+
+    return user;
+
 
 }

@@ -6,15 +6,16 @@ import Sorter, { SorterTypeEnum, SortOrderEnum } from "./Sorter";
 import { handleGetPagedProducts } from "./ProductRequests";
 import { Page } from "../types/typesIndex";
 import mapBackendProductToFrontend from "../pages/ControlPanel/ProductBackendMapper";
+import PageSelector from "./PageSelector";
 
 
 function NavProduct() {
 
     const productsContext = useContext(ProductsEditingContext);
 
-    const sortChange = (sortBy: SorterTypeEnum, pageNumber: number, order: SortOrderEnum) => {
+    const sortChange = () => {
 
-        const response = handleGetPagedProducts(
+        handleGetPagedProducts(
             productsContext?.sortType ? productsContext?.sortType : SorterTypeEnum.CREATION_DATE,
             productsContext?.pageNumber ? productsContext?.pageNumber : 0,
             productsContext?.pageSize ? productsContext?.pageSize : 12,
@@ -37,8 +38,10 @@ function NavProduct() {
 
 
         <div className="flex flex-col gap-1 w-full px-12 ">
+            <div className="flex flex-row gap-8">
+                <PageSelector /> <Sorter onChange={sortChange} />
+            </div>
 
-            <Sorter onChange={sortChange} />
         </div>
     </div>
 }

@@ -1,5 +1,5 @@
 import NavProduct from "../../components/NavProduct";
-import { useEffect, useState } from "react";
+import {  useEffect, useState } from "react";
 import Modal from "../../components/Modal";
 import PaintingLoader from "../../components/PaintingLoader";
 import EditProductForm from "./EditProductForm";
@@ -28,6 +28,7 @@ function EditAll() {
 
     const [selectedProduct, setSelectedProduct] = useState<number | undefined>(-1);
     const [searchTerm, setSearchTerm] = useState<string | undefined>();
+    const [totalPages, setTotalPages] = useState<number | undefined>(20);
 
 
 
@@ -273,6 +274,9 @@ function EditAll() {
         setIsLoading: setIsLoading,
         error: error,
         setError: setError,
+        totalPages: totalPages,
+        setTotalPages: setTotalPages,
+
     };
 
     products = <div className={"w-full flex flex-col relative "}>

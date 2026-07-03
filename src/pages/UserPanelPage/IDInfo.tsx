@@ -1,3 +1,4 @@
+import EmailHandler from "../ControlPanel/EmailHandler"
 import PasswordHandler from "./PasswordHandler"
 import UsernameHandler from "./UsernameHandler"
 
@@ -9,7 +10,7 @@ function IDInfo(){
  Identification info
  </span>
 </div>
-
+<EmailHandler/>
 <UsernameHandler/>
 <PasswordHandler/>
 
