@@ -14,7 +14,7 @@ export interface User {
 }
 // we can change the normal user For a DTO user so it will just have the needed values
 export interface BirthDate {
-  birthDate: Date
+  birthdate: Date
 }
 
 export interface userDTO {
