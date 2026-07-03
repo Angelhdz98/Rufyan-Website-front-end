@@ -9,6 +9,7 @@ import IDInfo from "./IDInfo"
 import { personalUserRequest } from "./personalUserRequest";
 import { useUserUpdate } from "../../components/useUserRegister";
 
+import { userInfoContext } from "../ControlPanel/useUserInfoContext";
 
 //this component will change between showing the info and editing the info
 
@@ -42,13 +43,13 @@ function UserInfo() {
 
                     firstLastname: user.fullName.firstLastname,
                     secondLastname: user.fullName.secondLastname,
-                    birthDate:new Date( user.birthDate.birthDate)
-
+                    birthDate: new Date(formattedDate),
+                    username:user.username
 
                 };
             })
         }).catch((error: Error) => {
-            alert("Fallo al subir la obra: " + error.message);
+            alert("Fallo al solitar info del usuario: " + error.message);
         })
 
     }, []);
@@ -164,17 +165,17 @@ function UserInfo() {
     </span>
         <div className="flex flex-row gap-4">
             <div className="flex flex-col ">
-                <span className="text-blue-400 text-sm">Nombre</span>
-                <span> Julio Homero  </span>
+                <span className="text-blue-400 text-sm">Nombre(s)</span>
+                <span> {userDataForm.firstName} {userDataForm.secondName ? userDataForm.secondName : ""} </span>
             </div>
 
             <div className="flex flex-col ">
-                <span className="text-blue-400 text-sm">Apellido materno</span>
-                <span> Gomez</span>
+                <span className="text-blue-400 text-sm">Apellido(s)</span>
+                <span> {userDataForm.firstLastname} {userDataForm.secondLastname ? userDataForm.secondLastname : ""}</span>
             </div>
             <div className="flex flex-col ">
                 <span className="text-blue-400 text-sm">Fecha de nacimiento</span>
-                <span> 14 de junio de 1998 </span>
+                <span> {formattedDate} </span>
             </div>
             <div className="edit-icon-div  ">
                 <Button rounded primary
@@ -195,8 +196,10 @@ function UserInfo() {
 
 
     return <div className="flex flex-col ">
-        {content}
+        <userInfoContext.Provider value={{ userInfo: userDataForm, setUserInfo: setUserDataForm }}>{content}
+       
         <IDInfo />
+         </userInfoContext.Provider>
     </div>
 };
 

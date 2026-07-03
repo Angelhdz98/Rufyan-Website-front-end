@@ -24,3 +24,79 @@ export const personalUserRequest = async () => {
 
 }
 
+export interface updateEmailParams {
+    newEmail: string
+    password: string
+}
+
+export const updateEmail = async (newEmail: string, password: string) => {
+
+    try {
+
+        console.log("new email: " + newEmail + " password: " + password);
+
+        const response = await api.put("/user/update-email", { newEmail: newEmail, password: password });
+
+        if (response.status !== 200 && response.status !== 201) {
+            throw new Error(`Error: ${response.statusText}`);
+        }
+
+        console.log("respuesta recibida de actualizar el email: ", JSON.stringify(response.data));
+
+        const data = response.data as userDTO;
+
+        return data;
+    } catch (error) {
+        console.error("Error actualizando el email. del usuario: ", error);
+        throw error;
+    }
+}
+
+export const updateUsername = async (newUsername: string, password: string) => {
+
+    try {
+
+        console.log("new username: " + newUsername + " password: " + password);
+
+        const response = await api.put("/user/update-username", { newUsername: newUsername, password: password, userId: 1 });
+
+        if (response.status !== 200 && response.status !== 201) {
+            throw new Error(`Error: ${response.statusText}`);
+        }
+
+        console.log("respuesta recibida de actualizar el username: ", JSON.stringify(response.data));
+
+        const data = response.data as userDTO;
+
+        return data;
+    } catch (error) {
+        console.error("Error actualizando el username del usuario: ", error);
+        throw error;
+    }
+}
+
+
+
+export const isUsernameAvailable = async (checkUsername: string) => {
+
+    try {
+
+        console.log("Checking for username: " + checkUsername);
+
+        const response = await api.get("/users/check-username/" + checkUsername);
+
+        if (response.status !== 200 && response.status !== 201) {
+            throw new Error(`Error: ${response.statusText}`);
+        }
+
+        console.log("respuesta recibida de actualizar el username: ", JSON.stringify(response.data));
+
+        const data = response.data as boolean;
+
+        return data;
+    } catch (error) {
+        console.error("Error actualizando el username del usuario: ", error);
+        throw error;
+    }
+
+}
