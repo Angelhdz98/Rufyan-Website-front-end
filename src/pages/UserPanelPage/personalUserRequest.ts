@@ -121,7 +121,7 @@ export const updateUserPasswordRequest = async (command: updatePasswordCommand) 
             throw new Error(`Error: ${response.statusText}`);
         }
 
-        console.log("respuesta recibida de actualizar el password: ", JSON.stringify(response.data));
+        alert("La contraseña ha sido actualizada correctamente");
 
 
     } catch (error) {
