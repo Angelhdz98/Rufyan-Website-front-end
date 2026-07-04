@@ -14,6 +14,11 @@ export interface updatePasswordCommand {
 
 export const personalUserRequest = async () => {
 
+    const storedUser = localStorage.getItem("userInfoRufyanWs");
+    if (storedUser) {
+        return JSON.parse(storedUser) as userDTO;
+    }
+
     try {
         const response = await api.get("/user-info");
 
@@ -24,6 +29,7 @@ export const personalUserRequest = async () => {
         console.log("respuesta recibida de información de usurio: ", JSON.stringify(response.data));
 
         const data = response.data as userDTO;
+        localStorage.setItem("userInfoRufyanWs", JSON.stringify(data))
 
         return data;
     } catch (error) {
@@ -33,6 +39,9 @@ export const personalUserRequest = async () => {
 
 
 }
+
+
+
 
 export interface updateEmailParams {
     newEmail: string
