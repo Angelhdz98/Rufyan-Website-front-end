@@ -35,10 +35,10 @@ function LogInForm({ onClick }: LogInRegisterProps) {
         setError('');
 
         loginRequest(logData.data.username, logData.data.password).then((response) => {
-            console.log("Login Response:", response);
-            console.log("ACCESS TOKEN:", response.access_token);
+           
 
             const decodedToken = jwtDecode<TokenPayload>(response.access_token);
+            localStorage.setItem("UserRoleRufyanWS",  decodedToken.role);
             console.log("Token decodificado:", decodedToken);
             console.log("Rol del usuario:", decodedToken.role);
 
