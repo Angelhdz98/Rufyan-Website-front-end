@@ -12,110 +12,164 @@ import Modal from "./Modal";
 import LogInForm from "./LogInForm";
 import RegisterForm from "./RegisterForm";
 import Logo from "./Logo";
-function Header(){
-    const [activeMenu, setActiveMenu]= useState<boolean>(false);
-    const navList=useRef<HTMLDivElement>(null);
+import { personalUserRequest } from "../pages/UserPanelPage/personalUserRequest";
+import { userDTO } from "../types/typesIndex";
+function Header() {
+    const [activeMenu, setActiveMenu] = useState<boolean>(false);
+    const navList = useRef<HTMLDivElement>(null);
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
     const [hasAccount, setHasaccount] = useState<boolean>(false);
-    const closeModal= ()=>{
+    const [isAdmin, setIsAdmin] = useState(false);
+    const userInfoInitialState: userDTO = {
+        fullName: { firstName: "", secondName: "", firstLastname: "", secondLastname: "" }, username: "",
+        email: "",
+        cartProducts: [],
+        birthDate: { birthdate: new Date("05-10-1999") }
+    }
+    const [userInfo, setUserInfo] = useState<userDTO>(userInfoInitialState);
+    const closeModal = () => {
         setIsModalOpen(false);
     }
-    
-    const openModal=() =>{
+
+    const openModal = () => {
         setIsModalOpen(true);
     }
-    const logInClick= () =>{
+    const logInClick = () => {
         openModal();
         setHasaccount(true);
     }
 
-    const registerClick= () =>{
+    const registerClick = () => {
         openModal();
         setHasaccount(false);
     }
-    const changeForm= () =>{
+    const changeForm = () => {
         setHasaccount(!hasAccount)
     }
-    const changeMenuState= ()=>{
-                setActiveMenu(!activeMenu);
+    const changeMenuState = () => {
+        setActiveMenu(!activeMenu);
 
-    }   
-
-     useEffect(()=>{
-        const handler = (event: MouseEvent) =>{
-            
-        if( activeMenu && !navList.current?.contains(event.target as Node)){
-            
-            event.stopPropagation();
-            setActiveMenu(!activeMenu);
-        }
-    };
-
-    document.addEventListener("click", handler, true);
-    return ()=>{
-        document.removeEventListener("click", handler);
     }
-    },[activeMenu])
+
+    useEffect(() => {
+        //Extracticng info from local storage or getting it from API
+        const userNameString = localStorage.getItem("userInfoRufyanWs");
+
+        if (userNameString) {
+            try {
+                const userData = JSON.parse(userNameString);
+                setUserInfo(userData);
+            } catch (error) {
+                console.error("JSON inválido en localStorage:", error);
+                localStorage.removeItem("userInfoRufyanWs");
+                personalUserRequest()
+                    .then((response) => {
+                        setUserInfo(response);
+                        localStorage.setItem("userInfoRufyanWs", JSON.stringify(response));
+                    })
+                    .catch(console.error);
+
+            }
+
+        } else {
+
+            personalUserRequest().then((response) => {
+                setUserInfo(response);
+
+            });
+
+
+
+        }
+
+        //Checking for adminRole 
+
+        const userRole = localStorage.getItem("UserRoleRufyanWS");
+        if (userRole == "ROLE_ADMIN") {
+            setIsAdmin(true);
+        }
+
+
+
+
+
+
+        const handler = (event: MouseEvent) => {
+
+            if (activeMenu && !navList.current?.contains(event.target as Node)) {
+
+                event.stopPropagation();
+                setActiveMenu(!activeMenu);
+            }
+        };
+
+        document.addEventListener("click", handler, true);
+        return () => {
+            document.removeEventListener("click", handler);
+        }
+    }, [activeMenu])
     return <div className="flex flex-row   items-end 2xl:gap-32 xl:gap-16 lg:gap-8     relative h-32 min-h-36">
         <div className="w-1/12 h-full min-w-64 min-h-24"  >
-         <Logo to="/"  />
-                 </div>
-            <div  className={classNames("",{"absolute navBoxShadow md:hidden  flex-col md top-0 right-0 pl-5 pr-3 pt-10 gap-1 items-end    bg-blue-400 flex h-dvh z-10":activeMenu,
-                ' flex flex-row max-md:hidden gap-4  max-md:top-1 max-md:right-2  ': !activeMenu,
-             })}>
+            <Logo to="/" />
+        </div>
+        <div className={classNames("", {
+            "absolute navBoxShadow md:hidden  flex-col md top-0 right-0 pl-5 pr-3 pt-10 gap-1 items-end    bg-blue-400 flex h-dvh z-10": activeMenu,
+            ' flex flex-row max-md:hidden gap-4  max-md:top-1 max-md:right-2  ': !activeMenu,
+        })}>
 
-            <CustomLink  to="/">Home</CustomLink>
-            <CustomLink  to= "/aboutRufyan">About me</CustomLink>            
-            <CustomLink   to ="/store">Store</CustomLink>
-            <CustomLink  to="/projects">Projects </CustomLink>
-            <CustomLink   to= "/shipment">Shipment</CustomLink>    
-            
-            </div>
-           {/** Se va a tener que agregar un isActive para que el Link que esté activo cambié */}
-           <div ref={navList} onClick={changeMenuState} className="menuBurguerContenedor hidden max-md:block absolute z-20 " >
-            <BurguerMenu   activeMenu={activeMenu} />
-            </div>
-            <div className="absolute top-8 right-[7%]  sm:right-12">
-                <span className="hover:text-blue-900 hover:underline hover:cursor-pointer"
-                 onClick={logInClick}>Log in
-                 </span>/
-                <span 
-                className="hover:text-blue-900 hover:underline hover:cursor-pointer" 
-                 onClick={registerClick}>
-                    register
-                 </span>
-                </div>
+            <CustomLink to="/">Home</CustomLink>
+            <CustomLink to="/aboutRufyan">About me</CustomLink>
+            <CustomLink to="/store">Store</CustomLink>
+            <CustomLink to="/projects">Projects </CustomLink>
+            <CustomLink to="/shipment">Shipment</CustomLink>
+            {isAdmin ? <CustomLink to="/admin">Admin</CustomLink> : ""}
+
+        </div>
+        {/** Se va a tener que agregar un isActive para que el Link que esté activo cambié */}
+        <div ref={navList} onClick={changeMenuState} className="menuBurguerContenedor hidden max-md:block absolute z-20 " >
+            <BurguerMenu activeMenu={activeMenu} />
+        </div>
+        <div className="absolute top-8 right-[7%]  sm:right-12">
+            <span className="hover:text-blue-900 hover:underline hover:cursor-pointer"
+                onClick={logInClick}>Log in
+            </span>/
+            <span
+                className="hover:text-blue-900 hover:underline hover:cursor-pointer"
+                onClick={registerClick}>
+                register
+            </span>
+        </div>
         <div className="flex flex-row items-center absolute max-md:left-72 top-2 right-64   gap-2  ">
-            <a target="_blank" 
-            href="https://www.instagram.com/rufyan_silva?igsh=MTBxc3BtazAxc2dwdg==">
-              <IoLogoInstagram size={24} /></a>
-    <a target="_blank" href="https://www.facebook.com/rufyan.silva?mibextid=ZbWKwL">
-    <BsFacebook size={19}  /> </a>
+            <a target="_blank"
+                href="https://www.instagram.com/rufyan_silva?igsh=MTBxc3BtazAxc2dwdg==">
+                <IoLogoInstagram size={24} /></a>
+            <a target="_blank" href="https://www.facebook.com/rufyan.silva?mibextid=ZbWKwL">
+                <BsFacebook size={19} /> </a>
         </div>
 
-    <div className="flex flex-row items-center gap-2 absolute bottom-2 2xl:right-32 md:right-4 right-12"> 
-    
-    <CustomLink to={"/user-panel"} className="flex flex-row items-center gap-1">
-    <FaUserAlt size={16}/>
-    <span className=" lg:max-2xl:block max-md:hidden ">Welcome name</span>
-    </CustomLink>
-    
-    
-    <CustomLink to={"/likes"}>
-    <FcLike size={22}/>
-    </CustomLink>
-    
-    <CustomLink to={"/cart"}>
-    <MdShoppingCart size={20} /> 
-    </CustomLink>
-    
+        <div className="flex flex-row items-center gap-2 absolute bottom-2 2xl:right-32 md:right-4 right-12">
 
-    </div>
-    <Modal isOpen={isModalOpen} onClose={closeModal} >
-       {hasAccount?<LogInForm onClick={changeForm}/>:<RegisterForm onClick={changeForm}/>}
+            <CustomLink to={"/user-panel"} className="flex flex-row items-center gap-1">
+                <FaUserAlt size={16} />
+                <span className=" lg:max-2xl:block max-md:hidden ">Welcome {userInfo.fullName.firstName}</span>
+            </CustomLink>
+
+
+            <CustomLink to={"/likes"}>
+                <FcLike size={22} />
+            </CustomLink>
+
+            <CustomLink to={"/cart"}>
+                <MdShoppingCart size={20} />
+            </CustomLink>
+
+
+        </div>
+        <Modal isOpen={isModalOpen} onClose={closeModal} >
+            {hasAccount ? <LogInForm onClick={changeForm} /> : <RegisterForm onClick={changeForm} />}
         </Modal>
     </div>;
-    }
-    export default Header;
-  
+}
+export default Header;
+
 
