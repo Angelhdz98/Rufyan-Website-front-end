@@ -41,3 +41,25 @@ export const loginRequest = async (email: string, password: string): Promise<Tok
         throw error;
     }
 };
+
+
+export const logOutRequest = async (): Promise<TokenResponse> => {
+    try {
+
+
+        const response = await api.post<TokenResponse>("/auth/logout");
+
+        if (response.status !== 200 && response.status !== 201) {
+            throw new Error(`Error en login: ${response.status} ${response.statusText}`);
+        }
+
+        console.log("Login exitoso:", response.data);
+
+        const tokenResponse = response.data as TokenResponse;
+        setAccessToken(tokenResponse.access_token);
+        return tokenResponse;
+    } catch (error) {
+        console.error("Error al realizar login:", error);
+        throw error;
+    }
+};
