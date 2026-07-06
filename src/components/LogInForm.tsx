@@ -35,17 +35,17 @@ function LogInForm({ onClick }: LogInRegisterProps) {
         setError('');
 
         loginRequest(logData.data.username, logData.data.password).then((response) => {
-           
+
 
             const decodedToken = jwtDecode<TokenPayload>(response.access_token);
-            localStorage.setItem("UserRoleRufyanWS",  decodedToken.role);
+            localStorage.setItem("UserRoleRufyanWS", decodedToken.role);
             console.log("Token decodificado:", decodedToken);
             console.log("Rol del usuario:", decodedToken.role);
 
             // Verificar si es admin
             if (decodedToken.role === 'ROLE_ADMIN') {
                 console.log("Usuario es admin, redirigiendo...");
-                navigate("/admin", { replace: true });
+                navigate("/", { replace: true });
             } else {
                 setError("Acceso denegado: Solo administradores pueden acceder.");
             }
