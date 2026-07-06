@@ -14,6 +14,8 @@ import RegisterForm from "./RegisterForm";
 import Logo from "./Logo";
 import { personalUserRequest } from "../pages/UserPanelPage/personalUserRequest";
 import { userDTO } from "../types/typesIndex";
+import { clearAccessToken, getAccessToken } from "../pages/ControlPanel/authStore";
+import { logOutRequest } from "../pages/ControlPanel/UseAuth";
 function Header() {
     const [activeMenu, setActiveMenu] = useState<boolean>(false);
     const navList = useRef<HTMLDivElement>(null);
@@ -108,6 +110,41 @@ function Header() {
             document.removeEventListener("click", handler);
         }
     }, [activeMenu])
+
+    const logOutClick = () => {
+        logOutRequest().then(() => {
+
+            setTimeout(() => {
+                window.location.reload();
+            }, 800);
+
+            clearAccessToken();
+        }).catch;
+
+    }
+
+    const noLoggedButtons = <div className="absolute top-8 right-[7%]  sm:right-12">
+        <span className="hover:text-blue-900 hover:underline hover:cursor-pointer"
+            onClick={logInClick}>Log in
+        </span>/
+        <span
+            className="hover:text-blue-900 hover:underline hover:cursor-pointer"
+            onClick={registerClick}>
+            register
+        </span>
+    </div>;
+    let hasAccesToken = false;
+
+    const token = getAccessToken();
+    if (token) {
+        hasAccesToken = true;
+    }
+
+    const loggedButton = <div className="absolute top-8 right-[7%]  sm:right-12">
+        <span className="hover:text-blue-900 hover:underline hover:cursor-pointer"
+            onClick={logOutClick}>Log out
+        </span>        </div>;
+
     return <div className="flex flex-row   items-end 2xl:gap-32 xl:gap-16 lg:gap-8     relative h-32 min-h-36">
         <div className="w-1/12 h-full min-w-64 min-h-24"  >
             <Logo to="/" />
@@ -129,16 +166,9 @@ function Header() {
         <div ref={navList} onClick={changeMenuState} className="menuBurguerContenedor hidden max-md:block absolute z-20 " >
             <BurguerMenu activeMenu={activeMenu} />
         </div>
-        <div className="absolute top-8 right-[7%]  sm:right-12">
-            <span className="hover:text-blue-900 hover:underline hover:cursor-pointer"
-                onClick={logInClick}>Log in
-            </span>/
-            <span
-                className="hover:text-blue-900 hover:underline hover:cursor-pointer"
-                onClick={registerClick}>
-                register
-            </span>
-        </div>
+        {
+            hasAccesToken ? loggedButton : noLoggedButtons
+        }
         <div className="flex flex-row items-center absolute max-md:left-72 top-2 right-64   gap-2  ">
             <a target="_blank"
                 href="https://www.instagram.com/rufyan_silva?igsh=MTBxc3BtazAxc2dwdg==">
