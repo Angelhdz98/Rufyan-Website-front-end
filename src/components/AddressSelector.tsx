@@ -1,11 +1,13 @@
-import { UserAddress } from "../types/typesIndex";
+
+import { AddressDomain } from "../types/typesIndex";
 import AddressCheck from "./AddressCheck"
 import Button from "./Button";
 
+
 interface AddressSelectorProps  {
-  userAddresses: UserAddress[];
-  selectedAddress:UserAddress;
-  onSelectAddress: (address:UserAddress)=>void;
+  userAddresses: AddressDomain[];
+  selectedAddress:AddressDomain;
+  onSelectAddress: (address:AddressDomain)=>void;
   confirmAddress:() => void
   //onAddAddress:() => void;  
   
@@ -16,9 +18,9 @@ function AddresSelector( addressSelectorProps:AddressSelectorProps){
     //const addressNumber=2;
     
     const addressChecks =addressSelectorProps.userAddresses.map((address)=>{
-      return  <AddressCheck address={address} onClick={()=> addressSelectorProps.onSelectAddress(address)} key={address.addressLine1} 
-      selected={addressSelectorProps.selectedAddress.addressLine1 == address.addressLine1 &&
-        addressSelectorProps.selectedAddress.neighborhood == address.neighborhood &&
+      return  <AddressCheck address={address} onClick={()=> addressSelectorProps.onSelectAddress(address)} key={address.street } 
+      selected={addressSelectorProps.selectedAddress.street == address.street &&
+        addressSelectorProps.selectedAddress.city == address.city &&
         addressSelectorProps.selectedAddress.country == address.country
       } />
     }) 

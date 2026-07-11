@@ -3,206 +3,221 @@ import { MdCancelPresentation } from "react-icons/md";
 import Button from "../../components/Button";
 import { Fragment } from "react/jsx-runtime";
 import FormInput from "../../components/FormInput";
-import { useEffect, useState } from "react";
-import { UpdateUserDTO, UserEntityDTO2State } from "../../types/typesIndex";
-import IDInfo from "./IDInfo"
+import { useContext, useEffect, useState } from "react";
+import { UpdateUserDTO } from "../../types/typesIndex";
+import IDInfo from "./IDInfo";
 import { personalUserRequest } from "./personalUserRequest";
 import { useUserUpdate } from "../../components/useUserRegister";
-
 import { userInfoContext } from "../ControlPanel/useUserInfoContext";
 
-//this component will change between showing the info and editing the info
-
-
-
-
 function UserInfo() {
+    const userContext = useContext(userInfoContext);
 
-    const [userDataForm, setUserDataForm] = useState<UserEntityDTO2State>
-        ({
-            id: 1,
-            username: "",
-            email: "",
-            firstName: "",
-            secondName: "",
-            firstLastname: "",
-            secondLastname: "",
-            birthDate: new Date()
-        });
 
     const [isEditing, setIsEditing] = useState(false);
+
+    const formattedDate = userContext?.userInfo.birthDate instanceof Date
+        ? userContext.userInfo.birthDate.toISOString().split("T")[0]
+        : "";
+
     useEffect(() => {
+        if (!userContext) return;
 
-        personalUserRequest().then((user) => {
-            setUserDataForm((prev) => {
-                return {
-                    ...prev, email: user.email,
+        personalUserRequest()
+            .then((user) => {
+                userContext.setUserInfo((prev) => ({
+                    ...prev,
+                    email: user.email,
                     firstName: user.fullName.firstName,
-
-                    secondName: user.fullName.secondName ? user.fullName.secondName : "",
-
+                    secondName: user.fullName.secondName ?? "",
                     firstLastname: user.fullName.firstLastname,
                     secondLastname: user.fullName.secondLastname,
-                    birthDate: new Date(formattedDate),
-                    username:user.username
-
-                };
+                    birthDate: user.birthDate?.birthdate ? new Date(user.birthDate.birthdate) : prev.birthDate,
+                    username: user.username,
+                }));
             })
-        }).catch((error: Error) => {
-            alert("Fallo al solitar info del usuario: " + error.message);
-        })
-
+            .catch((error: Error) => {
+                alert("Fallo al solicitar info del usuario: " + error.message);
+            });
     }, []);
-
-    //let updatedUser: UserEntityDTO2State | undefined;
 
     const changeInputHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { value, name, type } = e.target;
         let parsedValue: number | boolean | Date | string = value;
+
         if (type === "number") {
-            parsedValue = parseInt(value);
+            parsedValue = parseInt(value, 10);
         } else if (type === "date") {
-            //const paintingDetails = props.productDetails as PaintingDomainDetails;
             const possibleDate = new Date(value);
-            // Validar si la fecha es válida
-            if (!isNaN(possibleDate.getTime())) {
-                parsedValue = possibleDate;
-            } else {
-                // Si la fecha no es válida, mantener la fecha anterior
-                parsedValue = userDataForm.birthDate;
-            }
+            parsedValue = !Number.isNaN(possibleDate.getTime()) ? possibleDate : userContext?.userInfo.birthDate ?? new Date();
         } else if (type === "checkbox") {
             parsedValue = (e.target as HTMLInputElement).checked;
         }
 
+        if (!userContext) return;
 
-        setUserDataForm({ ...userDataForm, [name]: parsedValue });
-    }
+        userContext.setUserInfo({
+            ...userContext.userInfo,
+            [name]: parsedValue,
+        } as typeof userContext.userInfo);
+    };
 
-    const formattedDate = userDataForm.birthDate instanceof Date ?
-        userDataForm.birthDate.toISOString().split("T")[0] :
-        "";
-    console.log("La fecha en formato es: " + formattedDate);
     const handleUserInfoUpdate = () => {
-        const infoToSend: UpdateUserDTO = { id: userDataForm.id, birthDate: userDataForm.birthDate, fullName: { firstName: userDataForm.firstName, secondName: userDataForm.secondName, firstLastname: userDataForm.firstLastname, secondLastname: userDataForm.secondLastname } }
-        useUserUpdate(infoToSend).then((response) => {
-            setUserDataForm((prev) => {
-                return {
-                    ...prev, firstName: response.fullname.firstName,
+        if (!userContext) return;
 
-                };
-            })
+        const infoToSend: UpdateUserDTO = {
+            id: userContext.userInfo.id,
+            birthDate: userContext.userInfo.birthDate,
+            fullName: {
+                firstName: userContext.userInfo.firstName,
+                secondName: userContext.userInfo.secondName,
+                firstLastname: userContext.userInfo.firstLastname,
+                secondLastname: userContext.userInfo.secondLastname,
+            },
+        };
+
+        void useUserUpdate(infoToSend).then((response) => {
+            userContext.setUserInfo((prev) => ({
+                ...prev,
+                firstName: response.fullname.firstName,
+            }));
         });
+    };
+
+    if (!userContext) {
+        return <div className="flex flex-col">No hay información de usuario disponible.</div>;
     }
 
-    const editingContent = <Fragment>
-        <span className={" font-bold text-md  text-orange-700"}>
-            Personal Info
-        </span>
-        <div className="flex flex-col">
-            <div className="flex flex-row"><div className=" 1st-row flex flex-row flex-wrap gap-4">
-                <div className="flex flex-col">
-                    <FormInput type="text" name="firstName" onChange={changeInputHandler} value={userDataForm.firstName} className="flex flex-col" labelClassname="text-blue-400 text-sm font-bold ">Name
+    const editingContent = (
+        <Fragment>
+            <span className="font-bold text-md text-orange-700">Personal Info</span>
+            <div className="flex flex-col">
+                <div className="flex flex-row">
+                    <div className="1st-row flex flex-row flex-wrap gap-4">
+                        <div className="flex flex-col">
+                            <FormInput
+                                type="text"
+                                name="firstName"
+                                onChange={changeInputHandler}
+                                value={userContext.userInfo.firstName}
+                                className="flex flex-col"
+                                labelClassname="text-blue-400 text-sm font-bold"
+                            >
+                                Name
+                            </FormInput>
+                        </div>
+                        <div className="flex flex-col">
+                            <FormInput
+                                type="text"
+                                name="secondName"
+                                onChange={changeInputHandler}
+                                value={userContext.userInfo.secondName ? userContext.userInfo.secondName : ""}
+                                className="flex flex-col"
+                                labelClassname="text-blue-400 text-sm font-bold"
+                            >
+                                Second name
+                            </FormInput>
+                        </div>
 
-                    </FormInput>
+                        <div className="flex flex-col">
+                            <FormInput
+                                type="text"
+                                name="firstLastname"
+                                onChange={changeInputHandler}
+                                value={userContext.userInfo.firstLastname}
+                                className="flex flex-col"
+                                labelClassname="text-blue-400 text-sm font-bold"
+                            >
+                                Last name
+                            </FormInput>
+                        </div>
+
+                        <div className="flex flex-col">
+                            <FormInput
+                                type="text"
+                                name="secondLastname"
+                                onChange={changeInputHandler}
+                                value={userContext.userInfo.secondLastname}
+                                className="flex flex-col"
+                                labelClassname="text-blue-400 text-sm font-bold"
+                            >
+                                Second last name
+                            </FormInput>
+                        </div>
+
+                        <div className="flex flex-col">
+                            <FormInput
+                                type="date"
+                                name="birthDate"
+                                onChange={changeInputHandler}
+                                value={formattedDate}
+                                className="flex flex-col"
+                                labelClassname="text-blue-400 text-sm font-bold"
+                            >
+                                Birth date
+                            </FormInput>
+                        </div>
+                    </div>
+
+                    <Button
+                        rounded
+                        primary
+                        className="flex items-center justify-center border my-2 pl-2 pr-2"
+                        onClick={() => setIsEditing(false)}
+                    >
+                        <MdCancelPresentation className="text-xl" />
+                    </Button>
                 </div>
-                <div className="flex flex-col">
-                    <FormInput type="text" name="secondName" onChange={changeInputHandler} value={userDataForm.secondName ? userDataForm.secondName : ""} className="flex flex-col" labelClassname="text-blue-400 text-sm font-bold ">Second name
 
-                    </FormInput>
-                </div>
-
-                <div className="flex flex-col ">
-                    <FormInput type="text" name="firstLastname" onChange={changeInputHandler} value={userDataForm.firstLastname} className=" flex flex-col" labelClassname={`text-blue-400 text-sm font-bold `}>
-                        Last name
-                    </FormInput>
-                </div>
-
-                <div className="flex flex-col">
-                    <FormInput type="text" name="secondLastname" onChange={changeInputHandler} value={userDataForm.secondLastname} className="flex flex-col" labelClassname="text-blue-400 text-sm font-bold ">Second last name
-
-                    </FormInput>
-                </div>
-
-
-                <div className="flex flex-col ">
-                    <FormInput type="date" name="birthDate" onChange={changeInputHandler} value={formattedDate} className=" flex flex-col" labelClassname={`text-blue-400 text-sm font-bold `}>Birth date</FormInput>
-                </div>
-
-                <div className="edit-icon-div  ">
-
-
-                </div>
-
-
-
-
-
-
-            </div>
-
-                <Button rounded primary
-                    className="flex items-center justify-center border my-2 pl-2 pr-2 translate-x-  " onClick={() => setIsEditing(false)}
-                >
-                    <MdCancelPresentation className="text-xl" />
+                <Button rounded success className="w-fit p-1 m-4" onClick={handleUserInfoUpdate}>
+                    Ok
                 </Button>
-
             </div>
 
-            <Button rounded success className="w-fit p-1 m-4"
-                onClick={handleUserInfoUpdate}
-            >Ok</Button>
+            <div className="w-full border-b-2"></div>
+        </Fragment>
+    );
 
-        </div>
+    const viewContent = (
+        <Fragment>
+            <span className="font-bold text-md text-orange-700">Personal Info</span>
+            <div className="flex flex-row gap-4">
+                <div className="flex flex-col">
+                    <span className="text-blue-400 text-sm">Nombre(s)</span>
+                    <span>
+                        {userContext.userInfo.firstName} {userContext.userInfo.secondName ? userContext.userInfo.secondName : ""}
+                    </span>
+                </div>
 
-        <div className="w-full border-b-2"></div>
-
-    </Fragment>
-
-
-    const viewContent = <Fragment>   <span className={" font-bold text-md  text-orange-700"}>
-        Personal Info
-    </span>
-        <div className="flex flex-row gap-4">
-            <div className="flex flex-col ">
-                <span className="text-blue-400 text-sm">Nombre(s)</span>
-                <span> {userDataForm.firstName} {userDataForm.secondName ? userDataForm.secondName : ""} </span>
+                <div className="flex flex-col">
+                    <span className="text-blue-400 text-sm">Apellido(s)</span>
+                    <span>
+                        {userContext.userInfo.firstLastname} {userContext.userInfo.secondLastname ? userContext.userInfo.secondLastname : ""}
+                    </span>
+                </div>
+                <div className="flex flex-col">
+                    <span className="text-blue-400 text-sm">Fecha de nacimiento</span>
+                    <span>{formattedDate}</span>
+                </div>
+                <div className="edit-icon-div">
+                    <Button
+                        rounded
+                        primary
+                        className="flex items-center justify-center border my-2 pl-2 pr-2"
+                        onClick={() => setIsEditing(true)}
+                    >
+                        <FaEdit className="text-xl" />
+                    </Button>
+                </div>
             </div>
+            <div className="w-full border-b-2"></div>
+        </Fragment>
+    );
 
-            <div className="flex flex-col ">
-                <span className="text-blue-400 text-sm">Apellido(s)</span>
-                <span> {userDataForm.firstLastname} {userDataForm.secondLastname ? userDataForm.secondLastname : ""}</span>
-            </div>
-            <div className="flex flex-col ">
-                <span className="text-blue-400 text-sm">Fecha de nacimiento</span>
-                <span> {formattedDate} </span>
-            </div>
-            <div className="edit-icon-div  ">
-                <Button rounded primary
-                    className="flex items-center justify-center border my-2 pl-2 pr-2 translate-x-  "
-                    onClick={() => setIsEditing(true)}
-                >
-                    <FaEdit className="text-xl" />
-                </Button>
+    const content = isEditing ? editingContent : viewContent;
 
-            </div>
-        </div>
-        <div className="w-full border-b-2"></div></Fragment>;
-    let content = isEditing ? editingContent : viewContent;
-
-
-
-
-
-
-    return <div className="flex flex-col ">
-        <userInfoContext.Provider value={{ userInfo: userDataForm, setUserInfo: setUserDataForm }}>{content}
-       
-        <IDInfo />
-         </userInfoContext.Provider>
-    </div>
-};
-
+    return <div className="flex flex-col">{content}<IDInfo /></div>;
+}
 
 export default UserInfo;
 

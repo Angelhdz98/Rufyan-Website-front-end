@@ -1,6 +1,7 @@
-import { userDTO } from "../../types/typesIndex";
+import { AddAddressCommand, userDTO } from "../../types/typesIndex";
 import { api } from "../ControlPanel/axios";
-
+import { AddressDomain } from "../../types/typesIndex";
+//import { useNavigate } from "react-router-dom";
 
 
 export interface updatePasswordCommand {
@@ -11,6 +12,7 @@ export interface updatePasswordCommand {
 
 }
 
+//const navigate = useNavigate();
 
 export const personalUserRequest = async () => {
 
@@ -139,4 +141,59 @@ export const updateUserPasswordRequest = async (command: updatePasswordCommand) 
     }
 
 
+}
+
+export const getUserAddressdResquest = async (): Promise<AddressDomain[]> => {
+    try {
+        const response = await api.get("/user-address");
+
+        if (response.status !== 200 && response.status !== 201) {
+            throw new Error(`Error: ${response.statusText}`);
+        }
+
+        console.log("respuesta recibida de dirección del usuario: ", JSON.stringify(response.data));
+
+        const data = response.data as AddressDomain[];
+        return data;
+    } catch (error) {
+        console.error("Error al obtener lso domicilios registrados del usuario:", error);
+        throw error;
+    }
+}
+
+export const addUserAddressdResquest = async (command: AddAddressCommand): Promise<AddressDomain[]> => {
+    try {
+        const response = await api.post("/user-address",  command);
+
+        if (response.status !== 200 && response.status !== 201) {
+            throw new Error(`Error: ${response.statusText}`);
+        }
+
+        console.log("respuesta recibida agregar el usuario: ", JSON.stringify(response.data));
+
+        const data = response.data as AddressDomain[];
+        return data;
+    } catch (error) {
+        console.error("Error al agregar el domicilio :", error);
+        throw error;
+    }
+}
+
+export const deleteUserAddressdResquest = async (addressId: number): Promise<void> => {
+    try {
+        const response = await api.delete("/user-address/" + addressId);
+
+        if (response.status !== 200 && response.status !== 201) {
+            throw new Error(`Error: ${response.statusText}`);
+        }
+
+        console.log("respuesta recibida al eliminar el usuario: ", JSON.stringify(response.data));
+        alert("se ha eliminado la dirección correctamente");
+        //navigate("/user-panel");
+
+
+    } catch (error) {
+        console.error("Error al agregar el domicilio :", error);
+        throw error;
+    }
 }
