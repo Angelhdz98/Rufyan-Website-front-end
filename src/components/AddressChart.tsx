@@ -1,11 +1,12 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import AddressInfo from "./AddressInfo";
-import AddressButtons from "./AddressButtons";
 import AddressForm from "./AddressForm";
 import AddresSelector from "./AddressSelector";
-import { UserAddress } from "../types/typesIndex";
+import { AddAddressCommand, AddressDomain } from "../types/typesIndex";
+import { addUserAddressdResquest, getUserAddressdResquest } from "../pages/UserPanelPage/personalUserRequest";
+import { UserAddresInfoContext } from "./useUserAddresInfoContext";
 
-
+/*
 export const addressesSample: UserAddress[] = [{
   addressLine1: "paseo de la loma bonita",
   city: "Guadalajara",
@@ -29,12 +30,26 @@ export const addressesSample: UserAddress[] = [{
   postalCode: "45180",
   country: "México",
   neighborhood: "Tabachines"
-}];
+}];*/
+
+
+
 //{isEditing, isInForm,changeIsEditing, changeIsInForm}:{isEditing:boolean, changeIsEditing:(value: boolean)=>void, isInForm:boolean,changeIsInForm:(value: boolean)=>void   }
 
-function AddressChart({ isInForm, changeIsInForm }: { isInForm: boolean, changeIsInForm: (value: boolean) => void }) {
-  const [isEditing, setIsEditing] = useState(false);
+function AddressChart({ changeIsInForm }: { isInForm: boolean, changeIsInForm: (value: boolean) => void }) {
+  const [_, setIsEditing] = useState(false);
+  const [userAddresses, setUserAddresses] = useState<AddressDomain[]>([]);
+  useEffect(() => {
+    getUserAddressdResquest().then((response) => {
 
+      if (response.length == 0) {
+        alert("el usuario no ha regitrado un domicilio");
+      }
+      setUserAddresses(response);
+    }).catch((error) => {
+      alert("no se pudieron obtener los domicilios:  " + error);
+    })
+  }, []);
 
   const changeIsEditing = (value: boolean) => {
     setIsEditing(value);
@@ -45,16 +60,31 @@ function AddressChart({ isInForm, changeIsInForm }: { isInForm: boolean, changeI
 
   // addresses will be filled by a HTTP request limit of 
 
-  const [addressForm, setAddressForm] = useState<UserAddress>({
-    addressLine1: ""
-    , state: "",
-    postalCode: "",
+  const [addressForm, setAddressForm] = useState<AddAddressCommand>({
+    userId: 0,
+    streetName: "",
+    extNumber: 0,
+    intNumber: 0,
+    neighborhood: "",
+    city: "",
+    state: "",
+    zipCode: "",
     country: "",
-    neighborhood: ""
+    isDefault: true,
+
   });
 
+
   const [addressComponent, setAddressComponent] = useState("info");
-  const [selectedAddress, setSelectedAddress] = useState(addressesSample[1]);
+  const [selectedAddress, setSelectedAddress] = useState<AddressDomain>({
+    id: 0,
+    userId: 0,
+    street: "",
+    city: "",
+    country: "",
+    zipCode: "",
+    isDefault: false
+  });
 
 
 
@@ -62,33 +92,45 @@ function AddressChart({ isInForm, changeIsInForm }: { isInForm: boolean, changeI
     const { name, value } = e.target;
     setAddressForm({ ...addressForm, [name]: value });
   };
+  /*
+    const onAddressEdit = (e: React.FormEvent) => {
+      e.preventDefault();
+      console.log("edit Request done");
+  
+  
+    }
+      */
 
-  const onAddressEdit = (e: React.FormEvent) => {
+  const addAddressHandler = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("edit Request done");
+    //setAddressComponent("add");
 
-  }
-
-  const addAddressHandler = () => {
-    setAddressComponent("add");
+    addUserAddressdResquest(addressForm).then((response)=>{
+     alert("respuesta recibida: "+ JSON.stringify(response) );
+    });
     console.log("component: " + addressComponent);
   };
 
   const onEditAddressHandler = () => {
-    if (isEditing) {
-      setAddressForm(selectedAddress);
+    /*if (isEditing) {
+      //Click on delete
+      deleteUserAddressdResquest(selectedAddress.id)
       changeIsInForm(true),
         setAddressComponent("form");
 
+    } else {*/
+    if (userAddresses.length == 0) {
+      setAddressComponent("form");
     } else {
       setAddressComponent("edit");
-      changeIsEditing(true);
       console.log("component: " + addressComponent);
     }
+
+    // }
   };
 
 
-  const selectedAddressHandler = (address: UserAddress) => {
+  const selectedAddressHandler = (address: AddressDomain) => {
     setSelectedAddress(address);
 
   }
@@ -102,13 +144,7 @@ function AddressChart({ isInForm, changeIsInForm }: { isInForm: boolean, changeI
     setAddressComponent("info");
     changeIsInForm(false);
     changeIsEditing(false);
-    setAddressForm({
-      addressLine1: ""
-      , state: "",
-      postalCode: "",
-      country: "",
-      neighborhood: ""
-    });
+
   }
   /*
   const addressSelectHandler = () =>{
@@ -118,40 +154,46 @@ function AddressChart({ isInForm, changeIsInForm }: { isInForm: boolean, changeI
 
 
 
-  let content = <AddressInfo address={selectedAddress} />;
+  let content = <AddressInfo address={selectedAddress} changeToEdit={onEditAddressHandler} />;
 
   if (addressComponent == "info") {
-    content = <AddressInfo address={selectedAddress} />
+    content = <AddressInfo address={selectedAddress} changeToEdit={onEditAddressHandler} />
   } else if (addressComponent == "edit") {
     content = <AddresSelector onSelectAddress={selectedAddressHandler}
-      userAddresses={addressesSample}
+      userAddresses={userAddresses}
       selectedAddress={selectedAddress}
       confirmAddress={confirmAddress} />
     //
   } else if (addressComponent == "form") {
-    content = <AddressForm addressForm={addressForm} handleChange={addressFormChange} handleSubmit={onAddressEdit}
+    content = <AddressForm addressForm={addressForm} handleChange={addressFormChange} handleSubmit={addAddressHandler}
       handleCancel={cancelledHandler} />
   }
   else if (addressComponent == "change") {
     content = <AddresSelector
       onSelectAddress={selectedAddressHandler}
-      userAddresses={addressesSample}
+      userAddresses={userAddresses}
       selectedAddress={selectedAddress}
       confirmAddress={confirmAddress}
     />
   }
 
-  else { content = <AddressInfo address={selectedAddress} /> }
+  else { content = <AddressInfo address={selectedAddress} changeToEdit={onEditAddressHandler} /> }
 
 
   return <div className="flex flex-col">
-    {content}
-    <AddressButtons onAddAddress={addAddressHandler}
-      onSelectAddress={selectedAddressHandler}
-      onEditAddress={onEditAddressHandler}
-      className={isInForm ? "hidden" : " "}
-      isEditing={isEditing} />
+    <UserAddresInfoContext.Provider value={{
+      userAddresses: {
+        addresses: userAddresses,
+        setUserAddrreses: setUserAddresses
+      },
+      userAddressForm: {
+        addressForm: addressForm,
+        setAddressForm: setAddressForm
+      }
+    }}>
+      {content}
 
+    </UserAddresInfoContext.Provider>
   </div>
 
 
