@@ -1,10 +1,10 @@
 import React from "react";
 import Checker from "./Checker";
-import { UserAddress } from "../types/typesIndex";
+import { AddressDomain } from "../types/typesIndex";
 
 export interface AddresCheckProps extends React.HTMLAttributes<HTMLDivElement>{
     selected:boolean
-    address: UserAddress
+    address: AddressDomain
 }
 
 function AddressCheck(props: AddresCheckProps){
@@ -14,7 +14,7 @@ function AddressCheck(props: AddresCheckProps){
      <Checker selected={props.selected}  /> 
     </div>
     <div className="saved-addres-info">
-        <span>{props.address.addressLine1+ " - "+ props.address.neighborhood+ ", "+  (props.address.city? props.address.city + ", ":"")+ props.address.state+", " + props.address.country } </span>
+        <span>{props.address.street+ " - "+ ", "+  (props.address.city? props.address.city + ", ":"")  + props.address.country } </span>
     </div>
     </div>
 }
