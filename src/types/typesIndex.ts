@@ -10,7 +10,7 @@ export interface User {
   firstName: string;
   lastName: string;
   birthDate: string;// wehen the API got readry will be changed for a object to control dates 
-  addresses?: UserAddress[]
+  //addresses?: }[]
 }
 // we can change the normal user For a DTO user so it will just have the needed values
 export interface BirthDate {
@@ -31,6 +31,8 @@ export interface UpdateUserDTO {
   birthDate: Date;
 }
 
+
+
 export interface ImageProduct {
   id: number;
   productName?: string;
@@ -47,15 +49,29 @@ export interface Image {
   url: string;
 }
 
-export interface UserAddress {
-  addressLine1: string;
-  addressLine2?: string;
-  state: string;
+export interface AddAddressCommand {
+  userId: number;
+  streetName: string;
+  extNumber:number;
+  intNumber:number;
   neighborhood: string;
-  city?: string;
-  postalCode: string;
+  city: string;
+  state: string;
+  zipCode: string;
   country: string;
+  isDefault:boolean;
 }
+
+export interface AddressDomain {
+  id: number,
+  userId: number,
+  street: string,
+  city: string,
+  zipCode: string,
+  country: string,
+  isDefault: boolean,
+}
+
 
 export interface ProductCategory {
   id: number;
