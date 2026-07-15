@@ -163,7 +163,7 @@ export const getUserAddressdResquest = async (): Promise<AddressDomain[]> => {
 
 export const addUserAddressdResquest = async (command: AddAddressCommand): Promise<AddressDomain[]> => {
     try {
-        const response = await api.post("/user-address",  command);
+        const response = await api.post("/user-address", command);
 
         if (response.status !== 200 && response.status !== 201) {
             throw new Error(`Error: ${response.statusText}`);
@@ -187,7 +187,7 @@ export const deleteUserAddressdResquest = async (addressId: number): Promise<voi
             throw new Error(`Error: ${response.statusText}`);
         }
 
-        console.log("respuesta recibida al eliminar el usuario: ", JSON.stringify(response.data));
+        console.log("respuesta recibida al eliminar la dirección del el usuario: ", JSON.stringify(response.data));
         alert("se ha eliminado la dirección correctamente");
         //navigate("/user-panel");
 
