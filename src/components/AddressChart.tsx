@@ -46,6 +46,10 @@ function AddressChart({ changeIsInForm }: { isInForm: boolean, changeIsInForm: (
         alert("el usuario no ha regitrado un domicilio");
       }
       setUserAddresses(response);
+      if (response.length > 0) {
+        setSelectedAddress(response[0])
+      }
+
     }).catch((error) => {
       alert("no se pudieron obtener los domicilios:  " + error);
     })
@@ -105,8 +109,8 @@ function AddressChart({ changeIsInForm }: { isInForm: boolean, changeIsInForm: (
     e.preventDefault();
     //setAddressComponent("add");
 
-    addUserAddressdResquest(addressForm).then((response)=>{
-     alert("respuesta recibida: "+ JSON.stringify(response) );
+    addUserAddressdResquest(addressForm).then((response) => {
+      alert("respuesta recibida: " + JSON.stringify(response));
     });
     console.log("component: " + addressComponent);
   };
@@ -128,6 +132,7 @@ function AddressChart({ changeIsInForm }: { isInForm: boolean, changeIsInForm: (
 
     // }
   };
+
 
 
   const selectedAddressHandler = (address: AddressDomain) => {
@@ -154,12 +159,12 @@ function AddressChart({ changeIsInForm }: { isInForm: boolean, changeIsInForm: (
 
 
 
-  let content = <AddressInfo address={selectedAddress} changeToEdit={onEditAddressHandler} />;
+  let content = <AddressInfo  address={selectedAddress} changeToEdit={onEditAddressHandler} />;
 
   if (addressComponent == "info") {
     content = <AddressInfo address={selectedAddress} changeToEdit={onEditAddressHandler} />
   } else if (addressComponent == "edit") {
-    content = <AddresSelector onSelectAddress={selectedAddressHandler}
+    content = <AddresSelector  onChangeAddresComponent={setAddressComponent} onSelectAddress={selectedAddressHandler}
       userAddresses={userAddresses}
       selectedAddress={selectedAddress}
       confirmAddress={confirmAddress} />
@@ -169,7 +174,7 @@ function AddressChart({ changeIsInForm }: { isInForm: boolean, changeIsInForm: (
       handleCancel={cancelledHandler} />
   }
   else if (addressComponent == "change") {
-    content = <AddresSelector
+    content = <AddresSelector onChangeAddresComponent={setAddressComponent}
       onSelectAddress={selectedAddressHandler}
       userAddresses={userAddresses}
       selectedAddress={selectedAddress}

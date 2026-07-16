@@ -52,14 +52,14 @@ export interface Image {
 export interface AddAddressCommand {
   userId: number;
   streetName: string;
-  extNumber:number;
-  intNumber:number;
+  extNumber: number;
+  intNumber: number;
   neighborhood: string;
   city: string;
   state: string;
   zipCode: string;
   country: string;
-  isDefault:boolean;
+  isDefault: boolean;
 }
 
 export interface AddressDomain {
@@ -445,9 +445,19 @@ export interface Hat extends Product {
 
 export interface Banner {
   id: number;
-  link: string;
-  image: Image;
+  imagId: number;
+  goTo: string;
+  imageUrl: string;
+  bannerName: string;
+
 }
+
+export interface AddBannerCommand {
+  goTo: string;
+  bannerName: string;
+}
+
+
 
 export function isPainting(product: Product): product is Painting {
   return 'largo_cm' in product && 'altura_cm' in product;
