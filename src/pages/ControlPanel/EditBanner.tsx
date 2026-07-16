@@ -110,14 +110,7 @@ export function EditBanner() {
         setUploadedFile([]);
         setImagePreview("");
     }
-    let imageVisualization;
-
-    if (imagePreview.length < 1) {
-        imageVisualization = imagePreview;
-    } else {
-
-    }
-
+ 
     const renderedBanners = actualBanners.map((banner) => {
 
         return <div className="w-full h-full" key={banner.id}>
