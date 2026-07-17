@@ -25,7 +25,7 @@ export const addBannerRequest = async (addBannerCommand: AddBannerCommand, image
     const formData = new FormData();
 
     formData.append("imageFile", imageFile);
-    formData.append("addBannerCommand",  new Blob([JSON.stringify(addBannerCommand)], { type: "application/json" }));
+    formData.append("addBannerCommand", new Blob([JSON.stringify(addBannerCommand)], { type: "application/json" }));
 
     // new Blob([JSON.stringify(addBannerCommand)], { type: "application/json" } )
 
@@ -38,11 +38,11 @@ export const addBannerRequest = async (addBannerCommand: AddBannerCommand, image
 }
 
 
-export const deleteBannerRequest = async (bannerId: number)=>{
+export const deleteBannerRequest = async (bannerId: number) => {
 
-    const response = await api.delete("/banners/"+bannerId);
+    const response = await api.delete("/banners/" + bannerId);
 
-    if(response.status !==200 && response.status !==201){
+    if (response.status !== 200 && response.status !== 201) {
         throw new Error(`Error: ${response.statusText}`);
     }
 
