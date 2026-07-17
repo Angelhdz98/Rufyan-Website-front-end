@@ -5,7 +5,7 @@ import Button from "../../components/Button";
 import { IoNavigateCircleOutline } from "react-icons/io5";
 import { FaTrashAlt } from "react-icons/fa";
 import { ImageUploader } from "../../components/ImageUploader";
-import { addBannerRequest, getBannersRequest } from "./AdminRequests";
+import { addBannerRequest, deleteBannerRequest, getBannersRequest } from "./AdminRequests";
 
 
 export function EditBanner() {
@@ -34,9 +34,16 @@ export function EditBanner() {
 
     const deleteBanner = (idToDelete: number) => {
 
-        setActualBanners((prev) => {
-            return prev.filter((banner) => banner.id !== idToDelete)
-        });
+        deleteBannerRequest(idToDelete).then(() => {
+            setActualBanners((prev) => {
+                return prev.filter((banner) => banner.id !== idToDelete)
+            });
+            alert("Se eliminó correctamente el banner")
+        }).catch((error) => {
+            alert("Hubo un error eliminando el banner: \n " + error);
+        })
+
+
     }
 
 
@@ -110,7 +117,7 @@ export function EditBanner() {
         setUploadedFile([]);
         setImagePreview("");
     }
- 
+
     const renderedBanners = actualBanners.map((banner) => {
 
         return <div className="w-full h-full" key={banner.id}>
@@ -120,7 +127,9 @@ export function EditBanner() {
                     <div className="absolute flex flex-row gap-2 top-1/2 right-1/2 translate-x-1/2 -translate-y-1/2 items-center content-center">
                         <a target={"blank"} href={banner.goTo} ><IoNavigateCircleOutline className="text-3xl cursor-pointer" /> </a>
 
-                        <FaTrashAlt className="text-3xl cursor-pointer" onClick={() => deleteBanner(banner.id)} />
+                        <FaTrashAlt className="text-3xl cursor-pointer" onClick={() => {
+                            deleteBanner(banner.id)
+                        }} />
                     </div>
                 </div>
 
