@@ -3,12 +3,12 @@ import { CiNoWaitingSign } from "react-icons/ci";
 import { IoIosCheckmarkCircle } from "react-icons/io";
 import { useNavigate } from "react-router-dom";
 import obra2 from "../../public/assets/Images/imgObras/obra2.jpg";
-import { Painting, PaintingPricing, PaintingStock, ProductTypeEnum, StockTypeEnum } from "../types/typesIndex";
+import { Painting, PaintingPricing, PaintingStock, ProductDTO, ProductTypeEnum, StockTypeEnum } from "../types/typesIndex";
 import { LikeButton } from "./LikeButton";
 import PaintingPreviewButtonPanel from "./PaintingPreviewButtonPanel";
 
 interface PaintingPreviewProps {
-    paint: Painting;
+    paint: ProductDTO;
 }
 
 const examplePaint: Painting =
@@ -51,8 +51,8 @@ function PaintingPreview({ paint }: PaintingPreviewProps) {
         setOriginalSelected(!originalSelected);
     }
     // cambiar el primer false por paint.original.available 
-    const paintingStock = paint.productStock as PaintingStock;
-    const paintingPricing = paint.productPricing as PaintingPricing;
+    const paintingStock = paint.productStockDTO as PaintingStock;
+    const paintingPricing = paint.productPricingDTO as PaintingPricing;
     const availabilityTag = () => {
 
         return paintingStock.isOriginalAvailable ? <div className="flex">
