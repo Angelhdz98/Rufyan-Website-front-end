@@ -1,5 +1,5 @@
 import NavProduct from "../../components/NavProduct";
-import {  useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import Modal from "../../components/Modal";
 import PaintingLoader from "../../components/PaintingLoader";
 import EditProductForm from "./EditProductForm";
@@ -11,7 +11,7 @@ import mapBackendProductToFrontend from "./ProductBackendMapper";
 //import StockTag from "../../components/StockTag";
 import { ProductEditingContextProp, ProductsEditingContext } from "./useEditProductsContext";
 import { SortOrderEnum, SorterTypeEnum } from "../../components/Sorter";
-import { handleGetPagedProducts } from "../../components/ProductRequests";
+import { handleGetPagedProductsRequest } from "../../components/ProductRequests";
 // Función para mapear la respuesta del backend a la estructura esperada
 
 
@@ -192,7 +192,7 @@ function EditAll() {
 
     useEffect(() => {
         setIsLoading(true);
-        handleGetPagedProducts(sortBy, pageNumber, pageSize, sortOrder).then((products: Page<any>) => {
+        handleGetPagedProductsRequest(sortBy, pageNumber, pageSize, sortOrder).then((products: Page<any>) => {
             console.log(JSON.stringify(products));
             const content = products.content;
             console.log("contenido del pageeeee" + JSON.stringify(content));

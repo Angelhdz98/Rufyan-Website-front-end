@@ -1,6 +1,6 @@
 
 import { api } from "../pages/ControlPanel/axios"
-import { Page, Product, ProductDTO } from "../types/typesIndex";
+import { GetProductsByTypeCommand, Page, Product, ProductDTO } from "../types/typesIndex";
 import { SorterTypeEnum, SortOrderEnum } from "./Sorter";
 import mapBackendProductToFrontend from "../pages/ControlPanel/ProductBackendMapper";
 
@@ -29,7 +29,7 @@ export const requestFavoriteProducts = async () => {
 }
 
 
-export const handleGetPagedProducts = async (
+export const handleGetPagedProductsRequest = async (
     sorterType: SorterTypeEnum,
     pageNumber: number,
     pageSize: number,
@@ -66,7 +66,7 @@ export const handleGetPagedProducts = async (
     }
 };
 
-export const handleGetProductEntityForEditingById = async (productId: number) => {
+export const getProductEntityForEditingByIdRequest = async (productId: number) => {
     try {
 
         const response = await api.get("/admin/find-product-entity-by-id/" + productId, {
@@ -87,7 +87,7 @@ export const handleGetProductEntityForEditingById = async (productId: number) =>
 
 
 
-export const handleDeleteProductById = async (idToDelete: number) => {
+export const deleteProductByIdRequest = async (idToDelete: number) => {
 
 
 
@@ -100,5 +100,35 @@ export const handleDeleteProductById = async (idToDelete: number) => {
 
 
 
+
+}
+
+
+export const getProductByTypeRequest = async (getProductCommand: GetProductsByTypeCommand) => {
+
+
+
+    const response = await api.get("/products/by-type", { params: getProductCommand });
+    if (response.status !== 200 && response.status !== 201) {
+        throw new Error(`Error: ${response.statusText}`);
+    }
+
+    alert("Valor recibido en la petición: " + JSON.stringify(response));
+
+    return response.data as Page<ProductDTO>;
+
+
+
+}
+
+export const getProductByIdRequest = async (id: number) => {
+
+    const response = await api.get("/products/" + id);
+
+    if (response.status !== 200 && response.status !== 201) {
+        throw new Error(`Error: ${response.statusText}`);
+    }
+
+    return response.data as ProductDTO;
 
 }
