@@ -6,7 +6,7 @@ import { useProductForm } from "./useProducForm";
 import CurrentImagesEditor from "./CurrentImagesEditor";
 import { ImageProduct, PaintingPricing, PricingTypeEnum, ProductPricing, SinglePricing, } from "../../types/typesIndex";
 import Modal from "../../components/Modal";
-import { handleDeleteProductById, handleGetProductEntityForEditingById } from "../../components/ProductRequests";
+import { deleteProductByIdRequest, getProductEntityForEditingByIdRequest } from "../../components/ProductRequests";
 
 
 type EditProductFormProps = {
@@ -28,7 +28,7 @@ function EditProductForm(props: EditProductFormProps) {
 
     const { handleChange, toggleIsFavorite, handleProductTypeChange, handleDetailsChange, handleStockChanging, handlePriceChanging, productTypeEnum, commonData, handleUpdateFormSubmit, handleImageUpload, deleteImageUpload, imagePreview, uploadedFiles, setCommonData,
         setSelectedProductId
-        , currentImages, setCurrentImages,  productDomainDetails } = useProductForm();
+        , currentImages, setCurrentImages, productDomainDetails } = useProductForm();
 
 
     const voidJsxElement = <div></div>;
@@ -40,7 +40,7 @@ function EditProductForm(props: EditProductFormProps) {
         //currentImages?setCurrentImages(currentImages): "";
 
 
-        handleGetProductEntityForEditingById(props.productId).then((productData) => {
+        getProductEntityForEditingByIdRequest(props.productId).then((productData) => {
             // Aquí puedes manejar los datos del producto obtenidos
             let pricing: ProductPricing = productData.productPricing as PaintingPricing;
 
@@ -189,7 +189,7 @@ function EditProductForm(props: EditProductFormProps) {
                         Confirmar cambios
                     </Button>
                     <Button danger rounded onClick={() => {
-                        handleDeleteProductById(props.productId).then(() => {
+                        deleteProductByIdRequest(props.productId).then(() => {
                             setModalContent(() => {
                                 return <div>
                                     Producto eliminado correctamente actuliza la pagina

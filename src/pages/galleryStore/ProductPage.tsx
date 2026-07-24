@@ -1,87 +1,97 @@
-import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
+import { useContext, useEffect, useState } from "react";
 import ImageSwiper from "../../components/ImageSwiper";
-import { isPainting } from "../../hooks/isPainting";
-import { AppDispatch, RootState } from "../../store";
-import { fetchProductById, RequestParams } from "../../store/thunks/fetchProductById";
-import { Painting } from "../../types/typesIndex";
 import OriginalSelector from "./OriginalSelector";
+
+import { ProductContext } from "./ProductsContext";
+import { getProductByIdRequest } from "../../components/ProductRequests";
+import { PaintingDomainDetails, PaintingStock, ProductDTO, ProductTypeEnum } from "../../types/typesIndex";
+import { mapProductDTOToProduct } from "../ControlPanel/ProductBackendMapper";
 
 
 
 
 function ProductPage() {
-    const { category, id } = useParams<{ category?: string, id?: string }>();
-    const dispatch = useDispatch<AppDispatch>();
-    const { data, isLoading, error } = useSelector((state: RootState) => state.singleProduct);
 
+    const productContext = useContext(ProductContext); 
 
-    const painting = data[0] as Painting;
+    const [product, setProduct] = useState<ProductDTO|null>(null)
+
+    useEffect(()=>{ 
+        if(productContext && productContext.selectedProductId){
+            productContext.setIsLoading(true); 
+                getProductByIdRequest(productContext.selectedProductId)
+                .then((response)=>{
+                        setProduct(response);
+                })
+                .catch((error)=>{
+                    alert("Hubo un error encontrando la obra con el id: "+ productContext.selectedProductId + "\n error:"+ error); 
+                }).finally(()=>{
+                    productContext.setIsLoading(false);
+                });
+        }
+         
+
+    }, [])
+
+    
 
     const renderedProperties = () => {
 
-        if (isPainting(data[0])) {
+        if (product?.productTypeEnum == ProductTypeEnum.PAINTING) {
+
+            const paintingDomainDetails: PaintingDomainDetails = product.productDetails as PaintingDomainDetails; 
+            const paintingStock: PaintingStock = product.productStockDTO as PaintingStock; 
+
+
             return <div className=" flex flex-col w-full px-4">
                 <div className="flex flex-row">
                     <span className="font-semibold">Medium</span>
-                    <span>{": " + painting.productDomainDetails.medium}</span>
+                    <span>{": " + paintingDomainDetails.medium}</span>
                 </div>
                 <div className="flex flex-row">
                     <span className="font-semibold">Support material </span>
-                    <span>{": " + painting.productDomainDetails.supportMaterial}</span>
+                    <span>{": " + paintingDomainDetails.supportMaterial}</span>
                 </div>
                 <div className="flex flex-row">
                     <span className="font-semibold">Available copies </span>
-                    <span>{": " + painting.productStock.stockCopies}/{painting.productStock.copiesMade}</span>
+                    <span>{": " + paintingStock.stockCopies}/{paintingStock.copiesMade}</span>
                 </div>
                 <div className="flex flex-row">
                     <span className="font-semibold">Measures </span>
-                    <span>{": Height: " + painting.productDomainDetails.alturaCm + "cm Length: " + painting.productDomainDetails.largoCm + "cm"}</span>
+                    <span>{": Height: " + paintingDomainDetails.alturaCm + "cm Length: " + paintingDomainDetails.largoCm + "cm"}</span>
                 </div>
             </div>
         }
         return <div> Is other thing</div>
     }
 
-
-
-    useEffect(() => {
-
-
-        const request: RequestParams = { category: category as string, id: Number(id) };
-        dispatch(fetchProductById(request));
-        console.log("se hace el fetch category: ", category, " id: ", id);
-
-    }, [dispatch]);
-
-    if (isLoading) {
+    if (productContext?.isLoading) {
         return <div>Is loading. . . </div>
     }
 
-    else if (error) {
-        return <div> {error.toString()}</div>
+    else if (productContext?.error) {
+        return <div> {productContext.error}</div>
 
     }
-    console.log("data ", data[0])
-    if (!isLoading && error == null && data[0]) {
+    console.log("data ", productContext?.products[0])
+    if (!productContext?.isLoading && productContext?.error == null && product) {
         return <div className="main-body w-full flex flex-col md:flex-row  md_gap-4 p-4 py-4 h-fit">
             <div className="first-column md:w-4/12 h-fit">
 
 
-                <ImageSwiper product={data[0]} title={data[0].name} />
+                <ImageSwiper product={mapProductDTOToProduct(product)}  title={product.name} />
                 <div className="p-2">
                     <div>
                         <span className="font-semibold">
                             Description:
                         </span>
-                        {" " + data[0].description}
+                        {" " + product.description}
                     </div>
                     <div>
                         <span className="font-semibold">
                             Category:
                         </span>
-                        {" " + data[0].productTypeEnum.toString()}
+                        {" " + product.productTypeEnum.toString()}
                     </div>
                 </div>
 

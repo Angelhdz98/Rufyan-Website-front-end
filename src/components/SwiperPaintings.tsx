@@ -1,26 +1,20 @@
 import {Swiper, SwiperSlide } from "swiper/react";
 import PaintingPreview from "./PaintingPreview";
-import { useDispatch } from "react-redux";
 import {  Pagination, } from "swiper/modules";
-import { Fragment, useEffect } from "react";
-import { AppDispatch, fetchPaintings, RootState } from "../store";
-import { useSelector } from "react-redux";
+import { Fragment, useContext } from "react";
 import Button from "./Button";
 import { useNavigate } from "react-router-dom";
 import PaintingLoader from "./PaintingLoader";
+import { ProductContext } from "../pages/galleryStore/ProductsContext";
 
 
 function SwiperPaintings(){
-const dispatch= useDispatch<AppDispatch>();
-const navigate = useNavigate();
-    const {data ,isLoading, error} = useSelector((state: RootState)=>{
-        return state.paintings;
-    })
-    
-    useEffect(()=>{
-      dispatch(fetchPaintings());
-    },[dispatch])
 
+const navigate = useNavigate();
+
+const productContext = useContext(ProductContext); 
+ 
+    
  
     const goToPaintingCategoryHandler = () =>{
       console.log("viajar a categoría pintura");
@@ -28,23 +22,23 @@ const navigate = useNavigate();
 
 
     }
-  
+    const data = productContext?.products; 
+
     let renderedPaints = <div></div>;
 
-    if(isLoading){
+    if(productContext?.isLoading){
 
       renderedPaints = <Fragment> <PaintingLoader/> <PaintingLoader/> <PaintingLoader/> <PaintingLoader/>  <PaintingLoader/> <PaintingLoader/> <PaintingLoader/> <PaintingLoader/>  </Fragment>    
-    }else if(error){
-      renderedPaints =  <div>Ha ocurrido un error: {error}</div>
+    }else if(productContext?.error ){
+      renderedPaints =  <div>Ha ocurrido un error: {productContext.error}</div>
     }else{
 
     }
 
     
     
-
-    
-     renderedPaints = (
+if(data)
+    { renderedPaints = (
         <Fragment>
           {data.map((paint) => (
             <SwiperSlide key={paint.id} className="drop-shadow-xl">
@@ -53,7 +47,7 @@ const navigate = useNavigate();
           ))}
         </Fragment>
       );
-    
+    }
       
 
  return   <div className="flex flex-col w-full relative">

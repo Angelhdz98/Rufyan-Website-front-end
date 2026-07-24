@@ -3,7 +3,7 @@ import { ProductsEditingContext } from "../pages/ControlPanel/useEditProductsCon
 import CategorySelector from "./CategorySelector";
 import SearchBar from "./SearchBar";
 import Sorter, { SorterTypeEnum, SortOrderEnum } from "./Sorter";
-import { handleGetPagedProducts } from "./ProductRequests";
+import { handleGetPagedProductsRequest } from "./ProductRequests";
 import { Page } from "../types/typesIndex";
 import mapBackendProductToFrontend from "../pages/ControlPanel/ProductBackendMapper";
 import PageSelector from "./PageSelector";
@@ -15,7 +15,7 @@ function NavProduct() {
 
     const sortChange = () => {
 
-        handleGetPagedProducts(
+        handleGetPagedProductsRequest(
             productsContext?.sortType ? productsContext?.sortType : SorterTypeEnum.CREATION_DATE,
             productsContext?.pageNumber ? productsContext?.pageNumber : 0,
             productsContext?.pageSize ? productsContext?.pageSize : 12,

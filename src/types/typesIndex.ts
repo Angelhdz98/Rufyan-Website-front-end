@@ -85,6 +85,13 @@ export enum ProductTypeEnum {
   PRINT = "PRINT",
 
 }
+export interface GetProductsByTypeCommand{
+  productType: ProductTypeEnum;
+  pageNumber: number;
+  pageSize: number;
+  sorterType: string; 
+  sortOrder: string; 
+}
 
 export enum BodyClothingSizeEnum {
   XS = "XS",
