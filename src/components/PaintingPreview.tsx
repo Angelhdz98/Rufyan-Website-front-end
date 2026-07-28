@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { CiNoWaitingSign } from "react-icons/ci";
 import { IoIosCheckmarkCircle } from "react-icons/io";
 import { useNavigate } from "react-router-dom";
@@ -6,6 +6,7 @@ import obra2 from "../../public/assets/Images/imgObras/obra2.jpg";
 import { Painting, PaintingPricing, PaintingStock, ProductDTO, ProductTypeEnum, StockTypeEnum } from "../types/typesIndex";
 import { LikeButton } from "./LikeButton";
 import PaintingPreviewButtonPanel from "./PaintingPreviewButtonPanel";
+import { ProductContext } from "../pages/galleryStore/ProductsContext";
 
 interface PaintingPreviewProps {
     paint: ProductDTO;
@@ -34,6 +35,10 @@ const examplePaint: Painting =
 
 function PaintingPreview({ paint }: PaintingPreviewProps) {
 
+
+    const productContext = useContext(ProductContext);
+
+
     const [originalSelected, setOriginalSelected] = useState(false);
     const navigate = useNavigate();
 
@@ -44,8 +49,13 @@ function PaintingPreview({ paint }: PaintingPreviewProps) {
     //const originalAvailable = true; // momentaneo para pruebas
 
     const handleClick = (id: number) => {
-        console.log("Navegar a obra especifica")
-        navigate(`/store/paintings/${id}`);
+        if(productContext){
+            productContext.setSelectedProductId(id);
+            productContext.setIsLoading(true);
+            navigate(`/store/product/${id}`);
+
+        }
+        
     }
     const toggleOnSelectedHandler = () => {
         setOriginalSelected(!originalSelected);
