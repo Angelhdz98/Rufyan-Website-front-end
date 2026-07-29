@@ -10,6 +10,8 @@ import {
     ProductTypeEnum,
 } from "../../types/typesIndex";
 import { getProductByIdRequest } from "../../components/ProductRequests";
+import ImageSwiper from "../../components/ImageSwiper";
+import { mapProductDTOToProduct } from "../ControlPanel/ProductBackendMapper";
 //import { mapProductDTOToProduct } from "../ControlPanel/ProductBackendMapper";
 
 function ProductPage() {
@@ -88,6 +90,7 @@ function ProductPage() {
 
     return (
         <div className="p-2">
+            <ImageSwiper product={mapProductDTOToProduct(product)} title={product.name}/> 
             <div>
                 <span className="font-semibold">Description:</span>{" "}
                 {product.description}
