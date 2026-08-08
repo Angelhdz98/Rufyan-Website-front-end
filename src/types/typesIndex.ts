@@ -404,6 +404,58 @@ export interface ArtEvent extends Project {
 }
 
 
+
+export interface CartItemDetails {
+    itemQuantity:number
+    productType: ProductTypeEnum
+}
+export interface PaintingItemDetails extends CartItemDetails {
+  isOriginalSelected: boolean; 
+}
+export interface CartItemDTORecord{
+  productName: string; 
+  imageUrl: string;
+  productType: ProductTypeEnum.PAINTING 
+  details: CartItemDetails; 
+
+}
+
+export interface ShoppingCartDTO{
+  cartItemDTOSet: CartItemDTORecord[];
+  subTotalAmount: number;
+}
+
+export enum ClothingSizeEnum{
+XS="xs",
+S="s",
+M="m",
+L= "l",
+XL="xl",  
+XXL="xxl" 
+
+}
+
+export enum ClothingColorEnum{
+  WHITE= "Blanco",
+  BLACK= "Negro",
+  BLUE= "azul ",
+  RED= "rojo",
+  GREEN= "verde"
+
+}
+
+
+export interface ClothingItemDetails extends CartItemDetails{
+  clothingSizeEnum:ClothingSizeEnum;
+  color: ClothingColorEnum;  
+}
+
+export interface StockableProductItemDetails extends CartItemDetails{
+
+}
+
+
+
 export interface CartItemInterface<T extends Product = Product> {
   id: number;
   product: T;
