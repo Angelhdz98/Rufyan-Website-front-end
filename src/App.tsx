@@ -16,9 +16,10 @@ import Cart from "./pages/cartPage/Cart";
 import UserLikes from "./pages/LikedPage/UserLikes";
 import UserPanel from "./pages/UserPanelPage/UserPanel";
 //import PrivateRoute from "./components/PrivateRoute";
-import LogInForm from "./components/LogInForm";
+
 import AddProductForm from "./pages/ControlPanel/AddProductForm";
 import PrivateRoute from "./components/PrivateRoute";
+import AuthSwitch from "./components/AuthSwitch";
 //import { homeLoader } from "./pages/home/homeLoader";
 //import store from "./store";
 
@@ -31,17 +32,14 @@ const homeLoader:LoaderFunction = async () =>{
 const router = createBrowserRouter([
   {
     path: "/login",
-    element: <LogInForm onClick={() => {
-      console.log("no importa!");
-
-    }} />,
+    element: <AuthSwitch  />,
   },
   {
     path: '/',
     element: <Root />,
     children: [
       {
-        //delete this comments to filter
+        //Private Route will work kind Of well in dev 
         element: <PrivateRoute />,
         children: [
           {

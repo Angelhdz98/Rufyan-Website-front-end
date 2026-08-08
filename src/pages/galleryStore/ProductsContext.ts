@@ -10,6 +10,8 @@ export interface ProductContextProp{
     setIsLoading: React.Dispatch<React.SetStateAction<boolean>>
     error: string|null;
     setError: React.Dispatch<React.SetStateAction<string|null>>
+    isOriginalSelected: boolean;
+    setIsOriginalSelected:React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export const ProductContext = createContext<ProductContextProp|null >(null); 

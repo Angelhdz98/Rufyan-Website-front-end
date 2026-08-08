@@ -44,7 +44,7 @@ function ProductPreview({ product, onClick }: ProductPreviewProps) {
             {availabilityTag}
         </div>
         <div className={`text-[#eb4b1b] rounded-md text-3xl absolute z-10 bottom-12 right-2   border bg-white/70  cursor-pointer `} >
-            <LikeButton />
+            <LikeButton productId={product.id} />
         </div>
 
 

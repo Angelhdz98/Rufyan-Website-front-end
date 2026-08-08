@@ -39,30 +39,25 @@ function SwiperSlider(props: SwiperSliderProps) {
         if (selectedIndex < props.images.length - 1) {
 
             setSelectedIndex(selectedIndex + 1);
-            console.log(props.images.length + "  " + selectedIndex);
         } else if (selectedIndex == props.images.length - 1) {
 
             setSelectedIndex(0);
-            console.log("else if activado");
 
         }
         console.log("indice seleccionado por next " + selectedIndex);
     }
     const prevSlide = () => {
         setLoaded(false);
-
         if (selectedIndex == 0) {
             setSelectedIndex(props.images.length - 1);
         } else {
             setSelectedIndex(selectedIndex - 1);
         }
-        console.log("indice seleccionado por prev" + selectedIndex);
 
     }
 
     const loadedHandler = () => {
         setLoaded(true);
-        console.log(" Indice seleccionado tra finalizar la carga " + selectedIndex);
     }
     /*
     const priceTag = <div onClick={()=>SetIsOriginalSelected(!isOriginalSelected)}
@@ -154,7 +149,7 @@ return isPainting(props.product)&& props.product.available_copies > 0 ?
         <StockTag productStock={props.product.productStock} />
 
         <div className={`text-[#eb4b1b] rounded-md text-3xl absolute z-10 bottom-2 right-2   border bg-white/70  cursor-pointer `} >
-            <LikeButton />
+            <LikeButton productId={props.product.id} />
         </div>
 
         {slides}
