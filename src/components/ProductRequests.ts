@@ -113,8 +113,6 @@ export const getProductByTypeRequest = async (getProductCommand: GetProductsByTy
         throw new Error(`Error: ${response.statusText}`);
     }
 
-    alert("Valor recibido en la petición: " + JSON.stringify(response));
-
     return response.data as Page<ProductDTO>;
 
 

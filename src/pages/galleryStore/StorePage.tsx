@@ -24,7 +24,6 @@ function StorePage() {
     getProductByTypeRequest(getPaintingCommand).then((response) => {
       setProducts(response.content);
 
-      alert("respuesta recibida de la petición: " + JSON.stringify(response.content));
     }).catch((error) => {
       setError(error)
       alert("Hubo un problema pidiendo las obras: \n " + error);

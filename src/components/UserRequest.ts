@@ -7,7 +7,6 @@ export const isProductLikedRequest = async (productId: number) => {
     if (response.status !== 200 && response.status !== 201) {
         throw new Error(`Error: ${response.statusText}`);
     }
-    alert("el valor es: " + response.data);
     return response.data as boolean;
 }
 
