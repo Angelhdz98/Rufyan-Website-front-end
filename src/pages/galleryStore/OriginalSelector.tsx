@@ -4,7 +4,7 @@ import Button from "../../components/Button";
 import { PaintingItemDetails, PricingTypeEnum } from "../../types/typesIndex";
 
 import { ProductDTO, ProductTypeEnum } from "../../types/typesIndex";
-import { addCartItemRequest } from "../../components/CartAndBuyRequest";
+import { addCartItemRequest } from "../../components/CartAndBuyRequests";
 import { useParams } from "react-router-dom";
 //import { Painting } from "../../types/typesIndex";
 
