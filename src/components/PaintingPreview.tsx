@@ -49,13 +49,13 @@ function PaintingPreview({ paint }: PaintingPreviewProps) {
     //const originalAvailable = true; // momentaneo para pruebas
 
     const handleClick = (id: number) => {
-        if(productContext){
+        if (productContext) {
             productContext.setSelectedProductId(id);
             productContext.setIsLoading(true);
             navigate(`/store/product/${id}`);
 
         }
-        
+
     }
     const toggleOnSelectedHandler = () => {
         setOriginalSelected(!originalSelected);
@@ -111,7 +111,7 @@ function PaintingPreview({ paint }: PaintingPreviewProps) {
 
         </div>
         <div className={`text-[#eb4b1b] rounded-md text-3xl absolute z-10 bottom-12 right-2   border bg-white/70  cursor-pointer `} >
-            <LikeButton />
+            <LikeButton productId={paint.id} />
         </div>
 
 
