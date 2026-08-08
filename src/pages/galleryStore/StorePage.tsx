@@ -15,6 +15,7 @@ function StorePage() {
   const [selectedProductId, setSelectedProductId] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [isOriginalSelected, setIsOriginalSelected] = useState<boolean>(false);
 
 
   useEffect(() => {
@@ -49,7 +50,7 @@ function StorePage() {
 
     <div className="flex flex-col gap-0 relative">
 
-      <ProductContext.Provider value={{ products, setProducts, selectedProductId, setSelectedProductId, error, isLoading, setError, setIsLoading }}>
+      <ProductContext.Provider value={{ products, setProducts, selectedProductId, setSelectedProductId, error, isLoading, setError, setIsLoading, isOriginalSelected, setIsOriginalSelected }}>
 
         <SwiperPaintings />
         <SwiperProducts />
