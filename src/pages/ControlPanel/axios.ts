@@ -105,10 +105,15 @@ api.interceptors.response.use(
         }
 
         // Manejar otros errores de autenticación (500, 403, etc)
-        if (error.response?.status === 403 || error.response?.status == 401) {
+        if  (error.response?.status == 401) {
             clearAccessToken();
             window.location.href = "/login";
             return Promise.reject(error);
+        }
+
+        if(error.response?.status == 403){
+            alert("petición restringida para tu tipo de usuario ");
+              return Promise.reject(error);
         }
 
         return Promise.reject(error);
