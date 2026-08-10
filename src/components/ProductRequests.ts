@@ -130,3 +130,38 @@ export const getProductByIdRequest = async (id: number) => {
     return response.data as ProductDTO;
 
 }
+
+export const isProductFavoriteByIdRequest = async (productId: number) => {
+
+    const response = await api.get("/products/is-favorite/" + productId);
+
+    if (response.status !== 200 && response.status !== 201) {
+        throw new Error(`Error: ${response.statusText}`);
+    }
+
+    return response.data as boolean;
+
+}
+
+
+export const markProductAsFavoriteRequest = async (productId: number) => {
+
+    const response = await api.put("/products/mark-as-favorite/" + productId);
+
+    if (response.status !== 200 && response.status !== 201) {
+        throw new Error(`Error: ${response.statusText}`);
+    }
+
+    return response.data as boolean;
+}
+
+export const unmarkProductAsFavoriteRequest = async (productId: number) => {
+    const response = await api.put("/products/unmark-as-favorite/" + productId);
+
+    if (response.status !== 200 && response.status !== 201) {
+        throw new Error(`Error: ${response.statusText}`);
+    }
+
+    return response.data as boolean;
+
+}

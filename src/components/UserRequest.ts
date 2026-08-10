@@ -16,7 +16,7 @@ export interface ProductLikedDTO {
 
 export const markAsLikedRequest = async (productId: number) => {
 
-
+    
     const response = await api.post("/like/" + productId);
 
     if (response.status !== 200 && response.status !== 201) {
