@@ -8,7 +8,7 @@ import mapBackendProductToFrontend from "../pages/ControlPanel/ProductBackendMap
 
 
 
-export const requestFavoriteProducts = async () => {
+export const getFavoriteProductsRequest = async () => {
     try {
         const response = await api.get("/products/favorite");
 
@@ -163,5 +163,18 @@ export const unmarkProductAsFavoriteRequest = async (productId: number) => {
     }
 
     return response.data as boolean;
+
+}
+
+
+export const getLikedProducts = async (pageNumber: number) => {
+
+    const response = await api.get("/products-liked/" + pageNumber);
+
+    if (response.status !== 200 && response.status !== 201) {
+        throw new Error(`Error: ${response.statusText}`);
+    }
+
+    return response.data as Page<ProductDTO>;
 
 }

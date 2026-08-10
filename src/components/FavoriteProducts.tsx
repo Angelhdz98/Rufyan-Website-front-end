@@ -5,7 +5,7 @@ import Masonry from "react-masonry-css";
 import { Product } from "../types/typesIndex";
 import { mapProductDTOToProduct } from "../pages/ControlPanel/ProductBackendMapper";
 import PaintingLoader from "./PaintingLoader";
-import { requestFavoriteProducts } from "./ProductRequests";
+import { getFavoriteProductsRequest } from "./ProductRequests";
 
 
 
@@ -18,7 +18,7 @@ function FavoriteProducts() {
   const [clickedPaints, setClickedPaints] = useState<Record<number, boolean>>({});
   useEffect(() => {
     setIsLoading(true);
-    requestFavoriteProducts().then((products) => {
+    getFavoriteProductsRequest().then((products) => {
       console.log("Backend response:", JSON.stringify(products, null, 2));
       const mapedProducts = products.content.map((p) => {
         console.log("ProductDTO before mapping:", JSON.stringify(p, null, 2));
