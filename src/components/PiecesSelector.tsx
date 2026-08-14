@@ -3,19 +3,42 @@ import { FaRegTrashAlt } from "react-icons/fa";
 import { AiFillPlusSquare } from "react-icons/ai";
 import { AiFillMinusSquare } from "react-icons/ai";
 
+import { CartItemDTORecord } from "../types/typesIndex";
+
+
+
 
 export interface PiecesSelecteroProps extends HtmlHTMLAttributes<HTMLDivElement>{
-    
+    cartItem: CartItemDTORecord;
+    pieces: number;
+    removeCartItem: (cartItemId: number) => void;
+    addCartItem: (cartItem: CartItemDTORecord) => void;
+         
 }
 
 function PiecesSelector(props:PiecesSelecteroProps){
 
-    const [pieces, setPieces] = useState(1);
+    const [pieces, setPieces] = useState(props.pieces||1);
+    
     const addAPieceHandler = () =>{
+        setPieces(props.pieces+1);
+
         setPieces(pieces+1);
+        //add CartItem first delete a similar cart item then add the new with updated values 
+        props.addCartItem({...props.cartItem, details:{...props.cartItem.details, itemQuantity: props.cartItem.details.itemQuantity+1}})
+
     }
+
     const restAPieceHandler = () =>{
+        if(pieces==1){
+            props.removeCartItem(props.cartItem.id);
+            return;
+        }
+            
         setPieces(pieces-1);
+        //add CartItem first delete a similar cart item then add the new with updated values 
+        props.addCartItem({...props.cartItem, details:{...props.cartItem.details, itemQuantity: props.cartItem.details.itemQuantity-1}})
+
     }
 
 

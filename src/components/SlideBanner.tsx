@@ -86,11 +86,15 @@ function SlideBanner() {
       <Slider key={actualBanners.length} {...settings}>
         {actualBanners.map((banner, index) => (
           <div key={banner.id ?? index} className="w-full">
-            <img
-              src={banner.imageUrl}
-              alt={`Slide ${index}`}
-              className="w-full h-auto object-cover"
-            />
+            <a href={banner.goTo} >
+              <img
+                src={banner.imageUrl}
+                alt={`Slide ${index}`}
+                className="w-full h-auto object-cover"
+
+              />
+            </a>
+
           </div>
         ))}
       </Slider>
