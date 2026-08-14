@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 import AddressChart from "./AddressChart";
 import Button from "./Button";
