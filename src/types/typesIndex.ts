@@ -413,10 +413,13 @@ export interface PaintingItemDetails extends CartItemDetails {
   isOriginalSelected: boolean; 
 }
 export interface CartItemDTORecord{
+  id: number
+  productId: number
   productName: string; 
   imageUrl: string;
-  productType: ProductTypeEnum.PAINTING 
+  productType: ProductTypeEnum.PAINTING; 
   details: CartItemDetails; 
+  totalPrice: number;
 
 }
 
