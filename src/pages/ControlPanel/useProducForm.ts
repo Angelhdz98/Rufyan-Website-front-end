@@ -199,8 +199,8 @@ export const useProductForm = () => {
         alturaCm: 30,
         largoCm: 25,
         creationDate: new Date(),
-        medium: MediumEnum.ACRYLYC_PAINT.toString(),
-        supportMaterial: SupportMaterialEnum.COTTON_PAPER.toString(),
+        medium: MediumEnum.ACRYLIC_PAINT,
+        supportMaterial: SupportMaterialEnum.COTTON_PAPER,
         productTypeEnum: ProductTypeEnum.PAINTING
     };
     const clothingDetails: BodyClothingDomainDetails = { material: ClothingMaterial.COTTON.toString(), printingTechnique: PrintingTechniqueEnum.AEROGRAPHY.toString(), productTypeEnum: ProductTypeEnum.CLOTHING, type: BodyClotheTypeEnum.HOODIE.toString() };

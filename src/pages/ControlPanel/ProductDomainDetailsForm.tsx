@@ -26,7 +26,7 @@ function ProductDomainDetailsForm(props: ProductDomainDetailsFormProps) {
                     alturaCm: 30,
                     largoCm: 20,
                     creationDate: new Date(),
-                    medium: MediumEnum.ACRYLYC_PAINT.toString(),
+                    medium: MediumEnum.ACRYLIC_PAINT.toString(),
                     productTypeEnum: "PAINTING",
                     supportMaterial: SupportMaterialEnum.COTTON_PAPER.toString()
                 } as PaintingDomainDetails);
@@ -56,9 +56,9 @@ function ProductDomainDetailsForm(props: ProductDomainDetailsFormProps) {
                 alturaCm: 30,
                 largoCm: 20,
                 creationDate: new Date(),
-                medium: MediumEnum.ACRYLYC_PAINT.toString(),
+                medium: MediumEnum.ACRYLIC_PAINT,
                 productTypeEnum: "PAINTING",
-                supportMaterial: SupportMaterialEnum.COTTON_PAPER.toString()
+                supportMaterial: SupportMaterialEnum.COTTON_PAPER
             };
 
         const handlePaintingChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
@@ -104,7 +104,7 @@ function ProductDomainDetailsForm(props: ProductDomainDetailsFormProps) {
 
 
 
-        
+
 
         return <div className="flex flex-col gap-4 p-4 border border-gray-300 rounded-lg">
             <h3 className="font-semibold text-lg">Painting Details</h3>

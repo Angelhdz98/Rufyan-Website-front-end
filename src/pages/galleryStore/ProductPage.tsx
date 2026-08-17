@@ -15,6 +15,7 @@ import {
     ProductTypeEnum,
 } from "../../types/typesIndex";
 import { getProductByIdRequest } from "../../components/ProductRequests";
+import { formatMedium, formatSupportMaterial } from "../../utils/formatEnumLabel";
 import { IoIosCheckmarkCircle } from "react-icons/io";
 import { CiNoWaitingSign } from "react-icons/ci";
 import { LikeButton } from "../../components/LikeButton";
@@ -97,11 +98,11 @@ function ProductPage() {
             return (
                 <div className="flex flex-col w-full px-4 gap-1">
                     <div>
-                        <span className="font-semibold">Medium:</span> {details.medium}
+                        <span className="font-semibold">Medium:</span> {formatMedium(details.medium)}
                     </div>
                     <div>
                         <span className="font-semibold">Support material:</span>{" "}
-                        {details.supportMaterial}
+                        {formatSupportMaterial(details.supportMaterial)}
                     </div>
                     <div>
                         <span className="font-semibold">Available copies:</span>{" "}
