@@ -1,3 +1,4 @@
+import { MdShoppingCart } from "react-icons/md";
 import Button from "./Button";
     
 interface addTCartButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
@@ -8,7 +9,8 @@ interface addTCartButtonProps extends React.ButtonHTMLAttributes<HTMLButtonEleme
 
     return <Button onClick={onClick} primary rounded 
     className="text-xs px-1">
-        Add to cart
+        + <MdShoppingCart/>
+
         </Button> 
 }
 
