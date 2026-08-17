@@ -133,6 +133,8 @@ return isPainting(props.product)&& props.product.available_copies > 0 ?
         </SwiperSlide>
     })
 
+    const [isOriginalSelected, setIsOriginalSelected] = useState(false);
+
     return <Swiper
         onSlideNextTransitionStart={nextSlide}
         onSlidePrevTransitionStart={prevSlide}
@@ -144,7 +146,9 @@ return isPainting(props.product)&& props.product.available_copies > 0 ?
         className={props.className}
     >
 
-        <PriceTag productPricing={props.product.productPricing}></PriceTag>
+        <PriceTag isOriginalSelected={isOriginalSelected} onClick={() => {
+            setIsOriginalSelected(!isOriginalSelected);
+        }} productPricing={props.product.productPricing}></PriceTag>
 
         <StockTag productStock={props.product.productStock} />
 

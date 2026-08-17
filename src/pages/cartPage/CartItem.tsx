@@ -1,4 +1,5 @@
 
+import { useNavigate } from "react-router-dom";
 import Button from "../../components/Button";
 import PiecesSelector from "../../components/PiecesSelector";
 import { CartItemDTORecord, PaintingItemDetails, ProductTypeEnum } from "../../types/typesIndex";
@@ -11,7 +12,8 @@ interface cartItemProps {
 
 function CartItem(props: cartItemProps) {
 
-   
+    const navigate = useNavigate();
+
     let paintingOriginalDiv;
     if (props.cartItem.details.productType == ProductTypeEnum.PAINTING) {
         const paintingItemDetails = props.cartItem.details as PaintingItemDetails;
@@ -28,7 +30,10 @@ function CartItem(props: cartItemProps) {
 
     return <div className="flex flex-col  md:flex-row min-h-52 md:flex-grow lg:justify-start  h-fit    rounded-lg overflow-hidden shadow-lg ">
         <div className="1st-row w-full  md:h-full md:w-1/4 lg:w-1/6 max-w-1/3  object-contain">
-            <img src={props.cartItem.imageUrl} alt="" className="h-full w-full  " />
+
+            <img src={props.cartItem.imageUrl} alt="" className="h-full w-full hover:cursor-pointer " onClick={() => navigate(`/store/product/${props.cartItem.productId}`)} />
+
+
         </div>
         <div className=" 2nd-row w-3/5  flex flex-col  justify-between lg:justify-start   py-3 px-2 ">
             <div className="text-space p-2">

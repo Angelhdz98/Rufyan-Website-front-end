@@ -6,13 +6,19 @@ import losDelParaiso from "../../../public/assets/Images/los-del-paraiso.png"
 import Panel from "../../components/Panel";
 import FavoriteProjects from "../../components/FavoriteProjects";
 import OtherProductsChart from "../../components/OtherProductsChart";
+import { StorePageModalContext } from "../galleryStore/StorePageModalContext";
+import { useState } from "react";
+import Modal from "../../components/Modal";
 //import ProjectCard from "../../components/ProjectCard";
 
 function HomePage() {
 
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const initialContent = <div>Contenido inicial</div>
+    const [modalContent, setModalContent] = useState(initialContent); 
 
-
-    return <div className=" h-fit flex-grow">
+    return <StorePageModalContext.Provider value={{isModalOpen: isModalOpen, content: modalContent, setIsModalOpen: setIsModalOpen, setModalContent: setModalContent }}>
+        <div className=" h-fit flex-grow">
         <SlideBanner />
         <Panel name={"Favorite Artworks"}>
             <FavoriteProducts />
@@ -31,6 +37,11 @@ function HomePage() {
 
 
     </div>
+
+    <Modal isOpen={isModalOpen} onClose={()=>{setIsModalOpen(false)}} >{modalContent} </Modal>
+
+    </StorePageModalContext.Provider>
+     
 }
 
 export default HomePage;

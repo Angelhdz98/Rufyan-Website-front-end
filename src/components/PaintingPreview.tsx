@@ -3,10 +3,11 @@ import { CiNoWaitingSign } from "react-icons/ci";
 import { IoIosCheckmarkCircle } from "react-icons/io";
 import { useNavigate } from "react-router-dom";
 import obra2 from "../../public/assets/Images/imgObras/obra2.jpg";
-import { Painting, PaintingPricing, PaintingStock, ProductDTO, ProductTypeEnum, StockTypeEnum } from "../types/typesIndex";
+import { MediumEnum, Painting, PaintingPricing, PaintingStock, ProductDTO, ProductTypeEnum, StockTypeEnum, SupportMaterialEnum } from "../types/typesIndex";
 import { LikeButton } from "./LikeButton";
 import PaintingPreviewButtonPanel from "./PaintingPreviewButtonPanel";
 import { ProductContext } from "../pages/galleryStore/ProductsContext";
+
 
 interface PaintingPreviewProps {
     paint: ProductDTO;
@@ -25,7 +26,7 @@ const examplePaint: Painting =
         productName: "una obra fea",
         url: obra2,
     }],
-    productDomainDetails: { largoCm: 30, alturaCm: 50, creationDate: new Date("10-12-2020"), medium: "Aceite", supportMaterial: "Algodon", productTypeEnum: ProductTypeEnum.PAINTING, },
+    productDomainDetails: { largoCm: 30, alturaCm: 50, creationDate: new Date("10-12-2020"), medium: MediumEnum.ACRYLIC_PAINT, supportMaterial: SupportMaterialEnum.COTTON_PAPER, productTypeEnum: ProductTypeEnum.PAINTING, },
     productStock: { stockType: StockTypeEnum.PAINTING_STOCK, stockCopies: 10, copiesMade: 15, isOriginalAvailable: true },
 
     isFavorite: true,
@@ -65,16 +66,15 @@ function PaintingPreview({ paint }: PaintingPreviewProps) {
     const paintingPricing = paint.productPricingDTO as PaintingPricing;
     const availabilityTag = () => {
 
-        return paintingStock.isOriginalAvailable ? <div className="flex">
-            Original
-            <IoIosCheckmarkCircle className="text-green-500 mt-1" />
+        return paintingStock.isOriginalAvailable ? <div className="flex text-[10px] sm:text-sm items-center gap-0.5">
+            Original    <IoIosCheckmarkCircle className="text-green-500 " />
         </div> : paintingStock.stockCopies > 0
             ?
-            <div className="flex items-center" >
+            <div className="flex items-center text-xs sm:text-sm" >
                 Original
                 <CiNoWaitingSign className="text-red-500 stroke-2 " />
             </div>
-            : <div className="font-bold text-red-500">
+            : <div className="font-bold text-red-500 text-xs">
                 Sold out
             </div>;
     }
@@ -83,7 +83,10 @@ function PaintingPreview({ paint }: PaintingPreviewProps) {
         <div className="z-10  text-red-500 font-bold text-xs bg-white/70 absolute left-3 rounded px-1  bottom-12">No copies available</div>
 
     // cambiar este ultimo booleano por paint.original_availability 
-    const renderedPrice = originalSelected ? (<div >Price original: <br /> {paintingPricing.pricePerOriginal}.00 MXN</div>) : (<div>Price p/copy: <br /> {paintingPricing.pricePerCopy}.00 MXN</div>);
+    const renderedPrice = originalSelected ? (<div className=" text-xs sm:text-sm " > Original: <br />
+        <span className=" text-[10px] sm:text-sm ">{paintingPricing.pricePerOriginal}.00<span className="text-[8px] sm:text-[10px]">MXN</span></span>
+    </div>) :
+        (<div className="text-[10px] md:text-sm"> P/copy: <br /> {paintingPricing.pricePerCopy}.00<span className="text-[8px] sm:text-[10px]">MXN</span>  </div>);
 
 
 
@@ -96,8 +99,8 @@ function PaintingPreview({ paint }: PaintingPreviewProps) {
             src={paint.images[0].url}
             alt={paint.images[0].productName} />
         <div
-            className=" bg-slate-300 p-2 px-6 rounded-b-2xl h-[10%]">
-            <PaintingPreviewButtonPanel paint={examplePaint} isOriginalSelected={false} />
+            className=" bg-slate-300 p-2    px-6  rounded-b-2xl h-[10%] flex items-center ">
+            <PaintingPreviewButtonPanel paint={paint} isOriginalSelected={originalSelected} />
         </div>
         <div className="flex gap-2 text-sm  original-available-tag absolute items-center z-10 bg-white/70 rounded top-2 left-4 px-1 ">
             {availabilityTag()}

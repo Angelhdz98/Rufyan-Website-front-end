@@ -1,5 +1,4 @@
 import Button from "./Button";
-import { FaWhatsapp } from "react-icons/fa";
 
 
 
@@ -12,8 +11,8 @@ function BuyNowButton(){
     window.open(url, "_blank");
  };
     return    <Button onClick={buyPainting} rounded secondary  
-    className="text-xs px-1">
-        <FaWhatsapp /> for selling
+    className="text-xs sm:px-1 h-min ">
+         Comprar
         </Button>
 }
 

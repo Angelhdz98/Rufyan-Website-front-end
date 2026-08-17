@@ -1,9 +1,13 @@
 import classNames from "classnames";
-import type { Product } from "../types/typesIndex";
+import { PaintingItemDetails, ProductTypeEnum, type Product } from "../types/typesIndex";
 import Button from "./Button";
-import PriceTag from "./PriceTag";
 import StockTag from "./StockTag";
 import DetailsTag from "./DetailsTag";
+import AddToCartButton from "./AddToCartButton";
+import Cart from "../pages/cartPage/Cart";
+import { addCartItemRequest } from "./CartAndBuyRequests";
+import { useContext } from "react";
+import { StorePageModalContext } from "../pages/galleryStore/StorePageModalContext";
 export interface ProductLabelProps extends React.HTMLAttributes<HTMLDivElement> {
     product: Product;
     className?: string;
@@ -23,6 +27,13 @@ function ProductLabel(props: ProductLabelProps) {
 
     })
 
+   /* const clickPriceHandler = () => {
+        setIsOriginalSelected(!isOriginalSelected);
+        console.log("El valor de isOriginalSelected: " + isOriginalSelected);
+    }
+
+    const [isOriginalSelected, setIsOriginalSelected] = useState(false);
+    */
     /*   const priceTags = (() => {
            switch (product.productPricing.pricingType) {
                case "ORIGINAL": {
@@ -51,15 +62,30 @@ function ProductLabel(props: ProductLabelProps) {
            }
    
        }) */
+    const modalContext = useContext(StorePageModalContext);
 
+    const addToCartHandler = () => {
+        const details: PaintingItemDetails = {
+            isOriginalSelected: true,
+            itemQuantity: 1,
+            productType: ProductTypeEnum.PAINTING,
+        };
 
+        addCartItemRequest(props.product.id, details)
+            .then(() => {
+                modalContext?.setIsModalOpen(true);
+
+                const cart = <Cart />
+
+                modalContext?.setModalContent(cart);
+
+            })
+            .catch((error) => console.error(error));
+    }
 
     const botoneraObra = () => {
         return (<div className={"flex flex-row justify-between absolute w-[90%] bottom-1 " + props.className}>
-            <Button primary rounded
-                className="text-xs px-1">
-                Add to cart
-            </Button>
+            <AddToCartButton onClick={addToCartHandler} />
             <Button rounded secondary
                 className="text-xs px-1">
                 Buy now
@@ -78,8 +104,9 @@ function ProductLabel(props: ProductLabelProps) {
         {props.isButtonsHidden ? "" : botoneraObra()}
 
         <div className="p-2">
-            <DetailsTag productDetails={props.product.productDomainDetails} className={" grid grid-cols-2  "} />
-            <PriceTag productPricing={props.product.productPricing} />
+            <DetailsTag productDetails={props.product.productDomainDetails} />
+            {/*<PriceTag isOriginalSelected={isOriginalSelected} productPricing={props.product.productPricing}
+                onClick={clickPriceHandler} />*/}
             <StockTag productStock={props.product.productStock} className={"flex  w-full m-2 gap-5 justify-between"} />
         </div>
     </div>

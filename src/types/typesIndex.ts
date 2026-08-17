@@ -85,12 +85,12 @@ export enum ProductTypeEnum {
   PRINT = "PRINT",
 
 }
-export interface GetProductsByTypeCommand{
+export interface GetProductsByTypeCommand {
   productType: ProductTypeEnum;
   pageNumber: number;
   pageSize: number;
-  sorterType: string; 
-  sortOrder: string; 
+  sorterType: string;
+  sortOrder: string;
 }
 
 export enum BodyClothingSizeEnum {
@@ -161,8 +161,8 @@ export interface RegisterUserDTO {
 export type PaintingDomainDetails = {
   alturaCm: number;
   largoCm: number;
-  medium: string;
-  supportMaterial: string;
+  medium: MediumEnum;
+  supportMaterial: SupportMaterialEnum;
   creationDate: Date;
   productTypeEnum: "PAINTING";
 }
@@ -270,17 +270,17 @@ export type ProductSpecs = {
 export type ProductDetails = PaintingDetails | BodyClothingDetails;
 
 export enum MediumEnum {
-  OIL_PAINT,
-  ACRYLYC_PAINT,
-  PEN,
-  CHARCOAL,
-  WATERCOLOR
+  OIL_PAINT = "pintura de aceite",
+  ACRYLIC_PAINT = "pintura acrilica",
+  PEN = "lapiz",
+  CHARCOAL = "carboncillo",
+  WATERCOLOR = "acuarela"
 }
 
 export enum SupportMaterialEnum {
-  WOOD,
-  COTTON_PAPER,
-  PAPER
+  WOOD = "madera",
+  COTTON_PAPER = "papel de algodon",
+  PAPER = "papel"
 }
 export enum ClothingMaterial {
   COTTON = "COTTON",
@@ -406,54 +406,54 @@ export interface ArtEvent extends Project {
 
 
 export interface CartItemDetails {
-    itemQuantity:number
-    productType: ProductTypeEnum
+  itemQuantity: number
+  productType: ProductTypeEnum
 }
 export interface PaintingItemDetails extends CartItemDetails {
-  isOriginalSelected: boolean; 
+  isOriginalSelected: boolean;
 }
-export interface CartItemDTORecord{
+export interface CartItemDTORecord {
   id: number
   productId: number
-  productName: string; 
+  productName: string;
   imageUrl: string;
-  productType: ProductTypeEnum.PAINTING; 
-  details: CartItemDetails; 
+  productType: ProductTypeEnum.PAINTING;
+  details: CartItemDetails;
   totalPrice: number;
 
 }
 
-export interface ShoppingCartDTO{
+export interface ShoppingCartDTO {
   cartItemDTOSet: CartItemDTORecord[];
   subTotalAmount: number;
 }
 
-export enum ClothingSizeEnum{
-XS="xs",
-S="s",
-M="m",
-L= "l",
-XL="xl",  
-XXL="xxl" 
+export enum ClothingSizeEnum {
+  XS = "xs",
+  S = "s",
+  M = "m",
+  L = "l",
+  XL = "xl",
+  XXL = "xxl"
 
 }
 
-export enum ClothingColorEnum{
-  WHITE= "Blanco",
-  BLACK= "Negro",
-  BLUE= "azul ",
-  RED= "rojo",
-  GREEN= "verde"
+export enum ClothingColorEnum {
+  WHITE = "Blanco",
+  BLACK = "Negro",
+  BLUE = "azul ",
+  RED = "rojo",
+  GREEN = "verde"
 
 }
 
 
-export interface ClothingItemDetails extends CartItemDetails{
-  clothingSizeEnum:ClothingSizeEnum;
-  color: ClothingColorEnum;  
+export interface ClothingItemDetails extends CartItemDetails {
+  clothingSizeEnum: ClothingSizeEnum;
+  color: ClothingColorEnum;
 }
 
-export interface StockableProductItemDetails extends CartItemDetails{
+export interface StockableProductItemDetails extends CartItemDetails {
 
 }
 

@@ -15,15 +15,21 @@ import {
     ProductTypeEnum,
 } from "../../types/typesIndex";
 import { getProductByIdRequest } from "../../components/ProductRequests";
+import { formatMedium, formatSupportMaterial } from "../../utils/formatEnumLabel";
 import { IoIosCheckmarkCircle } from "react-icons/io";
 import { CiNoWaitingSign } from "react-icons/ci";
 import { LikeButton } from "../../components/LikeButton";
+import Modal from "../../components/Modal";
+import { StorePageModalContext } from "./StorePageModalContext";
 
 function ProductPage() {
     const { id } = useParams();
     const [product, setProduct] = useState<ProductDTO | null>(null);
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
+    const initialModalContent= <div>Contenido inicial</div>
+     const [modalContent, setModalContent] = useState(initialModalContent);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
     useEffect(() => {
         const productId = Number(id);
@@ -97,11 +103,11 @@ function ProductPage() {
             return (
                 <div className="flex flex-col w-full px-4 gap-1">
                     <div>
-                        <span className="font-semibold">Medium:</span> {details.medium}
+                        <span className="font-semibold">Medium:</span> {formatMedium(details.medium)}
                     </div>
                     <div>
                         <span className="font-semibold">Support material:</span>{" "}
-                        {details.supportMaterial}
+                        {formatSupportMaterial(details.supportMaterial)}
                     </div>
                     <div>
                         <span className="font-semibold">Available copies:</span>{" "}
@@ -172,9 +178,16 @@ function ProductPage() {
             </div>
 
             <div className="w-full md:flex-1 min-w-0 flex flex-col gap-4">
-                <OriginalSelector product={product} />
+                <StorePageModalContext.Provider value={{content:modalContent, setModalContent:setModalContent, isModalOpen: isModalOpen, setIsModalOpen: setIsModalOpen}}>
+                    <OriginalSelector product={product} />
+                </StorePageModalContext.Provider>
+                
                 {renderProperties()}
             </div>
+
+
+
+ <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} >{modalContent} </Modal>
         </div>
     );
 }
