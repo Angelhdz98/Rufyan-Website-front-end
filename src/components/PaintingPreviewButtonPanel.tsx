@@ -1,25 +1,52 @@
-import { HtmlHTMLAttributes } from "react";
-import { Painting } from "../types/typesIndex";
+import { HtmlHTMLAttributes, useContext } from "react";
+import { PaintingItemDetails, ProductDTO, ProductTypeEnum } from "../types/typesIndex";
 import AddToCartButton from "./AddToCartButton";
 import BuyNowButton from "./BuyNowButton";
+import { addCartItemRequest } from "./CartAndBuyRequests";
+import { StorePageModalContext } from "../pages/galleryStore/StorePageModalContext";
+import Cart from "../pages/cartPage/Cart";
+
 
 export interface PanelButton extends HtmlHTMLAttributes<HTMLDivElement> {
-    paint: Painting
+    paint: ProductDTO
     isOriginalSelected: boolean
 }
 
-function PaintingPreviewButtonPanel ({paint, ...rest}:PanelButton){
+function PaintingPreviewButtonPanel({
+    paint,
+    isOriginalSelected,
+}: PanelButton) {
 
-    const addToCartHandler = (id: number, originalSelected: boolean) => {
-        //dispatch();
-        console.log("Agregar al carrito obra con ID: " + id + " original " + (originalSelected ? "sí" : "no"));
-    }
+    const modalContext = useContext(StorePageModalContext);
 
-    return   <div className={"flex flex-row justify-between w-full "+ rest.className}>
+    const addToCartHandler = () => {
+        const details: PaintingItemDetails = {
+            isOriginalSelected,
+            itemQuantity: 1,
+            productType: ProductTypeEnum.PAINTING,
+        };
 
-    <BuyNowButton />
-    <AddToCartButton onClick = {()=>addToCartHandler(paint.id, rest.isOriginalSelected)} />
-</div>
+        addCartItemRequest(paint.id, details)
+            .then(() => {
+                modalContext?.setIsModalOpen(true);
+
+                const cart = <Cart />
+
+                modalContext?.setModalContent(cart);
+
+            })
+            .catch((error) => console.error(error));
+    };
+
+    return (
+        <div className="flex flex-row justify-between w-full h-min">
+            <BuyNowButton />
+            <AddToCartButton onClick={addToCartHandler} />
+
+
+
+        </div>
+    );
 }
 
 export default PaintingPreviewButtonPanel

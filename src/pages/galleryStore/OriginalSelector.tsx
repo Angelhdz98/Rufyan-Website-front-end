@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import Button from "../../components/Button";
 
 import { PaintingItemDetails, PricingTypeEnum } from "../../types/typesIndex";
@@ -6,11 +6,17 @@ import { PaintingItemDetails, PricingTypeEnum } from "../../types/typesIndex";
 import { ProductDTO, ProductTypeEnum } from "../../types/typesIndex";
 import { addCartItemRequest } from "../../components/CartAndBuyRequests";
 import { useParams } from "react-router-dom";
+
+import Cart from "../cartPage/Cart";
+import { StorePageModalContext } from "./StorePageModalContext";
 //import { Painting } from "../../types/typesIndex";
 
 
 function OriginalSelector(props: { product: ProductDTO }) {
+
     const [originalSelected, setOriginalSelected] = useState(true);
+    const storePageModalContext = useContext(StorePageModalContext);
+
 
 
 
@@ -21,9 +27,19 @@ function OriginalSelector(props: { product: ProductDTO }) {
     const paintingItemDetails: PaintingItemDetails = { isOriginalSelected: originalSelected, itemQuantity: 1, productType: ProductTypeEnum.PAINTING };
 
     const addToCartHandler = () => {
-        addCartItemRequest(selectedProductId, paintingItemDetails).then((response) => { alert("La respuesta de la petición es: " + JSON.stringify(response)); }).catch((error) => {
-            alert("Hubo un error con la petición: " + error);
-        });
+        addCartItemRequest(selectedProductId, paintingItemDetails)
+            .then(() => {
+                const cart = <Cart/>
+
+                storePageModalContext?.setModalContent(cart);
+                storePageModalContext?.setIsModalOpen(true);
+ 
+
+            }
+            )
+            .catch((error) => {
+                alert("Hubo un error con la petición: " + error);
+            });
 
     }
 
