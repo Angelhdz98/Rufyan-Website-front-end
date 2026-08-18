@@ -1,5 +1,4 @@
 import { HtmlHTMLAttributes } from "react";
-import Button from "./Button";
 import UploadedImagePreview from "./UploadedImagePreview";
 
 export interface ImageUploaderProps extends HtmlHTMLAttributes<HTMLDivElement> {
@@ -43,7 +42,7 @@ export function ImageUploader(props: ImageUploaderProps) {
                     {renderedImages}
                 </div>
             </div>
-            <Button rounded primary className="w-fit  place-self-end my-2  " >Add </Button>
+
         </div>
     );
 }
