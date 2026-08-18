@@ -1,7 +1,6 @@
 import classNames from "classnames";
 import { PaintingItemDetails, ProductTypeEnum, type Product } from "../types/typesIndex";
 import Button from "./Button";
-import StockTag from "./StockTag";
 import DetailsTag from "./DetailsTag";
 import AddToCartButton from "./AddToCartButton";
 import Cart from "../pages/cartPage/Cart";
@@ -103,11 +102,11 @@ function ProductLabel(props: ProductLabelProps) {
         </p>
         {props.isButtonsHidden ? "" : botoneraObra()}
 
-        <div className="p-2">
+        <div className="p-2 mb-3">
             <DetailsTag productDetails={props.product.productDomainDetails} />
             {/*<PriceTag isOriginalSelected={isOriginalSelected} productPricing={props.product.productPricing}
-                onClick={clickPriceHandler} />*/}
-            <StockTag productStock={props.product.productStock} className={"flex  w-full m-2 gap-5 justify-between"} />
+                onClick={clickPriceHandler} 
+            <StockTag productStock={props.product.productStock} className={"flex  w-full m-2 gap-5 justify-between"} />/>*/}
         </div>
     </div>
 }
