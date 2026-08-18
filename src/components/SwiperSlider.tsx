@@ -149,9 +149,11 @@ return isPainting(props.product)&& props.product.available_copies > 0 ?
         <PriceTag isOriginalSelected={isOriginalSelected} onClick={() => {
             setIsOriginalSelected(!isOriginalSelected);
         }} productPricing={props.product.productPricing}></PriceTag>
+        <div className=" absolute z-10 bottom-2 left-2  bg-white/70 rounded text-sm ">
+            <StockTag productStock={props.product.productStock} className="" />
 
-        <StockTag productStock={props.product.productStock} />
-
+        </div>
+            
         <div className={`text-[#eb4b1b] rounded-md text-3xl absolute z-10 bottom-2 right-2   border bg-white/70  cursor-pointer `} >
             <LikeButton productId={props.product.id} />
         </div>
