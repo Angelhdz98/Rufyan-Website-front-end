@@ -74,29 +74,37 @@ function SlideBanner() {
   }, []);
 
   if (isLoading) {
-    return <div className="w-full h-64 flex items-center justify-center text-gray-500">Cargando banners...</div>;
+    return <div className="w-full h-48 sm:h-[20vh] md:h-[25vh] flex items-center justify-center text-gray-500">Cargando banners...</div>;
   }
 
   if (actualBanners.length === 0) {
-    return <div className="w-full h-64 flex items-center justify-center text-gray-500">No hay banners disponibles</div>;
+    return <div className="w-full h-48 sm:h-[20vh] md:h-[30vh] flex items-center justify-center text-gray-500">No hay banners disponibles</div>;
   }
 
+
+
   return (
-    <div className="w-full mx-auto">
+    <div className="w-full mx-auto overflow-hidden relative">
       <Slider key={actualBanners.length} {...settings}>
-        {actualBanners.map((banner, index) => (
-          <div key={banner.id ?? index} className="w-full">
-            <a href={banner.goTo} >
+        {actualBanners.map((banner, index) => {
+
+          const bannerMessage = banner.message.length > 2 ? <div className="bg-white/70 rounded-lg px-2 absolute z-20 bottom-8 left-10  ">
+            <span className="">{banner.message} </span>
+          </div> : ""
+
+          return <div key={banner.id ?? index} className="w-full overflow-hidden relative">
+            <a href={banner.goTo} className="block w-full">
               <img
                 src={banner.imageUrl}
                 alt={`Slide ${index}`}
-                className="w-full h-auto object-cover"
-
+                className="w-full h-48 sm:h-[20vh] md:h-[30vh] object-cover"
               />
-            </a>
+              { bannerMessage}
 
+            </a>
           </div>
-        ))}
+        })
+        }
       </Slider>
     </div>
   );

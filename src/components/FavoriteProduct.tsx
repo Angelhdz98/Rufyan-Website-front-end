@@ -34,7 +34,7 @@ function FavoriteProduct(props: FavoriteproductProps) {
 
       {/** 
       className="w-full max-w-full  h-auto  border border-black rounded-lg  drop-shadow-lg overflow-hidden min-[490px]:w-1/3 sm:w-1/4 min-[880px]:w-1/5 min-[1320px]:w-1/6 2xl:w-1/5 min-[1620px]:w-1/6 "   */}  {/** Here are the changes for a single frame (a painting) */}
-      <SwiperSlider onClick={() => navigate(`store/product/${props.product.id}`)} key={props.product.id} images={props.product.images} className="relative" product={props.product} />
+      <SwiperSlider onClick={() => navigate(`store/product/${props.product.id}`)} key={props.product.id} images={props.product.images} className="  " product={props.product} />
       <ProductLabel onClick={props.onClick} isVisible={props.isVisible} clicked={props.clicked} product={props.product} />
     </div>)
 

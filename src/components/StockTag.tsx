@@ -1,5 +1,7 @@
 import React, { Fragment } from "react";
 import { BodyClothingSizeEnum, ClothingStock, PaintingStock, ProductStock, SingleStock } from "../types/typesIndex";
+import { IoIosCheckmarkCircle } from "react-icons/io";
+import { CiNoWaitingSign } from "react-icons/ci";
 
 interface StockTagProps extends React.HtmlHTMLAttributes<HTMLDivElement> {
     productStock: ProductStock
@@ -13,13 +15,16 @@ function StockTag(props: StockTagProps) {
         case "PAINTING_STOCK":
             stock = props.productStock as PaintingStock;
             stockTags = <Fragment >
-                <div><span>
+
+                {stock.isOriginalAvailable ? <div className="flex items-center gap-1.5">Original <IoIosCheckmarkCircle className={"text-green-500"} /></div> : <div className={"flex items-center gap-1.5 "} >Original  <CiNoWaitingSign className="text-red-500 stroke-2 " /></div>}
+                { /*                   <span>
                     {stock.isOriginalAvailable ? "Obra original disponible" : "Obra original no disponible"}
                 </span>
-                </div>
+                */}
+
                 <div>
                     <span>
-                        Copias disponibles {stock.stockCopies} / {stock.copiesMade}
+                        Copias {stock.stockCopies} / {stock.copiesMade}
                     </span>
                 </div>
 
