@@ -511,12 +511,14 @@ export interface Banner {
   goTo: string;
   imageUrl: string;
   bannerName: string;
+  message: string;
 
 }
 
 export interface AddBannerCommand {
   goTo: string;
   bannerName: string;
+  message: string;
 }
 
 
