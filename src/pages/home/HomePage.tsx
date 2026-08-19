@@ -2,7 +2,6 @@
 import FavoriteProducts from "../../components/FavoriteProducts";
 import SlideBanner from "../../components/SlideBanner";
 import ImgBanner from "../../components/ImgBanner";
-import losDelParaiso from "../../../public/assets/Images/los-del-paraiso.png"
 import Panel from "../../components/Panel";
 import FavoriteProjects from "../../components/FavoriteProjects";
 import OtherProductsChart from "../../components/OtherProductsChart";
