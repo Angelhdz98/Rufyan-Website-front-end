@@ -41,11 +41,15 @@ function StockTag(props: StockTagProps) {
         case "CLOTHING_STOCK": {
             stock = props.productStock as ClothingStock;
             const stockDisponible: Record<BodyClothingSizeEnum, number> = stock.stockPerSize;
-            stockTags = <>{Object.entries(stockDisponible).map(([nombre, cantidad]) => {
-                <span key={nombre}>
-                    {nombre} : {cantidad > 0 ? "Disponible" : "No disponible"}
-                </span>
-            })}</>
+            stockTags = (
+                <>
+                    {Object.entries(stockDisponible).map(([nombre, cantidad]) => (
+                        <span key={nombre} className="block">
+                            {nombre} : {cantidad }
+                        </span>
+                    ))}
+                </>
+            );
             break;
         }
     }
@@ -55,4 +59,4 @@ function StockTag(props: StockTagProps) {
 
 }
 
-export default StockTag;      
+export default StockTag;
